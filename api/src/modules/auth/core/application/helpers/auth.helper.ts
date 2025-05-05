@@ -1,4 +1,5 @@
 import { BcryptAdapter } from '@common/adapters/bcrypt.adapter';
+import { config } from '@common/configuration/config';
 import { Injectable } from '@nestjs/common';
 import { Response } from 'express';
 
@@ -13,7 +14,7 @@ export class AuthHelper {
   async implementsCookies(access_token: string, res: Response) {
     res.cookie('access_token', access_token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'development' ? false : true || true,
+      secure: config.NODE_ENV === 'development' ? false : true,
       sameSite: 'strict',
       maxAge: 60 * 60 * 1000,
     });
@@ -22,7 +23,7 @@ export class AuthHelper {
   async clearCookies(res: Response) {
     res.clearCookie('access_token', {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'development' ? false : true || true,
+      secure: config.NODE_ENV === 'development' ? false : true,
       sameSite: 'strict',
     });
   }

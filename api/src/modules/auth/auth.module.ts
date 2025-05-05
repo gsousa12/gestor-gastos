@@ -8,14 +8,15 @@ import { PrismaService } from '@common/modules/prisma/service/prisma.service';
 import { AuthHelper } from './core/application/helpers/auth.helper';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
+import { config } from '@common/configuration/config';
 
 @Module({
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.registerAsync({
       useFactory: () => ({
-        secret: process.env.JWT_SECRET,
-        signOptions: { expiresIn: '1h' },
+        secret: config.JWT.JWT_SECRET,
+        signOptions: { expiresIn: config.JWT.JWT_EXPIRES_IN },
       }),
     }),
   ],
