@@ -1,0 +1,57 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: gestor-postgres
+    environment:
+      - POSTGRES_USER=developer
+      - POSTGRES_PASSWORD=developer
+    volumes:
+      - postgres-db-volume:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: gestor-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "developer@developer.com"
+      PGADMIN_DEFAULT_PASSWORD: "developer"
+    ports:
+      - "16543:80"
+    volumes:
+      - ./servers.json:/pgadmin4/servers.json
+    networks:
+      - app-network
+    depends_on:
+      - postgres
+
+  # api:
+  #   build:
+  #     context: ./api
+  #     dockerfile: Dockerfile
+  #   container_name: gestor-api
+  #   restart: always
+  #   ports:
+  #     - "3000:3000"
+  #   env_file:
+  #     - ./api/.env
+  #   depends_on:
+  #     - postgres
+  #   networks:
+  #     - app-network
+
+volumes:
+  postgres-db-volume:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./data
+
+networks:
+  app-network:
+    driver: bridge

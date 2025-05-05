@@ -1,0 +1,12 @@
+# 'data' na raiz do projeto
+/data/
+
+# Outras exclusões Node/NestJS
+node_modules/
+dist/
+*.log
+.env
+*.env.local
+.DS_Store
+.idea/
+.vscode/
