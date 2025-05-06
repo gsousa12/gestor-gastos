@@ -9,6 +9,6 @@ export interface ISupplierRepository {
     limit: number,
     name: string | null,
     hasDebts: boolean | null,
-  ): Promise<{ data: Supplier[]; meta: PaginationMeta }>;
+  ): Promise<{ supplierList: Supplier[]; meta: PaginationMeta }>;
   getSupplierById(supplierId: number): Promise<Supplier | null>;
 }

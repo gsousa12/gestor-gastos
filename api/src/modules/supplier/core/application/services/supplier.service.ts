@@ -25,7 +25,7 @@ export class SupplierService implements ISupplierService {
     name: string | null,
     hasDebts: boolean | null,
   ): Promise<{ supplierList: Supplier[] | []; meta: PaginationMeta }> {
-    const { data: supplierList, meta } = await this.supplierRepository.getSupplierList(
+    const { supplierList: supplierList, meta } = await this.supplierRepository.getSupplierList(
       page,
       limit,
       name,

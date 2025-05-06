@@ -30,7 +30,7 @@ export class SupplierRepository implements ISupplierRepository {
     limit: number,
     name: string | null,
     hasDebts: boolean | null,
-  ): Promise<{ data: Supplier[]; meta: PaginationMeta }> {
+  ): Promise<{ supplierList: Supplier[]; meta: PaginationMeta }> {
     const skip = (page - 1) * limit;
 
     const whereClause: any = {
@@ -63,7 +63,7 @@ export class SupplierRepository implements ISupplierRepository {
     const totalPages = Math.ceil(totalCount / limit);
 
     return {
-      data: supplierList,
+      supplierList: supplierList,
       meta: {
         totalItems: totalCount,
         itemsPerPage: limit,

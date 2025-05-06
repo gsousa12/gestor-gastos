@@ -57,7 +57,7 @@ export class SupplierController {
     try {
       const supplier = await this.supplierService.getSupplierById(supplierId);
       const response = await this.supplierMapper.toMapperGetSupplierByIdResponse(supplier);
-      return CreateApiResponse('Usuário encontrado com sucesso', response);
+      return CreateApiResponse('Fornecedor encontrado com sucesso', response);
     } catch (error) {
       return MainErrorResponse(error);
     }

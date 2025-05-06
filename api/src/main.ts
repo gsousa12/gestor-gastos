@@ -6,13 +6,11 @@ import { config } from '@common/configuration/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const logger = new Logger('Bootstrap');
+  const port = config.PORT;
 
   app.setGlobalPrefix('api');
   app.use(cookieParser());
-
-  const logger = new Logger('Bootstrap');
-
-  const port = config.PORT;
 
   await app.listen(port);
   logger.log(`Server running on port: ${port}`);

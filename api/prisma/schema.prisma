@@ -29,18 +29,12 @@ model Supplier {
   createdAt       DateTime     @map("created_at")
   updatedAt       DateTime?    @map("updated_at")
   deletedAt       DateTime?    @map("deleted_at")
-
-  // Relacionamentos
-  // sectors         Sector[]     @relation("SupplierToSector") // Setores aos quais o fornecedor presta serviço
 }
 
-// model Sector {
-//   id              Int          @id @default(autoincrement())
-//   name            String       @unique
-//   description     String?      
-//   createdAt       DateTime     @default(now()) @map("created_at")
-//   updatedAt       DateTime?    @updatedAt @map("updated_at")
-
-//   // Relacionamentos
-//   suppliers       Supplier[]   @relation("SupplierToSector") 
-// }
+model Sector {
+  id              Int          @id @default(autoincrement())
+  name            String       @unique
+  description     String?      
+  createdAt       DateTime     @default(now()) @map("created_at")
+  updatedAt       DateTime?    @updatedAt @map("updated_at")
+}

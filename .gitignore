@@ -1,5 +1,6 @@
-# 'data' na raiz do projeto
+# raiz do projeto
 /data/
+/servers.json/
 
 # Outras exclusões Node/NestJS
 node_modules/
