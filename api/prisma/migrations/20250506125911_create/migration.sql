@@ -18,7 +18,7 @@ CREATE TABLE "Supplier" (
     "name" TEXT NOT NULL,
     "company_name" TEXT,
     "tax_id" TEXT,
-    "recurring_debt" INTEGER NOT NULL,
+    "recurring_debit" INTEGER NOT NULL,
     "contact_email" TEXT,
     "contact_phone" TEXT,
     "created_at" TIMESTAMP(3) NOT NULL,

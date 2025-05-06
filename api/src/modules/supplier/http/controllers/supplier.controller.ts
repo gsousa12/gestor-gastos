@@ -31,9 +31,9 @@ export class SupplierController {
   async getSupplierList(
     @Query('page') page: number = 1,
     @Query('name') name: string | null,
-    @Query('has_debts') hasDebts: string | undefined,
+    @Query('has_debits') hasDebits: string | undefined,
   ) {
-    const parsedHasDebts = hasDebts === 'true' ? true : hasDebts === 'false' ? false : null;
+    const parsedHasDebits = hasDebits === 'true' ? true : hasDebits === 'false' ? false : null;
     const limit = config.PAGINATION.LIST_PAGE_LIMIT;
 
     try {
@@ -41,7 +41,7 @@ export class SupplierController {
         page,
         limit,
         name,
-        parsedHasDebts,
+        parsedHasDebits,
       );
       const response = await this.supplierMapper.toMapperGetSupplierListResponse(supplierList);
       return CreateApiResponse('Lista de fornecedores', response, meta);

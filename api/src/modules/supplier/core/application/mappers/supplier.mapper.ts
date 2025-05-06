@@ -29,7 +29,7 @@ export class SupplierMapper {
       response.name = supplier.name;
       response.companyName = supplier.companyName;
       response.taxId = supplier.taxId;
-      response.recurringDebt = supplier.recurringDebt;
+      response.recurringDebit = supplier.recurringDebit;
       response.contactEmail = supplier.contactEmail;
       response.contactPhone = supplier.contactPhone;
       response.createdAt = supplier.createdAt;
@@ -43,7 +43,7 @@ export class SupplierMapper {
     response.name = supplier.name;
     response.companyName = supplier.companyName;
     response.taxId = supplier.taxId;
-    response.recurringDebt = supplier.recurringDebt;
+    response.recurringDebit = supplier.recurringDebit;
     response.contactEmail = supplier.contactEmail;
     response.contactPhone = supplier.contactPhone;
     response.createdAt = supplier.createdAt;

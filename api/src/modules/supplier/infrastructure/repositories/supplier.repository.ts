@@ -15,7 +15,7 @@ export class SupplierRepository implements ISupplierRepository {
         name: supplier.name,
         companyName: supplier.companyName,
         taxId: supplier.taxId,
-        recurringDebt: 0,
+        recurringDebit: 0,
         contactEmail: supplier.contactEmail,
         contactPhone: supplier.contactPhone,
         createdAt: new Date(),
@@ -29,7 +29,7 @@ export class SupplierRepository implements ISupplierRepository {
     page: number,
     limit: number,
     name: string | null,
-    hasDebts: boolean | null,
+    hasDebits: boolean | null,
   ): Promise<{ supplierList: Supplier[]; meta: PaginationMeta }> {
     const skip = (page - 1) * limit;
 
@@ -41,11 +41,11 @@ export class SupplierRepository implements ISupplierRepository {
       whereClause.name = { contains: name, mode: 'insensitive' };
     }
 
-    if (hasDebts !== null) {
-      if (hasDebts === true) {
-        whereClause.recurringDebt = { gt: 0 };
+    if (hasDebits !== null) {
+      if (hasDebits === true) {
+        whereClause.recurringDebit = { gt: 0 };
       } else {
-        whereClause.recurringDebt = { lte: 0 };
+        whereClause.recurringDebit = { lte: 0 };
       }
     }
 

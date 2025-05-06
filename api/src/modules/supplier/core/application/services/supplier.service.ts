@@ -1,5 +1,5 @@
 import { SUPPLIER_REPOSITORY } from '@common/tokens/repositories.tokens';
-import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { ISupplierService } from '../../domain/interfaces/supplier-service.interface';
 import { SupplierRepository } from '@modules/supplier/infrastructure/repositories/supplier.repository';
 import { SupplierHelper } from '../helpers/supplier.helper';
@@ -23,13 +23,13 @@ export class SupplierService implements ISupplierService {
     page: number,
     limit: number,
     name: string | null,
-    hasDebts: boolean | null,
+    hasDebits: boolean | null,
   ): Promise<{ supplierList: Supplier[] | []; meta: PaginationMeta }> {
     const { supplierList: supplierList, meta } = await this.supplierRepository.getSupplierList(
       page,
       limit,
       name,
-      hasDebts,
+      hasDebits,
     );
 
     return !supplierList || supplierList.length === 0

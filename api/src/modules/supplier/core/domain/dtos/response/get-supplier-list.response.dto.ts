@@ -3,7 +3,7 @@ export class GetSupplierListResponseDto {
   name: string;
   companyName: string | null;
   taxId: string | null;
-  recurringDebt: number;
+  recurringDebit: number;
   contactEmail: string | null;
   contactPhone: string | null;
   createdAt: Date;

@@ -8,7 +8,7 @@ export interface ISupplierService {
     page: number,
     limit: number,
     name: string | null,
-    hasDebts: boolean | null,
+    hasDebits: boolean | null,
   ): Promise<{ supplierList: Supplier[] | []; meta: PaginationMeta }>;
   getSupplierById(supplierId: number): Promise<Supplier>;
 }

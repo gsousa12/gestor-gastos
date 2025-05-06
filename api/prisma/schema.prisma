@@ -23,7 +23,7 @@ model Supplier {
   name            String
   companyName     String?      @map("company_name")
   taxId           String?      @map("tax_id")
-  recurringDebt   Int          @map("recurring_debt") 
+  recurringDebit   Int          @map("recurring_debit") 
   contactEmail    String?      @map("contact_email") 
   contactPhone    String?      @map("contact_phone") 
   createdAt       DateTime     @map("created_at")
@@ -35,6 +35,16 @@ model Sector {
   id              Int          @id @default(autoincrement())
   name            String       @unique
   description     String?      
-  createdAt       DateTime     @default(now()) @map("created_at")
-  updatedAt       DateTime?    @updatedAt @map("updated_at")
+  createdAt       DateTime     @map("created_at")
+  updatedAt       DateTime?    @map("updated_at")
+}
+
+model Expense {
+  id              Int          @id @default(autoincrement())
+  mouth           String
+  year            String
+  amount          Int
+  createdAt       DateTime     @map("created_at")
+  updatedAt       DateTime?    @map("updated_at")
+  deletedAt       DateTime?    @map("deleted_at")
 }
