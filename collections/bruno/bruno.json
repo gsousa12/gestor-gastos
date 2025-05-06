@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "Gestor de Gastos - Prefeitura",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
