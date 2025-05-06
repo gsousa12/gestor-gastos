@@ -16,6 +16,8 @@ model User {
   updatedAt  DateTime?  @map("updated_at")
   deletedAt  DateTime?  @map("deleted_at")
   isActive   Boolean    @map("is_active")
+
+  expenses        Expense[]
 }
 
 model Supplier {
@@ -29,6 +31,8 @@ model Supplier {
   createdAt       DateTime     @map("created_at")
   updatedAt       DateTime?    @map("updated_at")
   deletedAt       DateTime?    @map("deleted_at")
+
+  expenses        Expense[]
 }
 
 model Sector {
@@ -37,6 +41,18 @@ model Sector {
   description     String?      
   createdAt       DateTime     @map("created_at")
   updatedAt       DateTime?    @map("updated_at")
+
+  expenses        Expense[]
+}
+
+model Secretary {
+  id              Int          @id @default(autoincrement())
+  name            String
+  createdAt       DateTime     @default(now()) @map("created_at")
+  updatedAt       DateTime?    @map("updated_at")
+  deletedAt       DateTime?    @map("deleted_at")
+
+  expenses        Expense[]
 }
 
 model Expense {
@@ -47,4 +63,16 @@ model Expense {
   createdAt       DateTime     @map("created_at")
   updatedAt       DateTime?    @map("updated_at")
   deletedAt       DateTime?    @map("deleted_at")
+
+  supplierId      Int          @map("supplier_id")
+  supplier        Supplier     @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+
+  secretaryId     Int          @map("secretary_id")
+  secretary       Secretary    @relation(fields: [secretaryId], references: [id], onDelete: Cascade)
+
+  userId         Int          @map("user_id")
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  sectorId       Int          @map("sector_id")
+  sector         Sector       @relation(fields: [sectorId], references: [id], onDelete: Cascade)
 }
