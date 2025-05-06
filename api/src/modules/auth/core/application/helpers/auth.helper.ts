@@ -16,7 +16,7 @@ export class AuthHelper {
       httpOnly: true,
       secure: config.NODE_ENV === 'development' ? false : true,
       sameSite: 'strict',
-      maxAge: 60 * 60 * 1000,
+      maxAge: config.JWT.JWT_MAX_AGE,
     });
   }
 

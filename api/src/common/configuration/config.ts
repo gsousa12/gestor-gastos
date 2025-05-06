@@ -7,8 +7,12 @@ const config = {
     DATABASE_HOST: ENV.DATABASE_HOST ?? '',
   },
   JWT: {
-    JWT_SECRET: ENV.DATABASE_HOST ?? '',
-    JWT_EXPIRES_IN: ENV.JWT_EXPIRES_IN ?? '',
+    JWT_SECRET: ENV.JWT_SECRET ?? '',
+    JWT_EXPIRES_IN: ENV.JWT_EXPIRES_IN ?? '1h',
+    JWT_MAX_AGE: 3600000, // 1 hora em ms
+  },
+  PAGINATION: {
+    LIST_PAGE_LIMIT: 10,
   },
 };
 
