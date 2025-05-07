@@ -1,0 +1,24 @@
+meta {
+  name: createExpense
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:3000/api/expense/
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "description": "Compra de materiais de escritório",
+    "mouth": 5,
+    "year": "2025",
+    "amount": 1250,
+    "supplierId": 1,
+    "secretaryId": 1,
+    "userId": 1,
+    "subsectorId": 1
+  }
+}
