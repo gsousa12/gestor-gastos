@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from '@modules/auth/auth.module';
 import { SupplierModule } from '@modules/supplier/supplier.module';
 import { SectorModule } from '@modules/sector/sector.module';
+import { ExpenseModule } from '@modules/expense/expense.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { SectorModule } from '@modules/sector/sector.module';
     AuthModule,
     SupplierModule,
     SectorModule,
+    ExpenseModule,
   ],
   controllers: [],
   providers: [],

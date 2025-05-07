@@ -42,6 +42,18 @@ model Sector {
   createdAt       DateTime     @map("created_at")
   updatedAt       DateTime?    @map("updated_at")
 
+  subsectors      SubSector[]     @relation("Subsector")
+}
+
+model SubSector {
+  id              Int          @id @default(autoincrement())
+  name            String
+  createdAt       DateTime     @default(now()) @map("created_at")
+  updatedAt       DateTime?    @map("updated_at")
+  deletedAt       DateTime?    @map("deleted_at")
+
+  sectorId        Int          @map("sector_id")
+  sector          Sector       @relation("Subsector", fields: [sectorId], references: [id], onDelete: Cascade)
   expenses        Expense[]
 }
 
@@ -57,22 +69,23 @@ model Secretary {
 
 model Expense {
   id              Int          @id @default(autoincrement())
-  mouth           String
+  description     String?
+  mouth           Int
   year            String
   amount          Int
   createdAt       DateTime     @map("created_at")
   updatedAt       DateTime?    @map("updated_at")
-  deletedAt       DateTime?    @map("deleted_at")
 
   supplierId      Int          @map("supplier_id")
+  supplierName    String?      @map("supplier_name")
   supplier        Supplier     @relation(fields: [supplierId], references: [id], onDelete: Cascade)
 
   secretaryId     Int          @map("secretary_id")
   secretary       Secretary    @relation(fields: [secretaryId], references: [id], onDelete: Cascade)
 
-  userId         Int          @map("user_id")
-  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId         Int           @map("user_id")
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  sectorId       Int          @map("sector_id")
-  sector         Sector       @relation(fields: [sectorId], references: [id], onDelete: Cascade)
+  subsectorId    Int           @map("subsector_id")
+  subsector      SubSector     @relation(fields: [subsectorId], references: [id], onDelete: Cascade)
 }
