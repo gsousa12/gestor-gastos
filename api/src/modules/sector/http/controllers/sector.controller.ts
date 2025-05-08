@@ -22,6 +22,8 @@ export class SectorController {
       const response = await this.sectorMapper.toMapperCreateSectorResponse(createdSector);
       return CreateApiResponse('Setor cadastrado com sucesso', response);
     } catch (error) {
+      console.log(error);
+
       return MainErrorResponse(error);
     }
   }

@@ -21,6 +21,19 @@ export class SectorRepository implements ISectorRepository {
     return createdSector;
   }
 
+  async getSectorByName(name: string): Promise<Sector | null> {
+    const sector = await this.prisma.sector.findFirst({
+      where: {
+        name: {
+          equals: name,
+          mode: 'insensitive',
+        },
+      },
+    });
+
+    return sector;
+  }
+
   async getSectorList(
     page: number,
     limit: number,

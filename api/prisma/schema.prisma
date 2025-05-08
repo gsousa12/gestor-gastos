@@ -33,6 +33,7 @@ model Supplier {
   deletedAt       DateTime?    @map("deleted_at")
 
   expenses        Expense[]
+  payments        Payment[]
 }
 
 model Sector {
@@ -43,6 +44,7 @@ model Sector {
   updatedAt       DateTime?    @map("updated_at")
 
   subsectors      SubSector[]  @relation("Subsector")
+  payments        Payment[]
 }
 
 model SubSector {
@@ -88,13 +90,29 @@ model Expense {
 
   subsectorId    Int           @map("subsector_id")
   subsector      SubSector     @relation(fields: [subsectorId], references: [id], onDelete: Cascade)
+
+  payments        Payment[]
 }
 
 model Payment {
   id              Int          @id @default(autoincrement())
   mouth           Int
   year            String
+  status          String
   amount          Int
+  recurringDebtDeducted Int?   @map("recurring_debt_deducted")
   createdAt       DateTime     @map("created_at")
   updatedAt       DateTime?    @map("updated_at")
+  cacelledAt      DateTime?    @map("cancelled_at")
+
+  supplierId      Int          @map("supplier_id")
+  supplier        Supplier     @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+
+  sectorId        Int          @map("sector_id")
+  sector          Sector       @relation(fields: [sectorId], references: [id], onDelete: Cascade)
+
+  expenseId       Int          @map("expense_id")
+  expense         Expense      @relation(fields: [expenseId], references: [id], onDelete: Cascade)
+
+
 }

@@ -15,6 +15,10 @@ export class SectorService implements ISectorService {
   ) {}
 
   async createSector(sector: SectorEntity): Promise<Sector> {
+    const existingSector = await this.sectorRepository.getSectorByName(sector.name);
+    if (existingSector) {
+      throw new BadRequestException('Já existe um setor cadastrado com esse nome');
+    }
     const createdSector = await this.sectorRepository.createSector(sector);
     return createdSector;
   }

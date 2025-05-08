@@ -10,4 +10,5 @@ export interface ISectorRepository {
     name: string | undefined,
   ): Promise<{ sectorList: Sector[] | []; meta: PaginationMeta }>;
   getSectorById(sectorId: number): Promise<Sector | null>;
+  getSectorByName(name: string): Promise<Sector | null>;
 }
