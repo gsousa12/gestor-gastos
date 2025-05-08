@@ -20,5 +20,5 @@ export const validationMessages = {
 
   isDefined: (args: ValidationArguments) =>
     `O campo ${args.property} é obrigatório e deve está presente no payload de request.`,
-  taxID: (args: ValidationArguments) => `O campo ${args.property} deve ser um CNPJ ou CPF válido`,
+  taxId: (args: ValidationArguments) => `O campo ${args.property} deve ser um CNPJ ou CPF válido`,
 };
