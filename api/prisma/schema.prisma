@@ -42,7 +42,7 @@ model Sector {
   createdAt       DateTime     @map("created_at")
   updatedAt       DateTime?    @map("updated_at")
 
-  subsectors      SubSector[]     @relation("Subsector")
+  subsectors      SubSector[]  @relation("Subsector")
 }
 
 model SubSector {
@@ -88,4 +88,13 @@ model Expense {
 
   subsectorId    Int           @map("subsector_id")
   subsector      SubSector     @relation(fields: [subsectorId], references: [id], onDelete: Cascade)
+}
+
+model Payment {
+  id              Int          @id @default(autoincrement())
+  mouth           Int
+  year            String
+  amount          Int
+  createdAt       DateTime     @map("created_at")
+  updatedAt       DateTime?    @map("updated_at")
 }
