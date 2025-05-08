@@ -14,7 +14,7 @@ export class CreateSupplierRequestDto {
   @IsDefined()
   @IsString({ message: validationMessages.isString })
   @Matches(validateTaxIdRegex, {
-    message: validationMessages.taxID,
+    message: validationMessages.taxId,
   })
   taxId: string | null;
 

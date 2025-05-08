@@ -1,9 +1,6 @@
 import { Supplier } from '@prisma/client';
 import { CreateSupplierRequestDto } from '../dtos/request/create-supplier.request.dto';
 import { SupplierEntity } from '../../domain/entities/supplier.entity';
-import { CreateSupplierResponseDto } from '../../domain/dtos/response/create-supplier.response.dto';
-import { GetSupplierListResponseDto } from '../../domain/dtos/response/get-supplier-list.response.dto';
-import { GetSupplierByIdResponseDto } from '../../domain/dtos/response/get-supplier-id.response.dto';
 
 export class SupplierMapper {
   async toMapperCreateSupplierRequest(request: CreateSupplierRequestDto): Promise<SupplierEntity> {
@@ -16,15 +13,15 @@ export class SupplierMapper {
     return supplier;
   }
 
-  async toMapperCreateSupplierResponse(createdSupplier: Supplier): Promise<CreateSupplierResponseDto> {
-    const response = new CreateSupplierResponseDto();
+  async toMapperCreateSupplierResponse(createdSupplier: Supplier): Promise<SupplierEntity> {
+    const response = new SupplierEntity();
     (response.name = createdSupplier.name), (response.createdAt = createdSupplier.createdAt);
     return response;
   }
 
-  async toMapperGetSupplierListResponse(supplierList: Supplier[]): Promise<GetSupplierListResponseDto[]> {
+  async toMapperGetSupplierListResponse(supplierList: Supplier[]): Promise<SupplierEntity[]> {
     return supplierList.map((supplier) => {
-      const response = new GetSupplierListResponseDto();
+      const response = new SupplierEntity();
       response.id = supplier.id;
       response.name = supplier.name;
       response.companyName = supplier.companyName;
@@ -38,8 +35,8 @@ export class SupplierMapper {
     });
   }
 
-  async toMapperGetSupplierByIdResponse(supplier: Supplier): Promise<GetSupplierByIdResponseDto> {
-    const response = new GetSupplierByIdResponseDto();
+  async toMapperGetSupplierByIdResponse(supplier: Supplier): Promise<SupplierEntity> {
+    const response = new SupplierEntity();
     response.name = supplier.name;
     response.companyName = supplier.companyName;
     response.taxId = supplier.taxId;

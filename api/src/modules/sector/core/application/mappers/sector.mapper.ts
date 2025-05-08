@@ -1,9 +1,6 @@
 import { Sector } from '@prisma/client';
 import { SectorEntity } from '../../domain/entities/sector.entity';
 import { CreateSectorRequestDto } from '../dto/request/create-sector.request.dto';
-import { CreateSectorResponseDto } from '../../domain/dtos/response/create-sector.response.dto';
-import { GetSectorListResponseDto } from '../../domain/dtos/response/get-sector-list.response.dto';
-import { GetSectorByIdResponseDto } from '../../domain/dtos/response/get-sector-id.response.dto';
 
 export class SectorMapper {
   async toMapperCreateSectorRequest(request: CreateSectorRequestDto): Promise<SectorEntity> {
@@ -13,16 +10,16 @@ export class SectorMapper {
     return sector;
   }
 
-  async toMapperCreateSectorResponse(createdSector: Sector): Promise<CreateSectorResponseDto> {
-    const response = new CreateSectorResponseDto();
+  async toMapperCreateSectorResponse(createdSector: Sector): Promise<SectorEntity> {
+    const response = new SectorEntity();
     response.name = createdSector.name;
     response.description = createdSector.description;
     return response;
   }
 
-  async toMapperGetSectorListResponse(createdSector: Sector[]): Promise<GetSectorListResponseDto[]> {
+  async toMapperGetSectorListResponse(createdSector: Sector[]): Promise<SectorEntity[]> {
     return createdSector.map((sector) => {
-      const response = new GetSectorListResponseDto();
+      const response = new SectorEntity();
       response.id = sector.id;
       response.name = sector.name;
       response.description = sector.description;
@@ -32,8 +29,8 @@ export class SectorMapper {
     });
   }
 
-  async toMapperGetSectorByIdResponse(sector: Sector): Promise<GetSectorByIdResponseDto> {
-    const response = new GetSectorListResponseDto();
+  async toMapperGetSectorByIdResponse(sector: Sector): Promise<SectorEntity> {
+    const response = new SectorEntity();
     response.name = sector.name;
     response.description = sector.description;
     response.createdAt = sector.createdAt;

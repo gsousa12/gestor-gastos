@@ -15,7 +15,7 @@ export class SectorController {
 
   @Post('/')
   @HttpCode(HttpStatus.OK)
-  async createSector(@Body() request: CreateSectorRequestDto, @Request() req) {
+  async createSector(@Body() request: CreateSectorRequestDto) {
     try {
       const sector = await this.sectorMapper.toMapperCreateSectorRequest(request);
       const createdSector = await this.sectorService.createSector(sector);

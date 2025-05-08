@@ -15,7 +15,7 @@ export class SupplierController {
 
   @Post('/')
   @HttpCode(HttpStatus.OK)
-  async createSupplier(@Body() request: CreateSupplierRequestDto, @Request() req) {
+  async createSupplier(@Body() request: CreateSupplierRequestDto) {
     try {
       const supplier = await this.supplierMapper.toMapperCreateSupplierRequest(request);
       const createdSupplier = await this.supplierService.createSupplier(supplier);
