@@ -1,0 +1,11 @@
+meta {
+  name: cancelPayment
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3000/api/payment/cancel/15
+  body: none
+  auth: inherit
+}
