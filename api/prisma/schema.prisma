@@ -113,6 +113,4 @@ model Payment {
 
   expenseId       Int          @map("expense_id")
   expense         Expense      @relation(fields: [expenseId], references: [id], onDelete: Cascade)
-
-
 }

@@ -1,6 +1,6 @@
 import { HttpException } from '@nestjs/common';
 
-export function MainErrorResponse(error: unknown) {
+export function mainErrorResponse(error: unknown) {
   if (error instanceof HttpException) {
     const response = error.getResponse() as any;
 

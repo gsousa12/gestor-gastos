@@ -1,6 +1,7 @@
 import { Expense } from '@prisma/client';
 import { ExpenseEntity } from '../../domain/entities/expense.entity';
 import { CreateExpenseRequestDto } from '../dtos/request/create-expense.request.dto';
+import e from 'express';
 
 export class ExpenseMapper {
   async toMapperCreateExpenseRequest(request: CreateExpenseRequestDto): Promise<ExpenseEntity> {
@@ -32,6 +33,7 @@ export class ExpenseMapper {
   async toMapperGetExpenseListResponse(supplierList: Expense[]): Promise<ExpenseEntity[]> {
     const response = supplierList.map((supplier) => {
       const expense = new ExpenseEntity();
+      expense.id = supplier.id;
       expense.description = supplier.description;
       expense.mouth = supplier.mouth;
       expense.year = supplier.year;

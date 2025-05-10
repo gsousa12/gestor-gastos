@@ -11,7 +11,7 @@ import { PaginationMeta } from '@common/structures/types';
 export class SectorService implements ISectorService {
   constructor(
     @Inject(SECTOR_REPOSITORY) private readonly sectorRepository: SectorRepository,
-    private readonly sectorHelper: SectorHelper,
+    // private readonly sectorHelper: SectorHelper,
   ) {}
 
   async createSector(sector: SectorEntity): Promise<Sector> {

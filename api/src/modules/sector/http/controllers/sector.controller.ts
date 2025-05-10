@@ -1,6 +1,6 @@
 import { config } from '@common/configuration/config';
-import { CreateApiResponse } from '@common/utils/api-response';
-import { MainErrorResponse } from '@common/utils/main-error-response';
+import { createApiResponse } from '@common/utils/api-response';
+import { mainErrorResponse } from '@common/utils/main-error-response';
 import { CreateSectorRequestDto } from '@modules/sector/core/application/dto/request/create-sector.request.dto';
 import { SectorMapper } from '@modules/sector/core/application/mappers/sector.mapper';
 import { SectorService } from '@modules/sector/core/application/services/sector.service';
@@ -20,11 +20,9 @@ export class SectorController {
       const sector = await this.sectorMapper.toMapperCreateSectorRequest(request);
       const createdSector = await this.sectorService.createSector(sector);
       const response = await this.sectorMapper.toMapperCreateSectorResponse(createdSector);
-      return CreateApiResponse('Setor cadastrado com sucesso', response);
+      return createApiResponse('Setor cadastrado com sucesso', response);
     } catch (error) {
-      console.log(error);
-
-      return MainErrorResponse(error);
+      return mainErrorResponse(error);
     }
   }
 
@@ -36,9 +34,9 @@ export class SectorController {
     try {
       const { sectorList, meta } = await this.sectorService.getSectorList(page, limit, name);
       const response = await this.sectorMapper.toMapperGetSectorListResponse(sectorList);
-      return CreateApiResponse('Lista de setores', response, meta);
+      return createApiResponse('Lista de setores', response, meta);
     } catch (error) {
-      return MainErrorResponse(error);
+      return mainErrorResponse(error);
     }
   }
 
@@ -49,9 +47,9 @@ export class SectorController {
     try {
       const sector = await this.sectorService.getSectorById(sectorId);
       const response = await this.sectorMapper.toMapperGetSectorByIdResponse(sector);
-      return CreateApiResponse('Setor encontrado com sucesso', response);
+      return createApiResponse('Setor encontrado com sucesso', response);
     } catch (error) {
-      return MainErrorResponse(error);
+      return mainErrorResponse(error);
     }
   }
 }

@@ -1,4 +1,5 @@
 export class ExpenseEntity {
+  id: number;
   description: string | null;
   mouth: number;
   year: string;

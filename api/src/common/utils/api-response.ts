@@ -6,7 +6,7 @@ type ApiResponse<T extends Record<string, any>> = {
   pagination?: PaginationMeta;
 };
 
-export function CreateApiResponse<T extends Record<string, any>>(
+export function createApiResponse<T extends Record<string, any>>(
   message: string,
   data: T,
   pagination?: PaginationMeta,

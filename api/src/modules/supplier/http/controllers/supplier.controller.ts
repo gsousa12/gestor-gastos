@@ -1,6 +1,6 @@
 import { config } from '@common/configuration/config';
-import { CreateApiResponse } from '@common/utils/api-response';
-import { MainErrorResponse } from '@common/utils/main-error-response';
+import { createApiResponse } from '@common/utils/api-response';
+import { mainErrorResponse } from '@common/utils/main-error-response';
 import { CreateSupplierRequestDto } from '@modules/supplier/core/application/dtos/request/create-supplier.request.dto';
 import { SupplierMapper } from '@modules/supplier/core/application/mappers/supplier.mapper';
 import { SupplierService } from '@modules/supplier/core/application/services/supplier.service';
@@ -20,9 +20,9 @@ export class SupplierController {
       const supplier = await this.supplierMapper.toMapperCreateSupplierRequest(request);
       const createdSupplier = await this.supplierService.createSupplier(supplier);
       const response = await this.supplierMapper.toMapperCreateSupplierResponse(createdSupplier);
-      return CreateApiResponse('Fornecedor cadastrado com sucesso', response);
+      return createApiResponse('Fornecedor cadastrado com sucesso', response);
     } catch (error) {
-      return MainErrorResponse(error);
+      return mainErrorResponse(error);
     }
   }
 
@@ -44,9 +44,9 @@ export class SupplierController {
         parsedHasDebits,
       );
       const response = await this.supplierMapper.toMapperGetSupplierListResponse(supplierList);
-      return CreateApiResponse('Lista de fornecedores', response, meta);
+      return createApiResponse('Lista de fornecedores', response, meta);
     } catch (error) {
-      return MainErrorResponse(error);
+      return mainErrorResponse(error);
     }
   }
 
@@ -57,9 +57,9 @@ export class SupplierController {
     try {
       const supplier = await this.supplierService.getSupplierById(supplierId);
       const response = await this.supplierMapper.toMapperGetSupplierByIdResponse(supplier);
-      return CreateApiResponse('Fornecedor encontrado com sucesso', response);
+      return createApiResponse('Fornecedor encontrado com sucesso', response);
     } catch (error) {
-      return MainErrorResponse(error);
+      return mainErrorResponse(error);
     }
   }
 }

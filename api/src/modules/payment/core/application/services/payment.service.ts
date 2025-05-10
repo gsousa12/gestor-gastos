@@ -1,8 +1,10 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { PAYMENT_REPOSITORY } from '@common/tokens/repositories.tokens';
 import { IPaymentService } from '../interfaces/payment-service.interface';
 import { PaymentHelper } from '../helpers/payment.helper';
 import { PaymentRepository } from '@modules/payment/infrastructure/repository/payment.repository';
+import { Payment } from '@prisma/client';
+import { PaymentEntity } from '../../domain/entities/payment.entity';
 
 @Injectable()
 export class PaymentService implements IPaymentService {
@@ -10,4 +12,38 @@ export class PaymentService implements IPaymentService {
     @Inject(PAYMENT_REPOSITORY) private readonly paymentRepository: PaymentRepository,
     private readonly paymentHelper: PaymentHelper,
   ) {}
+
+  async createPayment(payment: PaymentEntity): Promise<Payment> {
+    const expense = await this.paymentRepository.getExpenseDetails(payment.expenseId);
+    if (!expense) {
+      throw new NotFoundException('Despesa não encontrada');
+    }
+
+    payment.supplierId = expense.supplierId;
+    payment.sectorId = expense.subsector.sectorId;
+    payment.mouth = expense.mouth;
+    payment.year = expense.year;
+
+    payment.recurringDebtDeducted = await this.paymentRepository.getRecurringDebtDeducted(payment);
+    const createdPayment = await this.paymentRepository.createPayment(payment);
+    if (createdPayment.recurringDebtDeducted || createdPayment.recurringDebtDeducted != 0) {
+      await this.paymentRepository.changeSupplierDebt(createdPayment);
+    }
+
+    return createdPayment;
+  }
+
+  async cancelPaymentById(paymentId: number): Promise<Payment> {
+    const payment = await this.paymentRepository.getPaymentById(paymentId);
+    if (!payment) {
+      throw new NotFoundException('Pagamento não encontrado');
+    }
+
+    const canceledPayment = await this.paymentRepository.cancelPayment(payment);
+    if (canceledPayment.recurringDebtDeducted || canceledPayment.recurringDebtDeducted != 0) {
+      await this.paymentRepository.changeSupplierDebt(canceledPayment);
+    }
+
+    return canceledPayment;
+  }
 }

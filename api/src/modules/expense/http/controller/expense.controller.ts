@@ -1,6 +1,6 @@
 import { config } from '@common/configuration/config';
-import { CreateApiResponse } from '@common/utils/api-response';
-import { MainErrorResponse } from '@common/utils/main-error-response';
+import { createApiResponse } from '@common/utils/api-response';
+import { mainErrorResponse } from '@common/utils/main-error-response';
 import { CreateExpenseRequestDto } from '@modules/expense/core/application/dtos/request/create-expense.request.dto';
 import { ExpenseMapper } from '@modules/expense/core/application/mappers/expense.mapper';
 import { ExpenseService } from '@modules/expense/core/application/services/expense.service';
@@ -20,9 +20,9 @@ export class ExpenseController {
       const expense = await this.expenseMapper.toMapperCreateExpenseRequest(request);
       const createdExpense = await this.expenseService.createExpense(expense);
       const response = await this.expenseMapper.toMapperCreateExpenseResponse(createdExpense);
-      return CreateApiResponse('Despesa criada com sucesso', response);
+      return createApiResponse('Despesa criada com sucesso', response);
     } catch (error) {
-      return MainErrorResponse(error);
+      return mainErrorResponse(error);
     }
   }
 
@@ -45,22 +45,22 @@ export class ExpenseController {
         year,
       );
       const response = await this.expenseMapper.toMapperGetExpenseListResponse(expenseList);
-      return CreateApiResponse('Lista de despesas', response, meta);
+      return createApiResponse('Lista de despesas', response, meta);
     } catch (error) {
-      return MainErrorResponse(error);
+      return mainErrorResponse(error);
     }
   }
 
   @Get('/:id')
   @HttpCode(HttpStatus.OK)
-  async getExpenseById(@Request() req, @Param('id') id: number) {
+  async getExpenseById(@Param('id') id: number) {
     const expenseId = Number(id);
     try {
       const expense = await this.expenseService.getExpenseById(expenseId);
       const response = await this.expenseMapper.toMapperGetExpenseByIdResponse(expense);
-      return CreateApiResponse('Fornecedor encontrado com sucesso', response);
+      return createApiResponse('Fornecedor encontrado com sucesso', response);
     } catch (error) {
-      return MainErrorResponse(error);
+      return mainErrorResponse(error);
     }
   }
 }
