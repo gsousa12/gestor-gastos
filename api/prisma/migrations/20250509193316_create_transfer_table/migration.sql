@@ -5,7 +5,7 @@ CREATE TABLE "Payment" (
     "year" TEXT NOT NULL,
     "status" TEXT NOT NULL,
     "amount" INTEGER NOT NULL,
-    "recurring_debt_deducted" INTEGER,
+    "recurring_debit_deducted" INTEGER,
     "created_at" TIMESTAMP(3) NOT NULL,
     "updated_at" TIMESTAMP(3),
     "cancelled_at" TIMESTAMP(3),

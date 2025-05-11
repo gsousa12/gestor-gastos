@@ -100,7 +100,8 @@ model Payment {
   year            String
   status          String
   amount          Int
-  recurringDebtDeducted Int?   @map("recurring_debt_deducted")
+  recurringDebitDeducted Int?   @map("recurring_debit_deducted")
+  recurringDebitDeductedType String? @map("recurring_debit_deducted_type")
   createdAt       DateTime     @map("created_at")
   updatedAt       DateTime?    @map("updated_at")
   cacelledAt      DateTime?    @map("cancelled_at")

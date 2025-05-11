@@ -25,10 +25,10 @@ export class PaymentService implements IPaymentService {
     payment.mouth = expense.mouth;
     payment.year = expense.year;
 
-    payment.recurringDebtDeducted = await this.paymentRepository.getRecurringDebtDeducted(payment);
+    payment.recurringDebitDeducted = await this.paymentRepository.getrecurringDebitDeducted(payment);
     const createdPayment = await this.paymentRepository.createPayment(payment);
-    if (createdPayment.recurringDebtDeducted && createdPayment.recurringDebtDeducted != 0) {
-      await this.paymentRepository.changeSupplierDebt(createdPayment);
+    if (createdPayment.recurringDebitDeducted && createdPayment.recurringDebitDeducted != 0) {
+      await this.paymentRepository.changeSupplierDebit(createdPayment);
     }
 
     return createdPayment;
@@ -41,8 +41,8 @@ export class PaymentService implements IPaymentService {
     }
 
     const canceledPayment = await this.paymentRepository.cancelPayment(payment);
-    if (canceledPayment.recurringDebtDeducted && canceledPayment.recurringDebtDeducted != 0) {
-      await this.paymentRepository.changeSupplierDebt(canceledPayment);
+    if (canceledPayment.recurringDebitDeducted && canceledPayment.recurringDebitDeducted != 0) {
+      await this.paymentRepository.changeSupplierDebit(canceledPayment);
     }
 
     return canceledPayment;

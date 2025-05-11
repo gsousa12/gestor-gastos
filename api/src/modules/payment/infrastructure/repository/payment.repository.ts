@@ -20,8 +20,8 @@ export class PaymentRepository implements IPaymentRepository {
         mouth: payment.mouth,
         year: payment.year,
         amount: payment.amount,
-        status: PaymentStatus.ATIVO,
-        recurringDebtDeducted: payment.recurringDebtDeducted,
+        status: PaymentStatus.ACTIVE,
+        recurringDebitDeducted: payment.recurringDebitDeducted,
         createdAt: new Date(),
         supplierId: payment.supplierId,
         supplierName: supplier?.name,
@@ -44,7 +44,7 @@ export class PaymentRepository implements IPaymentRepository {
     });
   }
 
-  async getRecurringDebtDeducted(payment: PaymentEntity): Promise<number> {
+  async getrecurringDebitDeducted(payment: PaymentEntity): Promise<number> {
     const expense = await this.prisma.expense.findFirst({
       where: {
         id: payment.expenseId,
@@ -81,10 +81,10 @@ export class PaymentRepository implements IPaymentRepository {
     return { verifyExistence: true, message: 'Todos os dados existem' };
   }
 
-  async changeSupplierDebt(payment: Payment): Promise<void> {
-    const difference = payment.recurringDebtDeducted;
+  async changeSupplierDebit(payment: Payment): Promise<void> {
+    const difference = payment.recurringDebitDeducted;
     if (!difference || difference === 0) return;
-    if (payment.status !== PaymentStatus.CANCELADO) {
+    if (payment.status !== PaymentStatus.CANCELED) {
       await this.prisma.supplier.update({
         where: { id: payment.supplierId },
         data: {
@@ -115,7 +115,7 @@ export class PaymentRepository implements IPaymentRepository {
     return await this.prisma.payment.update({
       where: { id: payment.id },
       data: {
-        status: PaymentStatus.CANCELADO,
+        status: PaymentStatus.CANCELED,
         updatedAt: new Date(),
         cacelledAt: new Date(),
       },

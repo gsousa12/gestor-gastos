@@ -1,4 +1,9 @@
 export enum PaymentStatus {
-  ATIVO = 'ativo',
-  CANCELADO = 'cancelado',
+  ACTIVE = 'ativo',
+  CANCELED = 'cancelado',
+}
+
+export enum recurringDebitDeductedType {
+  INCREASED = 'incrementado',
+  DEDUCTED = 'deduzido',
 }

@@ -16,7 +16,7 @@ export class PaymentMapper {
     response.year = payment.year;
     response.status = payment.status;
     response.amount = payment.amount;
-    response.recurringDebtDeducted = payment.recurringDebtDeducted;
+    response.recurringDebitDeducted = payment.recurringDebitDeducted;
     response.createdAt = payment.createdAt;
     return response;
   }
@@ -27,7 +27,7 @@ export class PaymentMapper {
     response.year = payment.year;
     response.status = payment.status;
     response.amount = payment.amount;
-    response.recurringDebtDeducted = payment.recurringDebtDeducted;
+    response.recurringDebitDeducted = payment.recurringDebitDeducted;
     response.createdAt = payment.createdAt;
     return response;
   }
@@ -40,7 +40,7 @@ export class PaymentMapper {
       payment.year = supplier.year;
       payment.amount = supplier.amount;
       payment.status = supplier.status;
-      payment.recurringDebtDeducted = supplier.recurringDebtDeducted;
+      payment.recurringDebitDeducted = supplier.recurringDebitDeducted;
       payment.createdAt = supplier.createdAt;
       payment.supplierId = supplier.supplierId;
       payment.supplierName = supplier.supplierName;
@@ -55,7 +55,7 @@ export class PaymentMapper {
     response.year = payment.year;
     response.amount = payment.amount;
     response.status = payment.status;
-    response.recurringDebtDeducted = payment.recurringDebtDeducted;
+    response.recurringDebitDeducted = payment.recurringDebitDeducted;
     response.createdAt = payment.createdAt;
     response.supplierId = payment.supplierId;
     response.supplierName = payment.supplierName;

@@ -8,7 +8,7 @@ export interface IPaymentRepository {
 
   // Gets
   getExpenseDetails(expenseId: number);
-  getRecurringDebtDeducted(payment: PaymentEntity): Promise<number>;
+  getrecurringDebitDeducted(payment: PaymentEntity): Promise<number>;
   getPaymentById(paymentId: number): Promise<Payment | null>;
   getPaymentList(
     page: number,
@@ -21,6 +21,6 @@ export interface IPaymentRepository {
 
   // Others
   verifyExistence(payment: PaymentEntity): Promise<{ verifyExistence: boolean; message: string }>;
-  changeSupplierDebt(payment: Payment): Promise<void>;
+  changeSupplierDebit(payment: Payment): Promise<void>;
   cancelPayment(payment: Payment): Promise<Payment>;
 }
