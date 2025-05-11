@@ -4,12 +4,17 @@ import { IPaymentRepository } from '../interfaces/payment-repository.interface';
 import { PaymentEntity } from '@modules/payment/core/domain/entities/payment.entity';
 import { Payment } from '@prisma/client';
 import { PaymentStatus } from '@modules/payment/core/domain/enums/payment.enum';
+import { PaginationMeta } from '@common/structures/types';
 
 @Injectable()
 export class PaymentRepository implements IPaymentRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async createPayment(payment: PaymentEntity): Promise<Payment> {
+    const supplier = await this.prisma.supplier.findUnique({
+      where: { id: payment.supplierId },
+      select: { name: true },
+    });
     return this.prisma.payment.create({
       data: {
         mouth: payment.mouth,
@@ -19,6 +24,7 @@ export class PaymentRepository implements IPaymentRepository {
         recurringDebtDeducted: payment.recurringDebtDeducted,
         createdAt: new Date(),
         supplierId: payment.supplierId,
+        supplierName: supplier?.name,
         sectorId: payment.sectorId,
         expenseId: payment.expenseId,
       },
@@ -114,5 +120,52 @@ export class PaymentRepository implements IPaymentRepository {
         cacelledAt: new Date(),
       },
     });
+  }
+
+  async getPaymentList(
+    page: number,
+    limit: number,
+    supplierName?: string,
+    mouth?: number,
+    year?: string,
+  ): Promise<{ paymentList: Payment[]; meta: PaginationMeta }> {
+    const skip = (page - 1) * limit;
+
+    const whereClause: any = {};
+
+    if (supplierName) {
+      whereClause.supplierName = { contains: supplierName, mode: 'insensitive' };
+    }
+
+    if (mouth) {
+      whereClause.mouth = mouth;
+    }
+
+    if (year) {
+      whereClause.year = year;
+    }
+
+    const [paymentList, totalCount] = await Promise.all([
+      this.prisma.payment.findMany({
+        where: whereClause,
+        skip,
+        take: limit,
+      }),
+      this.prisma.payment.count({
+        where: whereClause,
+      }),
+    ]);
+
+    const totalPages = Math.ceil(totalCount / limit);
+
+    return {
+      paymentList: paymentList,
+      meta: {
+        totalItems: totalCount,
+        itemsPerPage: limit,
+        currentPage: page,
+        totalPages,
+      },
+    };
   }
 }

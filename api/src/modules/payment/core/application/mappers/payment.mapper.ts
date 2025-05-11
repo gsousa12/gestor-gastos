@@ -31,4 +31,34 @@ export class PaymentMapper {
     response.createdAt = payment.createdAt;
     return response;
   }
+
+  async toMapperGetPaymentListResponse(supplierList: Payment[]): Promise<PaymentEntity[]> {
+    const response = supplierList.map((supplier) => {
+      const payment = new PaymentEntity();
+      payment.id = supplier.id;
+      payment.mouth = supplier.mouth;
+      payment.year = supplier.year;
+      payment.amount = supplier.amount;
+      payment.status = supplier.status;
+      payment.recurringDebtDeducted = supplier.recurringDebtDeducted;
+      payment.createdAt = supplier.createdAt;
+      payment.supplierId = supplier.supplierId;
+      payment.supplierName = supplier.supplierName;
+      return payment;
+    });
+    return response;
+  }
+
+  async toMapperGetPaymentByIdResponse(payment: Payment): Promise<PaymentEntity> {
+    const response = new PaymentEntity();
+    response.mouth = payment.mouth;
+    response.year = payment.year;
+    response.amount = payment.amount;
+    response.status = payment.status;
+    response.recurringDebtDeducted = payment.recurringDebtDeducted;
+    response.createdAt = payment.createdAt;
+    response.supplierId = payment.supplierId;
+    response.supplierName = payment.supplierName;
+    return response;
+  }
 }

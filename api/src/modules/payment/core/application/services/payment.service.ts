@@ -5,6 +5,7 @@ import { PaymentHelper } from '../helpers/payment.helper';
 import { PaymentRepository } from '@modules/payment/infrastructure/repository/payment.repository';
 import { Payment } from '@prisma/client';
 import { PaymentEntity } from '../../domain/entities/payment.entity';
+import { PaginationMeta } from '@common/structures/types';
 
 @Injectable()
 export class PaymentService implements IPaymentService {
@@ -45,5 +46,38 @@ export class PaymentService implements IPaymentService {
     }
 
     return canceledPayment;
+  }
+
+  async getPaymentList(
+    page: number,
+    limit: number,
+    supplierName?: string,
+    mouth?: number,
+    year?: string,
+  ): Promise<{ paymentList: Payment[]; meta: PaginationMeta }> {
+    const { paymentList: paymentList, meta } = await this.paymentRepository.getPaymentList(
+      page,
+      limit,
+      supplierName,
+      mouth,
+      year,
+    );
+
+    return !paymentList || paymentList.length === 0
+      ? { paymentList: [], meta }
+      : {
+          paymentList,
+          meta,
+        };
+  }
+
+  async getPaymentById(paymentId: number): Promise<Payment> {
+    const payment = await this.paymentRepository.getPaymentById(paymentId);
+
+    if (!payment) {
+      throw new NotFoundException('Pagamento não encontrada.');
+    }
+
+    return payment;
   }
 }

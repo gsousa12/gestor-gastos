@@ -9,6 +9,7 @@ export class PaymentEntity {
   updatedAt: Date | null;
   canceledAt: Date | null;
   supplierId: number;
+  supplierName: string | null;
   sectorId: number;
   expenseId: number;
 }

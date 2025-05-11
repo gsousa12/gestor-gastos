@@ -106,6 +106,7 @@ model Payment {
   cacelledAt      DateTime?    @map("cancelled_at")
 
   supplierId      Int          @map("supplier_id")
+  supplierName    String?      @map("supplier_name")
   supplier        Supplier     @relation(fields: [supplierId], references: [id], onDelete: Cascade)
 
   sectorId        Int          @map("sector_id")
