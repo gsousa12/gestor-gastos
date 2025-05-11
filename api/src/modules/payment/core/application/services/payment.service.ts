@@ -17,7 +17,7 @@ export class PaymentService implements IPaymentService {
   async createPayment(payment: PaymentEntity): Promise<Payment> {
     const expense = await this.paymentRepository.getExpenseDetails(payment.expenseId);
     if (!expense) {
-      throw new NotFoundException('Despesa não encontrada');
+      throw new NotFoundException('Pagamento não encontrada');
     }
 
     payment.supplierId = expense.supplierId;
@@ -27,7 +27,7 @@ export class PaymentService implements IPaymentService {
 
     payment.recurringDebtDeducted = await this.paymentRepository.getRecurringDebtDeducted(payment);
     const createdPayment = await this.paymentRepository.createPayment(payment);
-    if (createdPayment.recurringDebtDeducted || createdPayment.recurringDebtDeducted != 0) {
+    if (createdPayment.recurringDebtDeducted && createdPayment.recurringDebtDeducted != 0) {
       await this.paymentRepository.changeSupplierDebt(createdPayment);
     }
 
@@ -41,7 +41,7 @@ export class PaymentService implements IPaymentService {
     }
 
     const canceledPayment = await this.paymentRepository.cancelPayment(payment);
-    if (canceledPayment.recurringDebtDeducted || canceledPayment.recurringDebtDeducted != 0) {
+    if (canceledPayment.recurringDebtDeducted && canceledPayment.recurringDebtDeducted != 0) {
       await this.paymentRepository.changeSupplierDebt(canceledPayment);
     }
 

@@ -33,7 +33,7 @@ export class PaymentController {
     try {
       const canceledPayment = await this.paymentService.cancelPaymentById(paymentId);
       const response = this.paymentMapper.toMapperCancelPaymentResponse(canceledPayment);
-      return createApiResponse('Pagamento cadastrado com sucesso', response);
+      return createApiResponse('Pagamento cancelado com sucesso', response);
     } catch (error) {
       return mainErrorResponse(error);
     }
@@ -70,7 +70,7 @@ export class PaymentController {
     try {
       const payment = await this.paymentService.getPaymentById(paymentId);
       const response = await this.paymentMapper.toMapperGetPaymentByIdResponse(payment);
-      return createApiResponse('Fornecedor encontrado com sucesso', response);
+      return createApiResponse('Pagamento encontrado com sucesso', response);
     } catch (error) {
       return mainErrorResponse(error);
     }
