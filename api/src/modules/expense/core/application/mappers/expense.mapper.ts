@@ -7,7 +7,7 @@ export class ExpenseMapper {
   async toMapperCreateExpenseRequest(request: CreateExpenseRequestDto): Promise<ExpenseEntity> {
     const expense = new ExpenseEntity();
     expense.description = request.description;
-    expense.mouth = request.mouth;
+    expense.month = request.month;
     expense.year = request.year;
     expense.amount = request.amount;
     expense.supplierId = request.supplierId;
@@ -20,7 +20,7 @@ export class ExpenseMapper {
   async toMapperCreateExpenseResponse(createdExpense: Expense): Promise<ExpenseEntity> {
     const response = new ExpenseEntity();
     response.description = createdExpense.description;
-    response.mouth = createdExpense.mouth;
+    response.month = createdExpense.month;
     response.year = createdExpense.year;
     response.amount = createdExpense.amount;
     response.supplierId = createdExpense.supplierId;
@@ -35,7 +35,7 @@ export class ExpenseMapper {
       const expense = new ExpenseEntity();
       expense.id = supplier.id;
       expense.description = supplier.description;
-      expense.mouth = supplier.mouth;
+      expense.month = supplier.month;
       expense.year = supplier.year;
       expense.amount = supplier.amount;
       expense.supplierId = supplier.supplierId;
@@ -52,7 +52,7 @@ export class ExpenseMapper {
   async toMapperGetExpenseByIdResponse(expense: Expense): Promise<ExpenseEntity> {
     const response = new ExpenseEntity();
     response.description = expense.description;
-    response.mouth = expense.mouth;
+    response.month = expense.month;
     response.year = expense.year;
     response.amount = expense.amount;
     response.supplierId = expense.supplierId;

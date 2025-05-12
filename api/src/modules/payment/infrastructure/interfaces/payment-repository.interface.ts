@@ -17,7 +17,7 @@ export interface IPaymentRepository {
     page: number,
     limit: number,
     supplierName?: string,
-    mouth?: number,
+    month?: number,
     year?: string,
   ): Promise<{ paymentList: Payment[]; meta: PaginationMeta }>;
   getPaymentById(paymentId: number): Promise<Payment | null>;

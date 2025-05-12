@@ -27,14 +27,14 @@ export class ExpenseService implements IExpenseService {
     page: number,
     limit: number,
     supplierName?: string,
-    mouth?: number,
+    month?: number,
     year?: string,
   ): Promise<{ expenseList: Expense[]; meta: PaginationMeta }> {
     const { expenseList: expenseList, meta } = await this.expenseRepository.getExpenseList(
       page,
       limit,
       supplierName,
-      mouth,
+      month,
       year,
     );
 

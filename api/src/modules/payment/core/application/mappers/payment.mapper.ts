@@ -12,7 +12,7 @@ export class PaymentMapper {
 
   toMapperCreatePaymentResponse(payment: Payment): PaymentEntity {
     const response = new PaymentEntity();
-    response.mouth = payment.mouth;
+    response.month = payment.month;
     response.year = payment.year;
     response.status = payment.status;
     response.amount = payment.amount;
@@ -23,7 +23,7 @@ export class PaymentMapper {
 
   toMapperCancelPaymentResponse(payment: Payment): PaymentEntity {
     const response = new PaymentEntity();
-    response.mouth = payment.mouth;
+    response.month = payment.month;
     response.year = payment.year;
     response.status = payment.status;
     response.amount = payment.amount;
@@ -36,7 +36,7 @@ export class PaymentMapper {
     const response = supplierList.map((supplier) => {
       const payment = new PaymentEntity();
       payment.id = supplier.id;
-      payment.mouth = supplier.mouth;
+      payment.month = supplier.month;
       payment.year = supplier.year;
       payment.amount = supplier.amount;
       payment.status = supplier.status;
@@ -51,7 +51,7 @@ export class PaymentMapper {
 
   async toMapperGetPaymentByIdResponse(payment: Payment): Promise<PaymentEntity> {
     const response = new PaymentEntity();
-    response.mouth = payment.mouth;
+    response.month = payment.month;
     response.year = payment.year;
     response.amount = payment.amount;
     response.status = payment.status;

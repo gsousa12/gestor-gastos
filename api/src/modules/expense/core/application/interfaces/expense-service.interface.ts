@@ -11,7 +11,7 @@ export interface IExpenseService {
     page: number,
     limit: number,
     supplierName?: string,
-    mouth?: number,
+    month?: number,
     year?: string,
   ): Promise<{ expenseList: Expense[]; meta: PaginationMeta }>;
   getExpenseById(expenseId: number): Promise<Expense>;

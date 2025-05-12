@@ -10,7 +10,7 @@ export class CreateExpenseRequestDto {
   @IsNumber({}, { message: validationMessages.isNumber })
   @Min(1, { message: validationMessages.Min })
   @Max(12, { message: validationMessages.Max })
-  mouth: number;
+  month: number;
 
   @IsString({ message: validationMessages.isString })
   year: string;
