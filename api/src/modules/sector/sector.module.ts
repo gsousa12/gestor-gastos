@@ -6,10 +6,11 @@ import { SectorService } from './core/application/services/sector.service';
 import { SectorHelper } from './core/application/helpers/sector.helper';
 import { PrismaService } from '@common/modules/prisma/service/prisma.service';
 import { SectorMapper } from './core/application/mappers/sector.mapper';
+import { SubSectorController } from './http/controllers/subsector.controller';
 
 @Module({
   imports: [],
-  controllers: [SectorController],
+  controllers: [SectorController, SubSectorController],
   providers: [
     {
       provide: SECTOR_REPOSITORY,
