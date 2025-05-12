@@ -3,7 +3,10 @@ import { SupplierEntity } from '@modules/supplier/core/domain/entities/supplier.
 import { Supplier } from '@prisma/client';
 
 export interface ISupplierRepository {
+  // Creates
   createSupplier(supplier: SupplierEntity): Promise<Supplier>;
+
+  // Gets
   getSupplierList(
     page: number,
     limit: number,

@@ -3,7 +3,10 @@ import { SectorEntity } from '../../domain/entities/sector.entity';
 import { PaginationMeta } from '@common/structures/types';
 
 export interface ISectorService {
+  // Creates
   createSector(sector: SectorEntity): Promise<Sector>;
+
+  // Gets
   getSectorList(
     page: number,
     limit: number,

@@ -3,7 +3,7 @@ export enum PaymentStatus {
   CANCELED = 'cancelado',
 }
 
-export enum recurringDebitDeductedType {
-  INCREASED = 'incrementado',
-  DEDUCTED = 'deduzido',
+export enum RecurringDebitDeductedType {
+  INCREMENT = 'incremento',
+  DEDUCTION = 'dedução',
 }

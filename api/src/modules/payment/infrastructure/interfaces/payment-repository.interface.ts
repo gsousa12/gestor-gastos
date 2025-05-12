@@ -1,5 +1,6 @@
 import { PaginationMeta } from '@common/structures/types';
 import { PaymentEntity } from '@modules/payment/core/domain/entities/payment.entity';
+import { RecurringDebitDeductedType } from '@modules/payment/core/domain/enums/payment.enum';
 import { Payment } from '@prisma/client';
 
 export interface IPaymentRepository {
@@ -8,8 +9,10 @@ export interface IPaymentRepository {
 
   // Gets
   getExpenseDetails(expenseId: number);
-  getrecurringDebitDeducted(payment: PaymentEntity): Promise<number>;
-  getPaymentById(paymentId: number): Promise<Payment | null>;
+  getrecurringDebitDeducted(payment: PaymentEntity): Promise<{
+    amount: number;
+    type: RecurringDebitDeductedType;
+  }>;
   getPaymentList(
     page: number,
     limit: number,

@@ -1,6 +1,6 @@
 import { SUPPLIER_REPOSITORY } from '@common/tokens/repositories.tokens';
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { ISupplierService } from '../../domain/interfaces/supplier-service.interface';
+import { ISupplierService } from '../interfaces/supplier-service.interface';
 import { SupplierRepository } from '@modules/supplier/infrastructure/repositories/supplier.repository';
 import { SupplierHelper } from '../helpers/supplier.helper';
 import { Supplier } from '@prisma/client';

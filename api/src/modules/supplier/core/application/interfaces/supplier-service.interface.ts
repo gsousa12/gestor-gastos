@@ -1,9 +1,12 @@
 import { Supplier } from '@prisma/client';
-import { SupplierEntity } from '../entities/supplier.entity';
+import { SupplierEntity } from '../../domain/entities/supplier.entity';
 import { PaginationMeta } from '@common/structures/types';
 
 export interface ISupplierService {
+  // Creates
   createSupplier(supplier: SupplierEntity): Promise<Supplier>;
+
+  // Gets
   getSupplierList(
     page: number,
     limit: number,

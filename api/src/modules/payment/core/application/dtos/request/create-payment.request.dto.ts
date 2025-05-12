@@ -1,6 +1,5 @@
 import { validationMessages } from '@common/utils/validation-message';
-import { PaymentStatus } from '@modules/payment/core/domain/enums/payment.enum';
-import { IsEnum, IsNumber, IsString, Max, Min } from 'class-validator';
+import { IsNumber, Min } from 'class-validator';
 
 export class CreatePaymentRequestDto {
   @IsNumber({}, { message: validationMessages.isNumber })

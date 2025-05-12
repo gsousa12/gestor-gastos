@@ -5,6 +5,7 @@ export class PaymentEntity {
   amount: number;
   status: string;
   recurringDebitDeducted: number | null;
+  recurringDebitDeductedType: string | null;
   createdAt: Date;
   updatedAt: Date | null;
   canceledAt: Date | null;
