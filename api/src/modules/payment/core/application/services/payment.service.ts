@@ -22,7 +22,7 @@ export class PaymentService implements IPaymentService {
 
     payment.supplierId = expense.supplierId;
     payment.sectorId = expense.subsector.sectorId;
-    payment.mouth = expense.mouth;
+    payment.month = expense.month;
     payment.year = expense.year;
 
     const deducted = await this.paymentRepository.getrecurringDebitDeducted(payment);
@@ -54,14 +54,14 @@ export class PaymentService implements IPaymentService {
     page: number,
     limit: number,
     supplierName?: string,
-    mouth?: number,
+    month?: number,
     year?: string,
   ): Promise<{ paymentList: Payment[]; meta: PaginationMeta }> {
     const { paymentList: paymentList, meta } = await this.paymentRepository.getPaymentList(
       page,
       limit,
       supplierName,
-      mouth,
+      month,
       year,
     );
 

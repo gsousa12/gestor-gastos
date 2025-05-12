@@ -1,7 +1,7 @@
 -- CreateTable
 CREATE TABLE "Payment" (
     "id" SERIAL NOT NULL,
-    "mouth" INTEGER NOT NULL,
+    "month" INTEGER NOT NULL,
     "year" TEXT NOT NULL,
     "status" TEXT NOT NULL,
     "amount" INTEGER NOT NULL,

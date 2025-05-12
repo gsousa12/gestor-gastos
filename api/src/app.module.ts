@@ -5,6 +5,7 @@ import { SupplierModule } from '@modules/supplier/supplier.module';
 import { SectorModule } from '@modules/sector/sector.module';
 import { ExpenseModule } from '@modules/expense/expense.module';
 import { PaymentModule } from '@modules/payment/payment.module';
+import { ReportModule } from '@modules/report/report.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { PaymentModule } from '@modules/payment/payment.module';
     SectorModule,
     ExpenseModule,
     PaymentModule,
+    ReportModule,
   ],
   controllers: [],
   providers: [],

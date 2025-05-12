@@ -1,7 +1,7 @@
 export class ExpenseEntity {
   id: number;
   description: string | null;
-  mouth: number;
+  month: number;
   year: string;
   amount: number;
   supplierId: number;

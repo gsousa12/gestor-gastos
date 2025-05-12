@@ -31,7 +31,7 @@ export class ExpenseController {
   async getExpenseList(
     @Query('page') page: number = 1,
     @Query('supplierName') supplierName: string | undefined,
-    @Query('mouth') mouth: number | undefined,
+    @Query('month') month: number | undefined,
     @Query('year') year: string | undefined,
   ) {
     const limit = config.PAGINATION.LIST_PAGE_LIMIT;
@@ -41,7 +41,7 @@ export class ExpenseController {
         page,
         limit,
         supplierName,
-        mouth,
+        month,
         year,
       );
       const response = await this.expenseMapper.toMapperGetExpenseListResponse(expenseList);

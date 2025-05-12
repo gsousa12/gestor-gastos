@@ -17,7 +17,7 @@ export class PaymentRepository implements IPaymentRepository {
     });
     return this.prisma.payment.create({
       data: {
-        mouth: payment.mouth,
+        month: payment.month,
         year: payment.year,
         amount: payment.amount,
         status: PaymentStatus.ACTIVE,
@@ -139,7 +139,7 @@ export class PaymentRepository implements IPaymentRepository {
     page: number,
     limit: number,
     supplierName?: string,
-    mouth?: number,
+    month?: number,
     year?: string,
   ): Promise<{ paymentList: Payment[]; meta: PaginationMeta }> {
     const skip = (page - 1) * limit;
@@ -150,8 +150,8 @@ export class PaymentRepository implements IPaymentRepository {
       whereClause.supplierName = { contains: supplierName, mode: 'insensitive' };
     }
 
-    if (mouth) {
-      whereClause.mouth = mouth;
+    if (month) {
+      whereClause.month = month;
     }
 
     if (year) {

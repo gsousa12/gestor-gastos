@@ -1,6 +1,6 @@
 export class PaymentEntity {
   id: number;
-  mouth: number;
+  month: number;
   year: string;
   amount: number;
   status: string;

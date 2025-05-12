@@ -17,7 +17,7 @@ export class ExpenseRepository implements IExpenseRepository {
     return await this.prisma.expense.create({
       data: {
         description: expense.description,
-        mouth: expense.mouth,
+        month: expense.month,
         year: expense.year,
         amount: expense.amount,
         createdAt: new Date(),
@@ -52,7 +52,7 @@ export class ExpenseRepository implements IExpenseRepository {
     page: number,
     limit: number,
     supplierName?: string,
-    mouth?: number,
+    month?: number,
     year?: string,
   ): Promise<{ expenseList: Expense[]; meta: PaginationMeta }> {
     const skip = (page - 1) * limit;
@@ -63,8 +63,8 @@ export class ExpenseRepository implements IExpenseRepository {
       whereClause.supplierName = { contains: supplierName, mode: 'insensitive' };
     }
 
-    if (mouth) {
-      whereClause.mouth = mouth;
+    if (month) {
+      whereClause.month = month;
     }
 
     if (year) {
