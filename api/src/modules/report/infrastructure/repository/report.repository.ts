@@ -25,6 +25,11 @@ export class ReportRepository implements IReportRepository {
         month: month,
         year: year,
       },
+      include: {
+        expense: true,
+        supplier: true,
+        sector: true,
+      },
     });
   }
 }
