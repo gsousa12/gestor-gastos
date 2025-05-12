@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { IPaymentRepository } from '../interfaces/payment-repository.interface';
 import { PaymentEntity } from '@modules/payment/core/domain/entities/payment.entity';
 import { Payment } from '@prisma/client';
-import { PaymentStatus } from '@modules/payment/core/domain/enums/payment.enum';
+import { PaymentStatus, RecurringDebitDeductedType } from '@modules/payment/core/domain/enums/payment.enum';
 import { PaginationMeta } from '@common/structures/types';
 
 @Injectable()
@@ -22,6 +22,7 @@ export class PaymentRepository implements IPaymentRepository {
         amount: payment.amount,
         status: PaymentStatus.ACTIVE,
         recurringDebitDeducted: payment.recurringDebitDeducted,
+        recurringDebitDeductedType: payment.recurringDebitDeductedType,
         createdAt: new Date(),
         supplierId: payment.supplierId,
         supplierName: supplier?.name,
@@ -44,20 +45,26 @@ export class PaymentRepository implements IPaymentRepository {
     });
   }
 
-  async getrecurringDebitDeducted(payment: PaymentEntity): Promise<number> {
+  async getrecurringDebitDeducted(payment: PaymentEntity): Promise<{
+    amount: number;
+    type: RecurringDebitDeductedType;
+  }> {
     const expense = await this.prisma.expense.findFirst({
       where: {
         id: payment.expenseId,
-        subsector: {
-          sectorId: payment.sectorId,
-        },
+        subsector: { sectorId: payment.sectorId },
       },
       select: {
         amount: true,
       },
     });
 
-    return payment.amount - expense!.amount;
+    const difference = payment.amount - expense!.amount;
+
+    return {
+      amount: Math.abs(difference),
+      type: difference >= 0 ? RecurringDebitDeductedType.DEDUCTION : RecurringDebitDeductedType.INCREMENT,
+    };
   }
 
   async verifyExistence(payment: PaymentEntity): Promise<{ verifyExistence: boolean; message: string }> {
@@ -82,27 +89,30 @@ export class PaymentRepository implements IPaymentRepository {
   }
 
   async changeSupplierDebit(payment: Payment): Promise<void> {
-    const difference = payment.recurringDebitDeducted;
-    if (!difference || difference === 0) return;
-    if (payment.status !== PaymentStatus.CANCELED) {
-      await this.prisma.supplier.update({
-        where: { id: payment.supplierId },
-        data: {
-          recurringDebit: {
-            [difference > 0 ? 'decrement' : 'increment']: Math.abs(difference),
-          },
+    const { recurringDebitDeducted, recurringDebitDeductedType } = payment;
+
+    if (!recurringDebitDeducted || recurringDebitDeducted === 0 || !recurringDebitDeductedType) return;
+
+    const isCanceled = payment.status === PaymentStatus.CANCELED;
+
+    // Lógica:
+    // - Pagamento ativo com type INCREMENT => aumenta a dívida
+    // - Pagamento cancelado com type INCREMENT => reduz a dívida
+    // - Pagamento ativo com type DEDUCTED => reduz a dívida
+    // - Pagamento cancelado com type DEDUCTED => aumenta a dívida
+
+    const shouldIncrement =
+      (recurringDebitDeductedType === RecurringDebitDeductedType.INCREMENT && !isCanceled) ||
+      (recurringDebitDeductedType === RecurringDebitDeductedType.DEDUCTION && isCanceled);
+
+    await this.prisma.supplier.update({
+      where: { id: payment.supplierId },
+      data: {
+        recurringDebit: {
+          [shouldIncrement ? 'increment' : 'decrement']: recurringDebitDeducted,
         },
-      });
-    } else {
-      await this.prisma.supplier.update({
-        where: { id: payment.supplierId },
-        data: {
-          recurringDebit: {
-            [difference > 0 ? 'increment' : 'decrement']: Math.abs(difference),
-          },
-        },
-      });
-    }
+      },
+    });
   }
 
   async getPaymentById(paymentId: number): Promise<Payment | null> {
@@ -118,6 +128,9 @@ export class PaymentRepository implements IPaymentRepository {
         status: PaymentStatus.CANCELED,
         updatedAt: new Date(),
         cacelledAt: new Date(),
+      },
+      include: {
+        supplier: true,
       },
     });
   }

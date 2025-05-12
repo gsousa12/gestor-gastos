@@ -25,7 +25,9 @@ export class PaymentService implements IPaymentService {
     payment.mouth = expense.mouth;
     payment.year = expense.year;
 
-    payment.recurringDebitDeducted = await this.paymentRepository.getrecurringDebitDeducted(payment);
+    const deducted = await this.paymentRepository.getrecurringDebitDeducted(payment);
+    payment.recurringDebitDeducted = deducted.amount;
+    payment.recurringDebitDeductedType = deducted.type;
     const createdPayment = await this.paymentRepository.createPayment(payment);
     if (createdPayment.recurringDebitDeducted && createdPayment.recurringDebitDeducted != 0) {
       await this.paymentRepository.changeSupplierDebit(createdPayment);
