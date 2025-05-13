@@ -34,7 +34,7 @@ export class ReportService implements IReportService {
     }
   }
 
-  getFileName(report: ReportEntity): string {
+  getReportFileName(report: ReportEntity): string {
     const monthName = getMonthName(report.month);
     const type = this.reportHelper.getReportType(report.reportType);
     return `relatorio_${type}_${monthName}_${report.year}.pdf`;
