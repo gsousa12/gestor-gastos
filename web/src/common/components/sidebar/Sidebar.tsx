@@ -19,7 +19,7 @@ export const Sidebar = () => {
   return (
     <aside
       className={cn(
-        "fixed left-0 top-0 h-screen bg-white border-r border-gray-200 shadow-lg flex flex-col transition-all duration-300 z-30",
+        "fixed left-0 top-0 h-screen bg-white transition-all duration-300 z-30 border-r border-gray-200 shadow-sm",
         isMobile ? "w-20 px-2" : "w-64 px-4"
       )}
     >
