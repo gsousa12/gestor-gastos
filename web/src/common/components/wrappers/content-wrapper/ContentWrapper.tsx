@@ -5,5 +5,5 @@ interface ContentWrapperProps {
 }
 
 export const ContentWrapper = ({ children }: ContentWrapperProps) => {
-  return <div className="p-5">{children}</div>;
+  return <div className="p-4">{children}</div>;
 };
