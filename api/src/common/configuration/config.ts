@@ -2,6 +2,7 @@ const ENV = process.env;
 
 const config = {
   PORT: Number(ENV.PORT) ?? 3000,
+  CLIENT_URL: ENV.CLIENT_URL ?? '',
   NODE_ENV: ENV.NODE_ENV ?? '',
   DATABASE: {
     DATABASE_HOST: ENV.DATABASE_HOST ?? '',

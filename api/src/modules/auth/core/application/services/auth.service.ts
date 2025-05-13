@@ -40,4 +40,8 @@ export class AuthService implements IAuthService {
     }
     return user;
   }
+
+  async logout(res: Response): Promise<void> {
+    await this.authHelper.clearCookies(res);
+  }
 }

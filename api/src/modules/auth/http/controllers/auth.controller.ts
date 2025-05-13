@@ -20,4 +20,11 @@ export class AuthController {
       return mainErrorResponse(error);
     }
   }
+
+  @Post('/logout')
+  @HttpCode(HttpStatus.OK)
+  async logout(@Res({ passthrough: true }) res: Response) {
+    await this.authService.logout(res);
+    return createApiResponse('Deslogado com sucesso', {});
+  }
 }
