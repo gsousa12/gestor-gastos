@@ -3,9 +3,10 @@ import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { ISectorService } from '../interfaces/sector-service.interface';
 import { SectorRepository } from '@modules/sector/infrastructure/repositories/sector.repository';
 import { SectorHelper } from '../helpers/sector.helper';
-import { Sector } from '@prisma/client';
+import { Sector, SubSector } from '@prisma/client';
 import { SectorEntity } from '../../domain/entities/sector.entity';
 import { PaginationMeta } from '@common/structures/types';
+import { SubSectorEntity } from '../../domain/entities/subsector.entity';
 
 @Injectable()
 export class SectorService implements ISectorService {
@@ -45,5 +46,14 @@ export class SectorService implements ISectorService {
     }
 
     return sector;
+  }
+
+  async createSubSector(subsector: SubSectorEntity): Promise<SubSector> {
+    const existingSubSector = await this.sectorRepository.getSubSectorByName(subsector.name);
+    if (existingSubSector) {
+      throw new BadRequestException('Já existe um sub-setor cadastrado com esse nome');
+    }
+    const createdSubSector = await this.sectorRepository.createSubSector(subsector);
+    return createdSubSector;
   }
 }

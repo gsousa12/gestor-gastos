@@ -1,6 +1,8 @@
-import { Sector } from '@prisma/client';
+import { Sector, SubSector } from '@prisma/client';
 import { SectorEntity } from '../../domain/entities/sector.entity';
 import { CreateSectorRequestDto } from '../dto/request/create-sector.request.dto';
+import { SubSectorEntity } from '../../domain/entities/subsector.entity';
+import { CreateSubSectorRequestDto } from '../dto/request/create-subsector.request.dto';
 
 export class SectorMapper {
   async toMapperCreateSectorRequest(request: CreateSectorRequestDto): Promise<SectorEntity> {
@@ -35,6 +37,20 @@ export class SectorMapper {
     response.description = sector.description;
     response.createdAt = sector.createdAt;
     response.updatedAt = sector.updatedAt;
+    return response;
+  }
+
+  toMapperCreateSubSectorRequest(request: CreateSubSectorRequestDto): SubSectorEntity {
+    const subSector = new SubSectorEntity();
+    subSector.name = request.name;
+    subSector.sectorId = request.sectorId;
+    return subSector;
+  }
+
+  toMapperCreateSubSectorResponse(createdSubSector: SubSector): SubSectorEntity {
+    const response = new SubSectorEntity();
+    response.name = createdSubSector.name;
+    response.sectorId = createdSubSector.sectorId;
     return response;
   }
 }

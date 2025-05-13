@@ -2,8 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { ISectorRepository } from '../interfaces/sector-repository.interface';
 import { PrismaService } from '@common/modules/prisma/service/prisma.service';
 import { SectorEntity } from '@modules/sector/core/domain/entities/sector.entity';
-import { Sector } from '@prisma/client';
+import { Sector, SubSector } from '@prisma/client';
 import { PaginationMeta } from '@common/structures/types';
+import { SubSectorEntity } from '@modules/sector/core/domain/entities/subsector.entity';
 
 @Injectable()
 export class SectorRepository implements ISectorRepository {
@@ -79,5 +80,30 @@ export class SectorRepository implements ISectorRepository {
     });
 
     return sector;
+  }
+
+  async getSubSectorByName(name: string): Promise<SubSector | null> {
+    const subSector = await this.prisma.subSector.findFirst({
+      where: {
+        name: {
+          equals: name,
+          mode: 'insensitive',
+        },
+      },
+    });
+
+    return subSector;
+  }
+
+  async createSubSector(subsector: SubSectorEntity): Promise<SubSector> {
+    const createdSubSector = await this.prisma.subSector.create({
+      data: {
+        name: subsector.name,
+        sectorId: subsector.sectorId,
+        createdAt: new Date(),
+      },
+    });
+
+    return createdSubSector;
   }
 }
