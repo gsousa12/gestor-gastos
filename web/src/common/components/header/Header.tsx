@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { ChevronDown, Settings, LogOut } from "lucide-react";
 import { Avatar, AvatarFallback } from "../../../components/ui/avatar";
 import { getUserInitials } from "../../utils/functions";
+import { useLogoutMutation } from "../../hooks/auth/useLogoutMutation";
 
 export const Header = () => {
   const [open, setOpen] = useState(false);
@@ -21,6 +22,13 @@ export const Header = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [open]);
+
+  const { mutate, isPending, isError, error } = useLogoutMutation();
+
+  const handleLogout = () => {
+    mutate();
+    setOpen(false);
+  };
 
   return (
     <header className="w-full h-16 px-6 flex items-center justify-end bg-white border-b border-gray-200 shadow-sm">
@@ -46,7 +54,9 @@ export const Header = () => {
             </button>
             <button className="w-full flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-teal-50 hover:text-teal-700 hover:cursor-pointer transition-colors duration-200">
               <LogOut className="w-5 h-5 text-gray-400 group-hover:text-teal-600" />
-              <span className="text-sm font-medium">Logout</span>
+              <button className="text-sm font-medium" onClick={handleLogout}>
+                Logout
+              </button>
             </button>
           </div>
         )}
