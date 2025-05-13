@@ -10,6 +10,13 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 export class ReportHelper {
   constructor() {}
 
+  getReportType(type: string): string {
+    const reportType: Record<string, string> = {
+      payment: 'pagamentos',
+    };
+    return reportType[type] || '';
+  }
+
   async generatePdf(documentDefinition: TDocumentDefinitions): Promise<Buffer> {
     return new Promise((resolve, reject) => {
       try {

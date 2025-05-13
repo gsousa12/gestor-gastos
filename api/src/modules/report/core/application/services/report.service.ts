@@ -6,6 +6,7 @@ import { ReportRepository } from '@modules/report/infrastructure/repository/repo
 import { ReportEntity } from '../../domain/entities/report.entity';
 import { PaymentReportStrategy } from '../strategies/report.strategy';
 import { IReportStrategy } from '../interfaces/report-strategy.interface';
+import { getMonthName } from '@common/utils/conversion';
 
 @Injectable()
 export class ReportService implements IReportService {
@@ -18,6 +19,7 @@ export class ReportService implements IReportService {
     const data = await this.reportRepository.getDataForReport(report.reportType, report.month, report.year);
 
     const strategy = this.resolveStrategy(report.reportType);
+
     const documentDefinition = strategy.buildDocumentDefinition(data, report);
 
     return this.reportHelper.generatePdf(documentDefinition);
@@ -27,9 +29,14 @@ export class ReportService implements IReportService {
     switch (type) {
       case 'payment':
         return new PaymentReportStrategy(this.reportHelper);
-      // adicionar mais estratégias aqui
       default:
         throw new BadRequestException(`Tipo de relatório não suportado: ${type}`);
     }
+  }
+
+  getFileName(report: ReportEntity): string {
+    const monthName = getMonthName(report.month);
+    const type = this.reportHelper.getReportType(report.reportType);
+    return `relatorio_${type}_${monthName}_${report.year}.pdf`;
   }
 }
