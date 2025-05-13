@@ -1,11 +1,11 @@
 meta {
-  name: createSector
+  name: createSubSector
   type: http
   seq: 1
 }
 
 post {
-  url: http://localhost:3000/api/sector/
+  url: http://localhost:3000/api/sub-sector/
   body: json
   auth: inherit
 }
@@ -13,6 +13,6 @@ post {
 body:json {
   {
     "name": "Educação",
-    "description": "12331313"
+    "sectorId": 1
   }
 }
