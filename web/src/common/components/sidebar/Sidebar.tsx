@@ -1,4 +1,3 @@
-import { isMobile } from "react-device-detect";
 import { cn } from "../../../lib/utils";
 import { SideBarGroupTitle } from "../sidebar-group-title/SideBarGroupTitle";
 import { SidebarItem } from "../sidebar-item/SidebarItem";
@@ -7,36 +6,63 @@ import {
   GalleryVerticalEnd,
   Receipt,
   ArrowRightCircle,
+  FileText,
+  Truck,
+  Layers2,
 } from "lucide-react";
 import { useLocation } from "react-router-dom";
+import { useMobileDetect } from "../../hooks/useMobileDetect";
+
 export const Sidebar = () => {
   const location = useLocation();
+  const isMobile = useMobileDetect();
   return (
     <aside
       className={cn(
-        "fixed left-0 top-0 h-screen bg-white text-gray-800 p-4",
-        isMobile ? "w-20" : "w-64"
+        "fixed left-0 top-0 h-screen bg-white border-r border-gray-200 shadow-lg flex flex-col transition-all duration-300 z-30",
+        isMobile ? "w-20 px-2" : "w-64 px-4"
       )}
     >
       <div className="flex flex-col flex-grow">
-        <div className="flex flex-row">
-          {/* Logo temporaria */}
-          <GalleryVerticalEnd />
-          <div className="mr-5">Gestão de Gastos</div>
-          {/* Icone de minimização do sidebar */}
-          <span>v1.0</span>
+        <div
+          className={cn(
+            "flex items-center gap-3 py-6 border-b border-gray-100 transition-all duration-300",
+            isMobile ? "justify-center" : "justify-between"
+          )}
+        >
+          <GalleryVerticalEnd className="w-8 h-8 text-teal-600" />
+          {!isMobile && (
+            <>
+              <span className="text-lg font-bold text-gray-800 tracking-tight">
+                Gestão de Gastos
+              </span>
+              <span className="text-xs text-gray-400 font-semibold ml-auto">
+                v1.0
+              </span>
+            </>
+          )}
         </div>
-        {/* Div de agrupamento */}
-        <div>
-          <SideBarGroupTitle label="Geral" />
+        <div className="flex flex-col gap-2">
+          {!isMobile && <SideBarGroupTitle label="Geral" />}
           <SidebarItem
-            key={"Home"}
+            key={"Dashboard"}
             icon={<LayoutGrid />}
-            label={"Home"}
-            routerLink={"/home"}
+            label={"Dashboard"}
+            routerLink={"/dashboard"}
             isMobile={isMobile}
-            active={location.pathname === "/home"}
+            active={location.pathname === "/dashboard"}
           />
+          <SidebarItem
+            key={"Reports"}
+            icon={<FileText />}
+            label={"Relatórios"}
+            routerLink={"/reports"}
+            isMobile={isMobile}
+            active={location.pathname === "/reports"}
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          {!isMobile && <SideBarGroupTitle label="Movimentações" />}
           <SidebarItem
             key={"Expenses"}
             icon={<Receipt />}
@@ -52,6 +78,25 @@ export const Sidebar = () => {
             routerLink={"/payments"}
             isMobile={isMobile}
             active={location.pathname === "/payments"}
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          {!isMobile && <SideBarGroupTitle label="Outros" />}
+          <SidebarItem
+            key={"Suppliers"}
+            icon={<Truck />}
+            label={"Fornecedores"}
+            routerLink={"/suppliers"}
+            isMobile={isMobile}
+            active={location.pathname === "/suppliers"}
+          />
+          <SidebarItem
+            key={"Sectors"}
+            icon={<Layers2 />}
+            label={"Setores"}
+            routerLink={"/sectors"}
+            isMobile={isMobile}
+            active={location.pathname === "/sectors"}
           />
         </div>
       </div>
