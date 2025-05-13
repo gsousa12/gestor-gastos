@@ -17,6 +17,10 @@ export const getMonthName = (month: number): string => {
   return monthNames[month] || '';
 };
 
-export const convertCentsToReal = (cents: number): number => {
-  return cents / 100;
+export const convertCentsToReal = (cents: number): string => {
+  const reais = cents / 100;
+  return reais.toLocaleString('pt-BR', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
 };

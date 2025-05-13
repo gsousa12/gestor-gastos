@@ -8,7 +8,6 @@ export class PaymentReportStrategy implements IReportStrategy {
   constructor(private readonly reportHelper: ReportHelper) {}
 
   buildDocumentDefinition(data: any[], report: ReportEntity): TDocumentDefinitions {
-    // 1. Agrupar pagamentos por setor
     const setoresMap = new Map<string, any[]>();
     data.forEach((payment) => {
       const sectorName = payment.sector?.name || 'Setor não informado';
@@ -28,44 +27,91 @@ export class PaymentReportStrategy implements IReportStrategy {
 
       const tableBody = [
         [
-          { text: 'Fornecedor', style: 'tableHeader' },
-          { text: 'Descrição', style: 'tableHeader' },
-          { text: 'Dívida recorrente', style: 'tableHeader' },
-          { text: 'Dívida mês atual', style: 'tableHeader' },
-          { text: 'Valor pago', style: 'tableHeader' },
-          { text: 'Saldo devedor restante', style: 'tableHeader' },
+          { text: 'Fornecedor', style: 'tableHeader', valign: 'middle' },
+          { text: 'Descrição', style: 'tableHeader', valign: 'middle' },
+          { text: 'Débito mês anterior (R$)', style: 'tableHeader', valign: 'middle' },
+          { text: 'Débito mês atual (R$)', style: 'tableHeader', valign: 'middle' },
+          { text: 'Valor pago (R$)', style: 'tableHeader', valign: 'middle' },
+          { text: 'Saldo devedor restante (R$)', style: 'tableHeader', valign: 'middle' },
         ],
       ];
 
-      // Linhas da tabela
-      payments.forEach((payment) => {
-        // Dívida mês atual
-        let dividaMesAtual = payment.supplier?.recurringDebit ?? 0;
-        if (payment.recurringDebitDeductedType === 'incremento') {
-          dividaMesAtual += payment.recurringDebitDeducted ?? 0;
-        } else if (payment.recurringDebitDeductedType === 'dedução') {
-          dividaMesAtual -= payment.recurringDebitDeducted ?? 0;
-        }
+      let totalValorPago = 0;
+      let totalSaldoDevedor = 0;
 
-        // Saldo devedor restante (exemplo: dívida mês atual - valor pago)
-        const saldoDevedorRestante = dividaMesAtual + -(payment.amount ?? 0);
+      payments.forEach((payment) => {
+        const dividaRecorrente = payment.supplier?.recurringDebit ?? 0;
+        const dividaMesAtual = payment.expense?.amount ?? 0;
+        const saldoDevedorRestante = dividaRecorrente + dividaMesAtual - (payment.amount ?? 0);
+
+        totalValorPago += payment.amount ?? 0;
+        totalSaldoDevedor += saldoDevedorRestante;
 
         tableBody.push([
-          payment.supplier?.name ?? '',
-          payment.expense?.description ?? '',
-          payment.supplier?.recurringDebit != null
-            ? `R$ ${convertCentsToReal(payment.supplier.recurringDebit).toFixed(2)}`
-            : '',
-          `R$ ${convertCentsToReal(dividaMesAtual).toFixed(2)}`,
-          payment.amount != null ? `R$ ${convertCentsToReal(payment.amount).toFixed(2)}` : '',
-          `R$ ${convertCentsToReal(saldoDevedorRestante).toFixed(2)}`,
+          { text: payment.supplier?.name ?? '', style: 'tableContent', valign: 'middle' },
+          { text: payment.expense?.description ?? '', style: 'tableContent', valign: 'middle' },
+          {
+            text:
+              payment.supplier?.recurringDebit != null
+                ? `${convertCentsToReal(payment.supplier.recurringDebit)}`
+                : '',
+            style: 'tableContent',
+            valign: 'middle',
+          },
+          { text: `${convertCentsToReal(dividaMesAtual)}`, style: 'tableContent', valign: 'middle' },
+          {
+            text: payment.amount != null ? `${convertCentsToReal(payment.amount)}` : '',
+            style: 'tableContent',
+            // fillColor: '#22c55e',
+            // color: '#fff',
+            valign: 'middle',
+          } as any,
+          {
+            text: `${convertCentsToReal(saldoDevedorRestante)}`,
+            style: 'tableContent',
+            // fillColor: '#ef4444',
+            // color: '#fff',
+            valign: 'middle',
+          } as any,
         ]);
       });
 
+      tableBody.push([
+        { text: '', colSpan: 4, border: [false, true, false, false] },
+        {},
+        {},
+        {},
+        {
+          text: [
+            { text: 'Total:', fontSize: 10, bold: true },
+            '\n',
+            { text: `${convertCentsToReal(totalValorPago)}`, fontSize: 12, bold: true },
+          ],
+          style: 'totalCell',
+          fillColor: '#22c55e',
+          color: '#fff',
+          border: [true, true, true, true],
+          margin: [0, 2, 0, 2],
+        } as any,
+        {
+          text: [
+            { text: 'Total:', fontSize: 10, bold: true },
+            '\n',
+            { text: `${convertCentsToReal(totalSaldoDevedor)}`, fontSize: 12, bold: true },
+          ],
+          style: 'totalCell',
+          fillColor: '#ef4444',
+          color: '#fff',
+          border: [true, true, true, true],
+          margin: [0, 2, 0, 2],
+        } as any,
+      ]);
+
       content.push({
         table: {
-          widths: ['*', '*', 'auto', 'auto', 'auto', 'auto'],
+          widths: [100, '*', 70, 70, 60, 80],
           body: tableBody,
+          // heights: 28,
         },
         layout: 'lightHorizontalLines',
         margin: [0, 0, 0, 0],
@@ -90,7 +136,11 @@ export class PaymentReportStrategy implements IReportStrategy {
           fillColor: '#eeeeee',
         },
         tableContent: {
-          fontSize: 12, // diminua conforme necessário
+          fontSize: 12,
+        },
+        totalCell: {
+          fontSize: 12,
+          bold: true,
         },
       },
       pageMargins: [10, 10, 10, 10],

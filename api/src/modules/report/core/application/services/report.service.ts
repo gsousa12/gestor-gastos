@@ -19,7 +19,6 @@ export class ReportService implements IReportService {
     const data = await this.reportRepository.getDataForReport(report.reportType, report.month, report.year);
 
     const strategy = this.resolveStrategy(report.reportType);
-    console.log(JSON.stringify(data, null, 2));
 
     const documentDefinition = strategy.buildDocumentDefinition(data, report);
 
