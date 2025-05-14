@@ -30,23 +30,22 @@ export class ExpenseMapper {
     return response;
   }
 
-  async toMapperGetExpenseListResponse(supplierList: Expense[]): Promise<ExpenseEntity[]> {
-    const response = supplierList.map((supplier) => {
-      const expense = new ExpenseEntity();
-      expense.id = supplier.id;
-      expense.description = supplier.description;
-      expense.month = supplier.month;
-      expense.year = supplier.year;
-      expense.amount = supplier.amount;
-      expense.supplierId = supplier.supplierId;
-      expense.secretaryId = supplier.secretaryId;
-      expense.userId = supplier.userId;
-      expense.subsectorId = supplier.subsectorId;
-      expense.createdAt = supplier.createdAt;
-      expense.supplierName = supplier.supplierName;
-      return expense;
-    });
-    return response;
+  toMapperGetExpenseListResponse(expenseList: any[]): ExpenseEntity[] {
+    return expenseList.map((expense) => ({
+      id: expense.id,
+      description: expense.description,
+      month: expense.month,
+      year: expense.year,
+      amount: expense.amount,
+      createdAt: expense.createdAt,
+      updatedAt: expense.updatedAt,
+      supplierId: expense.supplierId,
+      secretaryId: expense.secretaryId,
+      userId: expense.userId,
+      subsectorId: expense.subsectorId,
+      supplierName: expense.supplier?.name || null,
+      subsectorName: expense.subsector?.name || null,
+    }));
   }
 
   async toMapperGetExpenseByIdResponse(expense: Expense): Promise<ExpenseEntity> {

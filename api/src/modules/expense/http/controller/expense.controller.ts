@@ -48,8 +48,6 @@ export class ExpenseController {
       const response = await this.expenseMapper.toMapperGetExpenseListResponse(expenseList);
       return createApiResponse('Lista de despesas', response, meta);
     } catch (error) {
-      console.log(error);
-
       return mainErrorResponse(error);
     }
   }

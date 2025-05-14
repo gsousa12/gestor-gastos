@@ -76,6 +76,18 @@ export class ExpenseRepository implements IExpenseRepository {
         where: whereClause,
         skip,
         take: limit,
+        include: {
+          subsector: {
+            select: {
+              name: true,
+            },
+          },
+          supplier: {
+            select: {
+              name: true,
+            },
+          },
+        },
       }),
       this.prisma.expense.count({
         where: whereClause,
