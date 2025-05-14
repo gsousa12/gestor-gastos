@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { useAuthStore } from "../../store/authStore";
-import { login, LoginPayload } from "../../api/auth/auth";
+import { login, LoginRequest } from "../../api/auth/auth";
 import { useNavigate } from "react-router-dom";
 
 export const useLoginMutation = () => {
@@ -8,9 +8,9 @@ export const useLoginMutation = () => {
   const navigate = useNavigate();
 
   return useMutation({
-    mutationFn: (payload: LoginPayload) => login(payload),
+    mutationFn: (request: LoginRequest) => login(request),
     onSuccess: () => {
-      setAuthenticated(true); // (veja o próximo passo)
+      setAuthenticated(true);
       navigate("/dashboard", { replace: true });
     },
     onError: () => {

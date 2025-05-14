@@ -12,8 +12,6 @@ const queryClient = new QueryClient();
 
 const AppLayout = () => {
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
-  console.log(isAuthenticated);
-
   return (
     <GlobalWrapper>
       {isAuthenticated && (
