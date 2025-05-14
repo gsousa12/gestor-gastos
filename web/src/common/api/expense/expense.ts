@@ -1,6 +1,8 @@
 import { api } from "../axios";
 import {
   CreateExpenseRequest,
+  CreateExpenseResponse,
+  DeleteExpenseByIdResponse,
   ExpenseListResponse,
   GetExpenseCreateFormDataResponse,
   GetExpenseListRequest,
@@ -29,7 +31,14 @@ export const getCreateExpenseFormData =
 
 export const createExpense = async (
   request: CreateExpenseRequest
-): Promise<void> => {
+): Promise<CreateExpenseResponse> => {
   const response = await api.post("/expense/", request);
+  return response.data ?? [];
+};
+
+export const deleteExpenseById = async (
+  id: number
+): Promise<DeleteExpenseByIdResponse> => {
+  const response = await api.delete(`/expense/${id}`);
   return response.data ?? [];
 };

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { ContentWrapper } from "../../../../common/components/wrappers/content-wrapper/ContentWrapper";
 import { GenerateReportButton } from "../../../../common/components/generate-report-button/GenerateReportButton";
 import { CreateExpenseButton } from "../../components/create-expense-button/CreateExpenseButton";
@@ -11,24 +10,29 @@ import {
   getCurrentMonth,
   getCurrentYear,
 } from "../../../../common/utils/functions";
+import { DeleteConfirmationPopup } from "../../../../common/components/popups/deletion-confirmation-popup/DeleteConfirmationPopup";
 
 export const ExpensesPage = () => {
   const {
-    expenses,
+    expensesData,
     pagination,
     isPending,
     filters,
+    openCreateExpensePopup,
+    openDeletePopup,
+    page,
     applyFilters,
     clearFilters,
-    page,
     handlePageChange,
+    onDeleteExpenseById,
+    handleConfirmDelete,
+    handleOpenCreateExpense,
+    handleCloseDeletePopup,
+    setOpenCreateExpensePopup,
   } = useExpensesController();
-
-  const [openCreateExpensePopup, setOpenCreateExpensePopup] = useState(false);
 
   return (
     <ContentWrapper>
-      {/* <ContentTitle label="Despesas" /> */}
       <div className="flex flex-row justify-end gap-1 items-center mb-4">
         <ExpenseFilterPopUp
           filters={filters}
@@ -46,19 +50,31 @@ export const ExpensesPage = () => {
         />
         <CreateExpenseButton
           label="Cadastrar Despesa"
-          openPopup={() => setOpenCreateExpensePopup(true)}
+          openPopup={handleOpenCreateExpense}
         />
       </div>
+
       <CreateExpensePopup
         open={openCreateExpensePopup}
         onOpenChange={setOpenCreateExpensePopup}
       />
-      <ExpenseTable data={expenses} />
+      <DeleteConfirmationPopup
+        open={openDeletePopup}
+        title="Excluir Despesa"
+        description="Tem certeza que deseja excluir essa despesa? Essa ação não poderá ser desfeita."
+        onCancel={handleCloseDeletePopup}
+        onConfirm={handleConfirmDelete}
+      />
+
+      <ExpenseTable
+        data={expensesData}
+        onDeleteExpenseById={onDeleteExpenseById}
+      />
+
       <Pagination
         currentPage={page}
         totalPages={pagination?.totalPages ?? 1}
         totalItems={pagination?.totalItems ?? 0}
-        pageSize={10}
         onPageChange={handlePageChange}
       />
     </ContentWrapper>

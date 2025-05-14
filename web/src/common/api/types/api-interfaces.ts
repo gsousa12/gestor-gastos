@@ -18,12 +18,22 @@ export interface CreateExpenseRequest {
   secretaryId: number;
   userId: number;
 }
-
+// FIXME: Padronizar o response do data sendo ARRAY OU OBJETO
 /* RESPONSE */
 export interface ExpenseListResponse {
   message: string;
   pagination: PaginationMeta;
   data: Expense[];
+}
+
+export interface CreateExpenseResponse {
+  message: string;
+  data: Expense[];
+}
+
+export interface DeleteExpenseByIdResponse {
+  message: string;
+  data: [];
 }
 
 export interface GetExpenseCreateFormDataResponse {

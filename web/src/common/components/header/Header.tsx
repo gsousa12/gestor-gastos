@@ -32,13 +32,10 @@ export const Header = () => {
 
   return (
     <header className="w-full h-16 px-6 flex items-center justify-end bg-white border-b border-gray-200 shadow-sm">
-      {/* <span className="text-gray-700 text-base font-medium mr-auto">
-        Seja bem-vindo, {username}
-      </span> */}
-      <Avatar className="w-9 h-9 bg-white text-teal-700 font-bold text-base ring-2 ring-gray-300 mr-2">
+      <Avatar className="w-9 h-9 bg-white text-teal-700 font-bold text-base mr-2">
         <AvatarFallback>{getUserInitials(username)}</AvatarFallback>
       </Avatar>
-      <span className="text-gray-700 text-base font-medium">{username}</span>
+      {/* <span className="text-gray-700 text-base font-medium">{username}</span> */}
       <div className="relative" ref={menuRef}>
         <button
           className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-teal-50 transition-colors duration-200 group"

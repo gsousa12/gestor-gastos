@@ -10,7 +10,6 @@ type PaginationProps = {
   currentPage: number;
   totalPages: number;
   totalItems: number;
-  pageSize: number;
   onPageChange: (page: number) => void;
 };
 
@@ -18,12 +17,11 @@ export const Pagination = ({
   currentPage,
   totalPages,
   totalItems,
-  pageSize,
   onPageChange,
 }: PaginationProps) => {
   const canGoPrevious = currentPage > 1;
   const canGoNext = currentPage < totalPages;
-
+  const pageSize = 10;
   return (
     <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-2 py-4">
       {/* Mostrando itens visíveis */}

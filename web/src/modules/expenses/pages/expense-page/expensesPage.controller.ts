@@ -4,31 +4,39 @@ import {
   getCurrentMonth,
   getCurrentYear,
 } from "../../../../common/utils/functions";
+import { useDeleteExpenseById } from "../../../../common/hooks/expense/useDeleteExpenseById";
 
 export type ExpenseFilterValues = {
   supplierName: string;
   month: number | "";
   year: string;
 };
+
 export const useExpensesController = () => {
-  const { mutate, data, isPending } = useGetExpenseList();
+  const { mutate: getExpenseList, data, isPending } = useGetExpenseList();
+  const { mutateAsync: deleteExpenseById } = useDeleteExpenseById();
 
   const [filters, setFilters] = useState<ExpenseFilterValues>({
     supplierName: "",
-    month: getCurrentMonth(),
+    month: "",
     year: getCurrentYear(),
   });
 
   const [page, setPage] = useState(1);
+  const [openCreateExpensePopup, setOpenCreateExpensePopup] = useState(false);
+  const [openDeletePopup, setOpenDeletePopup] = useState(false);
+  const [selectedIdToDelete, setSelectedIdToDelete] = useState<number | null>(
+    null
+  );
 
   useEffect(() => {
-    mutate({
+    getExpenseList({
       page,
       supplierName: filters.supplierName,
       month: filters.month === "" ? undefined : filters.month,
       year: filters.year === "" ? getCurrentYear() : filters.year,
     });
-  }, [filters, page]);
+  }, [filters, page, getExpenseList]);
 
   const applyFilters = (newFilters: ExpenseFilterValues) => {
     setFilters(newFilters);
@@ -48,14 +56,49 @@ export const useExpensesController = () => {
     setPage(newPage);
   };
 
+  const onDeleteExpenseById = (id: number) => {
+    setSelectedIdToDelete(id);
+    setOpenDeletePopup(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (selectedIdToDelete !== null) {
+      await deleteExpenseById(selectedIdToDelete);
+      setOpenDeletePopup(false);
+      setSelectedIdToDelete(null);
+      getExpenseList({
+        page,
+        supplierName: filters.supplierName,
+        month: filters.month === "" ? undefined : filters.month,
+        year: filters.year === "" ? getCurrentYear() : filters.year,
+      });
+    }
+  };
+
+  const handleOpenCreateExpense = () => {
+    setOpenCreateExpensePopup(true);
+  };
+
+  const handleCloseDeletePopup = () => {
+    setOpenDeletePopup(false);
+  };
+
   return {
-    expenses: data?.data ?? [],
+    expensesData: data?.data ?? [],
     pagination: data?.pagination,
     isPending,
     filters,
+    openCreateExpensePopup,
+    openDeletePopup,
+    selectedIdToDelete,
+    page,
     applyFilters,
     clearFilters,
-    page,
     handlePageChange,
+    onDeleteExpenseById,
+    handleConfirmDelete,
+    handleOpenCreateExpense,
+    handleCloseDeletePopup,
+    setOpenCreateExpensePopup,
   };
 };

@@ -7,17 +7,22 @@ import {
   TableRow,
 } from "../../../../components/ui/table";
 import { Pencil, Trash2 } from "lucide-react";
-import { Expense } from "../../../../common/api/expense/expense";
+
 import {
   convertCentsToReal,
   getMonthName,
 } from "../../../../common/utils/functions";
+import { Expense } from "../../../../common/api/types/api-types";
 
 interface ExpenseTableProps {
   data: Expense[];
+  onDeleteExpenseById: (id: number) => void;
 }
 
-export const ExpenseTable = ({ data }: ExpenseTableProps) => {
+export const ExpenseTable = ({
+  data,
+  onDeleteExpenseById,
+}: ExpenseTableProps) => {
   return (
     <div className="rounded-lg border border-gray-100 overflow-x-auto shadow-sm">
       <Table>
@@ -81,6 +86,7 @@ export const ExpenseTable = ({ data }: ExpenseTableProps) => {
                   <button
                     className="p-1 rounded hover:bg-red-50 transition"
                     title="Deletar"
+                    onClick={() => onDeleteExpenseById(expense.id)}
                   >
                     <Trash2 className="w-4 h-4 text-gray-400 hover:text-red-600 hover:cursor-pointer" />
                   </button>
