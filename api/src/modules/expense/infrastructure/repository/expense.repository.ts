@@ -2,7 +2,7 @@ import { PrismaService } from '@common/modules/prisma/service/prisma.service';
 import { Injectable } from '@nestjs/common';
 import { IExpenseRepository } from '../interfaces/expense-repository.interface';
 import { ExpenseEntity } from '@modules/expense/core/domain/entities/expense.entity';
-import { Expense } from '@prisma/client';
+import { Expense, Secretary, Sector, SubSector, Supplier } from '@prisma/client';
 import { PaginationMeta } from '@common/structures/types';
 
 @Injectable()
@@ -112,5 +112,26 @@ export class ExpenseRepository implements IExpenseRepository {
       where: { id: expenseId },
     });
     return expense;
+  }
+
+  async getCreationFormData(): Promise<{
+    supplierList: { id: number; name: string }[];
+    subSectorList: { id: number; name: string }[];
+    secretaryList: { id: number; name: string }[];
+  }> {
+    const supplierList = await this.prisma.supplier.findMany({
+      select: { id: true, name: true },
+    });
+    const subSectorList = await this.prisma.subSector.findMany({
+      select: { id: true, name: true },
+    });
+    const secretaryList = await this.prisma.secretary.findMany({
+      select: { id: true, name: true },
+    });
+    return {
+      supplierList,
+      subSectorList,
+      secretaryList,
+    };
   }
 }

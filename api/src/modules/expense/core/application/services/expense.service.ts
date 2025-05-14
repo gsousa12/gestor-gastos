@@ -3,7 +3,7 @@ import { IExpenseService } from '../interfaces/expense-service.interface';
 import { EXPENSE_REPOSITORY } from '@common/tokens/repositories.tokens';
 import { ExpenseRepository } from '@modules/expense/infrastructure/repository/expense.repository';
 import { ExpenseHelper } from '../helpers/expense.helper';
-import { Expense } from '@prisma/client';
+import { Expense, Secretary, Sector, Supplier } from '@prisma/client';
 import { ExpenseEntity } from '../../domain/entities/expense.entity';
 import { PaginationMeta } from '@common/structures/types';
 
@@ -54,5 +54,19 @@ export class ExpenseService implements IExpenseService {
     }
 
     return expense;
+  }
+
+  async getCreationFormData(): Promise<{
+    supplierList: { id: number; name: string }[];
+    subSectorList: { id: number; name: string }[];
+    secretaryList: { id: number; name: string }[];
+  }> {
+    const { supplierList, subSectorList, secretaryList } = await this.expenseRepository.getCreationFormData();
+
+    return {
+      supplierList: supplierList || [],
+      subSectorList: subSectorList || [],
+      secretaryList: secretaryList || [],
+    };
   }
 }

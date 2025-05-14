@@ -26,6 +26,17 @@ export class ExpenseController {
     }
   }
 
+  @Get('/creation-form-data')
+  @HttpCode(HttpStatus.OK)
+  async getCreationFormData() {
+    try {
+      const creationFormData = await this.expenseService.getCreationFormData();
+      return createApiResponse('Dados para criação de despesa', creationFormData);
+    } catch (error) {
+      return mainErrorResponse(error);
+    }
+  }
+
   @Get('/')
   @HttpCode(HttpStatus.OK)
   async getExpenseList(
