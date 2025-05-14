@@ -9,6 +9,7 @@ import {
   FileText,
   Truck,
   Layers2,
+  Building,
 } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import { useMobileDetect } from "../../hooks/useMobileDetect";
@@ -97,6 +98,14 @@ export const Sidebar = () => {
             routerLink={"/sectors"}
             isMobile={isMobile}
             active={location.pathname === "/sectors"}
+          />
+          <SidebarItem
+            key={"Secretariats"}
+            icon={<Building />}
+            label={"Secretarias"}
+            routerLink={"/secretariats"}
+            isMobile={isMobile}
+            active={location.pathname === "/secretariats"}
           />
         </div>
       </div>
