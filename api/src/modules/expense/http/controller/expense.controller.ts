@@ -35,18 +35,21 @@ export class ExpenseController {
     @Query('year') year: string | undefined,
   ) {
     const limit = config.PAGINATION.LIST_PAGE_LIMIT;
-
+    const parsedMonth = month !== undefined ? Number(month) : undefined;
+    const parsedPage = page !== undefined ? Number(page) : 1;
     try {
       const { expenseList, meta } = await this.expenseService.getExpenseList(
-        page,
+        parsedPage,
         limit,
         supplierName,
-        month,
+        parsedMonth,
         year,
       );
       const response = await this.expenseMapper.toMapperGetExpenseListResponse(expenseList);
       return createApiResponse('Lista de despesas', response, meta);
     } catch (error) {
+      console.log(error);
+
       return mainErrorResponse(error);
     }
   }
