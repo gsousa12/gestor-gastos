@@ -7,10 +7,12 @@ import {
 } from "../../schemas/create-expense-schema";
 import { ComboBox } from "../../../../common/components/combobox/Combobox";
 import {
+  formatAmount,
   getCurrentMonth,
   getCurrentYear,
 } from "../../../../common/utils/functions";
 import { useCreateExpense } from "../../../../common/hooks/expense/useCreateExpense";
+import { cn } from "../../../../lib/utils";
 
 export const CreateExpensePopupContent = () => {
   const { createExpenseFormData, isPending } =
@@ -45,7 +47,9 @@ export const CreateExpensePopupContent = () => {
   }
 
   const onSubmit = (data: CreateExpenseFormValues) => {
-    data.amount = data.amount * 100;
+    console.log(data.amount);
+
+    data.amount = formatAmount(data.amount);
     createExpenseMutation(data);
     console.log(data);
   };
@@ -94,10 +98,11 @@ export const CreateExpensePopupContent = () => {
         </div>
       </div>
       <div>
+        {/* FIXME: PASSANDO VALORES COMO 1.450 QUEBRA A VALIDAÇÃO */}
         <label className="block text-xs text-gray-700 mb-1">Valor (R$)</label>
         <input
           type="number"
-          min={100}
+          min={1}
           step={0.01}
           {...register("amount", { valueAsNumber: true })}
           className="w-full px-2 py-1 border border-gray-200 rounded-md text-sm focus:ring-1 focus:ring-teal-400 outline-none"
@@ -130,7 +135,13 @@ export const CreateExpensePopupContent = () => {
       />
       <button
         type="submit"
-        className="mt-2 px-4 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700 hover:cursor-pointer transition-colors"
+        className={cn(
+          "mt-2 px-4 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700 transition-colors",
+          !!errors.description?.message
+            ? "cursor-not-allowed opacity-50 hover:bg-teal-600"
+            : "hover:cursor-pointer"
+        )}
+        disabled={isPending || !!errors.description?.message}
       >
         Cadastrar Despesa
       </button>

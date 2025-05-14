@@ -5,7 +5,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "../../../../components/ui/popover";
-import { ExpenseFilterValues } from "../../pages/expensesPage.controller";
+import { ExpenseFilterValues } from "../../pages/expense-page/expensesPage.controller";
 import { useMobileDetect } from "../../../../common/hooks/useMobileDetect";
 import { getCurrentYear } from "../../../../common/utils/functions";
 

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { useGetExpenseList } from "../../../common/hooks/expense/useGetExpenseList";
+import { useGetExpenseList } from "../../../../common/hooks/expense/useGetExpenseList";
 import {
   getCurrentMonth,
   getCurrentYear,
-} from "../../../common/utils/functions";
+} from "../../../../common/utils/functions";
 
 export type ExpenseFilterValues = {
   supplierName: string;

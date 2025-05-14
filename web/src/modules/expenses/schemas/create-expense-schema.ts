@@ -20,7 +20,7 @@ export const createExpenseSchema = z.object({
       required_error: "O valor é obrigatório.",
       invalid_type_error: "O valor deve ser um número.",
     })
-    .min(100, { message: "O valor deve ser no mínimo 100." }),
+    .min(1, { message: "O valor deve ser no mínimo 1." }),
   supplierId: z.number({
     required_error: "O fornecedor é obrigatório.",
     invalid_type_error: "Selecione um fornecedor válido.",

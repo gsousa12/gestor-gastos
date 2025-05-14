@@ -47,3 +47,7 @@ export const getCurrentYear = (): string => {
   const ano = dataAtual.getFullYear();
   return ano.toString();
 };
+
+export const formatAmount = (amount: number): number => {
+  return amount * 100;
+};

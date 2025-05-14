@@ -1,16 +1,16 @@
 import { useState } from "react";
-import { ContentWrapper } from "../../../common/components/wrappers/content-wrapper/ContentWrapper";
-import { GenerateReportButton } from "../../../common/components/generate-report-button/GenerateReportButton";
-import { CreateExpenseButton } from "../components/create-expense-button/CreateExpenseButton";
-import { CreateExpensePopup } from "../components/create-expense-popup/CreateExpensePopup";
-import { ExpenseTable } from "../components/expense-table/ExpenseTable";
-import { Pagination } from "../../../common/components/pagination/Pagination";
+import { ContentWrapper } from "../../../../common/components/wrappers/content-wrapper/ContentWrapper";
+import { GenerateReportButton } from "../../../../common/components/generate-report-button/GenerateReportButton";
+import { CreateExpenseButton } from "../../components/create-expense-button/CreateExpenseButton";
+import { CreateExpensePopup } from "../../components/create-expense-popup/CreateExpensePopup";
+import { ExpenseTable } from "../../components/expense-table/ExpenseTable";
+import { Pagination } from "../../../../common/components/pagination/Pagination";
 import { useExpensesController } from "./expensesPage.controller";
-import { ExpenseFilterPopUp } from "../components/expense-filter-popup/ExpenseFilterPopUp";
+import { ExpenseFilterPopUp } from "../../components/expense-filter-popup/ExpenseFilterPopUp";
 import {
   getCurrentMonth,
   getCurrentYear,
-} from "../../../common/utils/functions";
+} from "../../../../common/utils/functions";
 
 export const ExpensesPage = () => {
   const {
@@ -36,7 +36,7 @@ export const ExpensesPage = () => {
           onClear={clearFilters}
         />
         <GenerateReportButton
-          type="payment"
+          type="expense"
           month={
             typeof filters.month === "number"
               ? filters.month
