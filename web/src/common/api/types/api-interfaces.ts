@@ -9,6 +9,16 @@ export interface GetExpenseListRequest {
   year?: string;
 }
 
+export interface CreateExpenseRequest {
+  description: string | null;
+  month: number;
+  year: string;
+  amount: number;
+  supplierId: number;
+  secretaryId: number;
+  userId: number;
+}
+
 /* RESPONSE */
 export interface ExpenseListResponse {
   message: string;

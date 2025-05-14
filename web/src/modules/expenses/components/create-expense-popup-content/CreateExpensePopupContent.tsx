@@ -10,11 +10,12 @@ import {
   getCurrentMonth,
   getCurrentYear,
 } from "../../../../common/utils/functions";
+import { useCreateExpense } from "../../../../common/hooks/expense/useCreateExpense";
 
 export const CreateExpensePopupContent = () => {
   const { createExpenseFormData, isPending } =
     useCreateExpensePopupContentController();
-
+  const { mutate: createExpenseMutation } = useCreateExpense();
   const {
     register,
     handleSubmit,
@@ -44,7 +45,8 @@ export const CreateExpensePopupContent = () => {
   }
 
   const onSubmit = (data: CreateExpenseFormValues) => {
-    // Chame a mutation de criação aqui
+    data.amount = data.amount * 100;
+    createExpenseMutation(data);
     console.log(data);
   };
 

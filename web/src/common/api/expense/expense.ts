@@ -1,5 +1,6 @@
 import { api } from "../axios";
 import {
+  CreateExpenseRequest,
   ExpenseListResponse,
   GetExpenseCreateFormDataResponse,
   GetExpenseListRequest,
@@ -25,3 +26,10 @@ export const getCreateExpenseFormData =
     const response = await api.get("/expense/creation-form-data");
     return response.data ?? [];
   };
+
+export const createExpense = async (
+  request: CreateExpenseRequest
+): Promise<void> => {
+  const response = await api.post("/expense/", request);
+  return response.data ?? [];
+};
