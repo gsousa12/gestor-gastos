@@ -1,5 +1,6 @@
 import { FileChartColumn } from "lucide-react";
 import { useCreateReport } from "../../hooks/report/useCreateReport";
+import { useMobileDetect } from "../../hooks/useMobileDetect";
 
 export interface GenerateReportButtonProps {
   type: string;
@@ -12,6 +13,7 @@ export const GenerateReportButton = ({
   month,
   year,
 }: GenerateReportButtonProps) => {
+  const isMobile = useMobileDetect();
   const request = {
     reportType: type,
     month: month,
@@ -25,14 +27,17 @@ export const GenerateReportButton = ({
 
   return (
     <button
-      className="flex flex-row hover:cursor-pointer"
+      className={
+        isMobile
+          ? "flex items-center justify-center p-2 bg-gray-100 hover:cursor-pointer text-gray-700 rounded-md hover:bg-teal-50 hover:text-teal-700 transition-colors duration-150 focus:outline-none focus:ring-1 focus:ring-teal-400 disabled:opacity-60"
+          : "flex flex-row items-center gap-1 px-3 py-1 bg-gray-100 hover:cursor-pointer text-gray-700 text-sm font-medium rounded-md hover:bg-teal-50 hover:text-teal-700 transition-colors duration-150 focus:outline-none focus:ring-1 focus:ring-teal-400 disabled:opacity-60"
+      }
       onClick={handleGenerateReport}
       disabled={isPending}
+      title="Gerar Relatório"
     >
-      <FileChartColumn className="h-5 w-5" />
-      <span className="ml-2">
-        {isPending ? "Gerando..." : "Gerar Relatório"}
-      </span>
+      <FileChartColumn className={isMobile ? "w-5 h-5" : "w-4 h-4"} />
+      {!isMobile && <span>{isPending ? "Gerando..." : "Gerar Relatório"}</span>}
     </button>
   );
 };

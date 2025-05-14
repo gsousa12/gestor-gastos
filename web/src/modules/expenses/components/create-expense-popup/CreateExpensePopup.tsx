@@ -19,7 +19,7 @@ export const CreateExpensePopup = ({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <div className="flex items-center justify-between w-full">
-          <DialogTitle>Criar Despesa</DialogTitle>
+          <DialogTitle>Cadastrar Despesa</DialogTitle>
           <DialogClose asChild>
             <button
               className="text-gray-400 hover:text-gray-600 transition-colors"

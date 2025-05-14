@@ -1,23 +1,28 @@
 import { Plus } from "lucide-react";
+import { useMobileDetect } from "../../../../common/hooks/useMobileDetect";
 
 interface CreateExpenseButtonProps {
   label: string;
-  onClick: () => void;
+  openPopup: () => void;
 }
 
 export const CreateExpenseButton = ({
   label,
-  onClick,
+  openPopup,
 }: CreateExpenseButtonProps) => {
+  const isMobile = useMobileDetect();
   return (
     <button
-      className="flex flex-row items-center gap-2 px-4 py-2 bg-teal-600 
-      text-white font-semibold rounded-lg shadow hover:bg-teal-700 
-      hover:cursor-pointer transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-teal-400"
-      onClick={onClick}
+      className={
+        isMobile
+          ? "flex items-center justify-center p-2 bg-white text-gray-700 rounded-md hover:bg-teal-50 hover:text-teal-700 hover:cursor-pointer transition-colors duration-150 focus:outline-none focus:ring-1 focus:ring-teal-400"
+          : "flex flex-row items-center gap-1 px-3 py-1 bg-white text-gray-700 text-sm font-medium rounded-md hover:bg-teal-50 hover:text-teal-700 hover:cursor-pointer transition-colors duration-150 focus:outline-none focus:ring-1 focus:ring-teal-400"
+      }
+      onClick={openPopup}
+      title={label}
     >
-      <Plus className="w-5 h-5" />
-      <span>{label}</span>
+      <Plus className={isMobile ? "w-5 h-5" : "w-4 h-4"} />
+      {!isMobile && <span>{label}</span>}
     </button>
   );
 };

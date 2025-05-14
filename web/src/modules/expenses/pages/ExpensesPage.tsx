@@ -1,36 +1,54 @@
-import { useEffect, useState } from "react";
-import { ContentTitle } from "../../../common/components/content-title/ContentTitle";
+import { useState } from "react";
 import { ContentWrapper } from "../../../common/components/wrappers/content-wrapper/ContentWrapper";
-import { useGetExpenseList } from "../../../common/hooks/expense/useGetExpenseList";
 import { GenerateReportButton } from "../../../common/components/generate-report-button/GenerateReportButton";
-import { Paper } from "../../../common/components/paper/Paper";
 import { CreateExpenseButton } from "../components/create-expense-button/CreateExpenseButton";
 import { CreateExpensePopup } from "../components/create-expense-popup/CreateExpensePopup";
+import { ExpenseTable } from "../components/expense-table/ExpenseTable";
+import { Pagination } from "../../../common/components/pagination/Pagination";
+import { useExpensesController } from "./expensesPage.controller";
+import { ExpenseFilterPopUp } from "../components/expense-filter-popup/ExpenseFilterPopUp";
 
 export const ExpensesPage = () => {
-  // const request = {
-  //   page: 1,
-  //   supplierName: "",
-  //   month: 5,
-  //   year: "2025",
-  // };
-  // const { mutate, data, isPending } = useGetExpenseList();
+  const {
+    expenses,
+    pagination,
+    isPending,
+    filters,
+    applyFilters,
+    clearFilters,
+    page,
+    handlePageChange,
+  } = useExpensesController();
 
-  // useEffect(() => {
-  //   mutate(request);
-  // }, []);
-  const [open, setOpen] = useState(false);
+  const [openCreateExpensePopup, setOpenCreateExpensePopup] = useState(false);
+
   return (
     <ContentWrapper>
-      <ContentTitle label="Despesas" />
-      <div className="flex flex-row justify-end gap-3 items-center">
+      {/* <ContentTitle label="Despesas" /> */}
+      <div className="flex flex-row justify-end gap-1 items-center mb-4">
+        <ExpenseFilterPopUp
+          filters={filters}
+          onApply={applyFilters}
+          onClear={clearFilters}
+        />
         <GenerateReportButton type="payment" month={5} year="2025" />
         <CreateExpenseButton
-          label="Criar Despesa"
-          onClick={() => setOpen(true)}
+          label="Cadastrar Despesa"
+          openPopup={() => setOpenCreateExpensePopup(true)}
         />
       </div>
-      <CreateExpensePopup open={open} onOpenChange={setOpen} />
+      <CreateExpensePopup
+        open={openCreateExpensePopup}
+        onOpenChange={setOpenCreateExpensePopup}
+      />
+      <ExpenseTable data={expenses} />
+      <Pagination
+        currentPage={page}
+        totalPages={pagination?.totalPages ?? 1}
+        totalItems={pagination?.totalItems ?? 0}
+        pageSize={10}
+        onPageChange={handlePageChange}
+      />
     </ContentWrapper>
   );
 };

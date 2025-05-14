@@ -18,8 +18,9 @@ export type Expense = {
   secretaryId: number;
   userId: number;
   subsectorId: number;
-  createdAt: Date;
-  supplierName: string | null;
+  createdAt: string;
+  supplierName: string;
+  subsectorName: string;
 };
 
 export interface ExpenseListResponse {
@@ -40,5 +41,5 @@ export const getExpenseList = async (
       year,
     },
   });
-  return response.data;
+  return response.data ?? [];
 };

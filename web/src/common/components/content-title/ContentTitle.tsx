@@ -1,6 +1,9 @@
+import { useMobileDetect } from "../../hooks/useMobileDetect";
+
 interface ContentTitleProps {
   label: string;
 }
 export const ContentTitle = ({ label }: ContentTitleProps) => {
-  return <div className="text-xl font-bold mb-2">{label}</div>;
+  const isMobile = useMobileDetect();
+  return isMobile ? <></> : <div className="text-2xl font-bold">{label}</div>;
 };
