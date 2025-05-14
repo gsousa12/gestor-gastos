@@ -69,4 +69,14 @@ export class ExpenseService implements IExpenseService {
       secretaryList: secretaryList || [],
     };
   }
+
+  async deleteExpenseById(expenseId: number): Promise<void> {
+    const expense = await this.expenseRepository.getExpenseById(expenseId);
+
+    if (!expense) {
+      throw new NotFoundException('Despesa não encontrada.');
+    }
+
+    await this.expenseRepository.deleteExpenseById(expenseId);
+  }
 }

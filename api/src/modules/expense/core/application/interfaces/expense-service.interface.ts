@@ -20,4 +20,7 @@ export interface IExpenseService {
     subSectorList: { id: number; name: string }[];
     secretaryList: { id: number; name: string }[];
   }>;
+
+  // Deletes
+  deleteExpenseById(expenseId: number): Promise<void>;
 }

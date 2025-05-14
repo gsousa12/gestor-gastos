@@ -4,7 +4,18 @@ import { mainErrorResponse } from '@common/utils/main-error-response';
 import { CreateExpenseRequestDto } from '@modules/expense/core/application/dtos/request/create-expense.request.dto';
 import { ExpenseMapper } from '@modules/expense/core/application/mappers/expense.mapper';
 import { ExpenseService } from '@modules/expense/core/application/services/expense.service';
-import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Query, Request } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Post,
+  Query,
+  Request,
+} from '@nestjs/common';
 
 @Controller('expense')
 export class ExpenseController {
@@ -15,7 +26,7 @@ export class ExpenseController {
 
   @Post('/')
   @HttpCode(HttpStatus.OK)
-  async createExpense(@Body() request: CreateExpenseRequestDto, @Request() req) {
+  async createExpense(@Body() request: CreateExpenseRequestDto) {
     try {
       const expense = await this.expenseMapper.toMapperCreateExpenseRequest(request);
       const createdExpense = await this.expenseService.createExpense(expense);
@@ -70,7 +81,19 @@ export class ExpenseController {
     try {
       const expense = await this.expenseService.getExpenseById(expenseId);
       const response = await this.expenseMapper.toMapperGetExpenseByIdResponse(expense);
-      return createApiResponse('Fornecedor encontrado com sucesso', response);
+      return createApiResponse('Despesa encontrado com sucesso', response);
+    } catch (error) {
+      return mainErrorResponse(error);
+    }
+  }
+
+  @Delete('/:id')
+  @HttpCode(HttpStatus.OK)
+  async deleteExpenseById(@Param('id') id: number) {
+    const expenseId = Number(id);
+    try {
+      await this.expenseService.deleteExpenseById(expenseId);
+      return createApiResponse('Despesa deletado com sucesso', {});
     } catch (error) {
       return mainErrorResponse(error);
     }

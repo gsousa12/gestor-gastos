@@ -21,6 +21,9 @@ export interface IExpenseRepository {
     secretaryList: { id: number; name: string }[];
   }>;
 
+  // Deletes
+  deleteExpenseById(expenseId: number): Promise<void>;
+
   // Others
   verifyExistence(expense: ExpenseEntity): Promise<{ verifyExistence: boolean; message: string }>;
 }

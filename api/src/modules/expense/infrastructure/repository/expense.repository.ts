@@ -134,4 +134,10 @@ export class ExpenseRepository implements IExpenseRepository {
       secretaryList,
     };
   }
+
+  async deleteExpenseById(expenseId: number): Promise<void> {
+    await this.prisma.expense.delete({
+      where: { id: expenseId },
+    });
+  }
 }
