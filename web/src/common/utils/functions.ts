@@ -35,3 +35,15 @@ export const getMonthName = (month: number): string => {
 
   return monthNames[month] || "";
 };
+
+export const getCurrentMonth = (): number => {
+  const dataAtual = new Date();
+  const mes = dataAtual.getMonth();
+  return mes + 1;
+};
+
+export const getCurrentYear = (): string => {
+  const dataAtual = new Date();
+  const ano = dataAtual.getFullYear();
+  return ano.toString();
+};

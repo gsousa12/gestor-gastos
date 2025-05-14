@@ -52,14 +52,14 @@ export const Sidebar = () => {
             isMobile={isMobile}
             active={location.pathname === "/dashboard"}
           />
-          <SidebarItem
+          {/* <SidebarItem
             key={"Reports"}
             icon={<FileText />}
             label={"Relatórios"}
             routerLink={"/reports"}
             isMobile={isMobile}
             active={location.pathname === "/reports"}
-          />
+          /> */}
         </div>
         <div className="flex flex-col gap-2">
           {!isMobile && <SideBarGroupTitle label="Movimentações" />}

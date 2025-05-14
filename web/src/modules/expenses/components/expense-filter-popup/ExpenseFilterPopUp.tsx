@@ -7,6 +7,7 @@ import {
 } from "../../../../components/ui/popover";
 import { ExpenseFilterValues } from "../../pages/expensesPage.controller";
 import { useMobileDetect } from "../../../../common/hooks/useMobileDetect";
+import { getCurrentYear } from "../../../../common/utils/functions";
 
 const months = [
   { value: "", label: "Todos" },
@@ -111,21 +112,21 @@ export const ExpenseFilterPopUp = ({
               value={values.year}
               onChange={handleChange}
               className="w-full px-2 py-1 border border-gray-200 rounded-md text-sm focus:ring-1 focus:ring-teal-400 outline-none"
-              placeholder="2025"
+              placeholder={getCurrentYear()}
               maxLength={4}
             />
           </div>
         </div>
         <div className="flex justify-end gap-2 mt-2">
           <button
-            className="px-2 py-1 text-xs rounded bg-gray-100 text-gray-500 hover:bg-gray-200"
+            className="px-2 py-1 text-xs rounded bg-gray-100 text-gray-500 hover:bg-gray-200 hover:cursor-pointer"
             onClick={handleClear}
             type="button"
           >
             Limpar
           </button>
           <button
-            className="px-2 py-1 text-xs rounded bg-teal-600 text-white hover:bg-teal-700"
+            className="px-2 py-1 text-xs rounded bg-teal-600 text-white hover:bg-teal-700 hover:cursor-pointer"
             onClick={handleApply}
             type="button"
           >

@@ -1,9 +1,9 @@
 import { useMutation, UseMutationResult } from "@tanstack/react-query";
+import { getExpenseList } from "../../api/expense/expense";
 import {
   ExpenseListResponse,
-  getExpenseList,
   GetExpenseListRequest,
-} from "../../api/expense/expense";
+} from "../../api/types/api-interfaces";
 
 export const useGetExpenseList = (): UseMutationResult<
   ExpenseListResponse, // tipo do retorno

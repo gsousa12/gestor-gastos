@@ -1,33 +1,9 @@
-import { PaginationMeta } from "../../utils/interfaces";
 import { api } from "../axios";
-
-export interface GetExpenseListRequest {
-  page: number;
-  supplierName?: string;
-  month?: number;
-  year?: string;
-}
-
-export type Expense = {
-  id: number;
-  description: string | null;
-  month: number;
-  year: string;
-  amount: number;
-  supplierId: number;
-  secretaryId: number;
-  userId: number;
-  subsectorId: number;
-  createdAt: string;
-  supplierName: string;
-  subsectorName: string;
-};
-
-export interface ExpenseListResponse {
-  message: string;
-  pagination: PaginationMeta;
-  data: Expense[];
-}
+import {
+  ExpenseListResponse,
+  GetExpenseCreateFormDataResponse,
+  GetExpenseListRequest,
+} from "../types/api-interfaces";
 
 export const getExpenseList = async (
   request: GetExpenseListRequest
@@ -43,3 +19,9 @@ export const getExpenseList = async (
   });
   return response.data ?? [];
 };
+
+export const getCreateExpenseFormData =
+  async (): Promise<GetExpenseCreateFormDataResponse> => {
+    const response = await api.get("/expense/creation-form-data");
+    return response.data ?? [];
+  };

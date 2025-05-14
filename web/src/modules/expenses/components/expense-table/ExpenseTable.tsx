@@ -31,7 +31,9 @@ export const ExpenseTable = ({ data }: ExpenseTableProps) => {
             </TableHead>
             <TableHead className="text-gray-400 font-semibold">Valor</TableHead>
 
-            <TableHead className="text-gray-400 font-semibold">Setor</TableHead>
+            <TableHead className="text-gray-400 font-semibold">
+              Sub-Setor
+            </TableHead>
             <TableHead className="text-gray-400 font-semibold">Mês</TableHead>
             <TableHead className="text-gray-400 font-semibold">Ano</TableHead>
             <TableHead className="text-gray-400 font-semibold text-center">

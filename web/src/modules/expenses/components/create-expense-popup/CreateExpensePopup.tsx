@@ -5,6 +5,7 @@ import {
   DialogTitle,
 } from "../../../../components/ui/dialog";
 import { X } from "lucide-react";
+import { CreateExpensePopupContent } from "../create-expense-popup-content/CreateExpensePopupContent";
 
 interface CreateExpensePopupProps {
   open: boolean;
@@ -29,7 +30,7 @@ export const CreateExpensePopup = ({
             </button>
           </DialogClose>
         </div>
-        {/* Conteúdo da modal */}
+        <CreateExpensePopupContent />
       </DialogContent>
     </Dialog>
   );

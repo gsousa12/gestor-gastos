@@ -7,6 +7,10 @@ import { ExpenseTable } from "../components/expense-table/ExpenseTable";
 import { Pagination } from "../../../common/components/pagination/Pagination";
 import { useExpensesController } from "./expensesPage.controller";
 import { ExpenseFilterPopUp } from "../components/expense-filter-popup/ExpenseFilterPopUp";
+import {
+  getCurrentMonth,
+  getCurrentYear,
+} from "../../../common/utils/functions";
 
 export const ExpensesPage = () => {
   const {
@@ -31,7 +35,15 @@ export const ExpensesPage = () => {
           onApply={applyFilters}
           onClear={clearFilters}
         />
-        <GenerateReportButton type="payment" month={5} year="2025" />
+        <GenerateReportButton
+          type="payment"
+          month={
+            typeof filters.month === "number"
+              ? filters.month
+              : getCurrentMonth()
+          }
+          year={filters.year !== "" ? filters.year : getCurrentYear()}
+        />
         <CreateExpenseButton
           label="Cadastrar Despesa"
           openPopup={() => setOpenCreateExpensePopup(true)}
