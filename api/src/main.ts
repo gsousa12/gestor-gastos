@@ -4,6 +4,7 @@ import { Logger } from '@nestjs/common';
 import * as cookieParser from 'cookie-parser';
 import { config } from '@common/configuration/config';
 import { SingleErrorPipe } from '@common/pipes/single-error.pipe';
+import { DelayInterceptor } from '@common/interceptors/delay.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -25,6 +26,7 @@ async function bootstrap() {
   const logger = new Logger('Bootstrap');
   const port = config.PORT;
 
+  // app.useGlobalInterceptors(new DelayInterceptor());
   app.setGlobalPrefix('api');
   app.use(cookieParser());
 
