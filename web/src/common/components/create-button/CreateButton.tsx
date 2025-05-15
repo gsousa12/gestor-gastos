@@ -1,5 +1,5 @@
 import { Plus } from "lucide-react";
-import { useMobileDetect } from "../../../../common/hooks/useMobileDetect";
+import { useMobileDetect } from "../../hooks/useMobileDetect";
 
 interface CreateButtonProps {
   label: string;
