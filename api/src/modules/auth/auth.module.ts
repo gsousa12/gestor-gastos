@@ -9,6 +9,7 @@ import { AuthHelper } from './core/application/helpers/auth.helper';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { config } from '@common/configuration/config';
+import { JwtStrategy } from './core/application/strategies/jwt.strategy';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { config } from '@common/configuration/config';
     BcryptAdapter,
     AuthHelper,
     PrismaService,
+    JwtStrategy,
   ],
   exports: [JwtModule, PassportModule],
 })

@@ -3,11 +3,13 @@ import { ChevronDown, Settings, LogOut } from "lucide-react";
 import { Avatar, AvatarFallback } from "../../../components/ui/avatar";
 import { getUserInitials } from "../../utils/functions";
 import { useLogoutMutation } from "../../hooks/auth/useLogoutMutation";
+import { useAuthStore } from "../../store/authStore";
 
 export const Header = () => {
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-  const username = "Gabriel Sousa";
+  const { mutate: logoutMutation } = useLogoutMutation();
+  const userName = useAuthStore((state) => state.user?.name);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -23,19 +25,17 @@ export const Header = () => {
     };
   }, [open]);
 
-  const { mutate, isPending, isError, error } = useLogoutMutation();
-
   const handleLogout = () => {
-    mutate();
+    logoutMutation();
     setOpen(false);
   };
 
   return (
     <header className="w-full h-16 px-6 flex items-center justify-end bg-white border-b border-gray-200 shadow-sm">
-      <Avatar className="w-9 h-9 bg-white text-emerald-700 font-bold text-base mr-2">
-        <AvatarFallback>{getUserInitials(username)}</AvatarFallback>
-      </Avatar>
-      {/* <span className="text-gray-700 text-base font-medium">{username}</span> */}
+      {/* <Avatar className="w-9 h-9 bg-white text-emerald-700 font-bold text-base mr-2">
+        <AvatarFallback>{getUserInitials(userName)}</AvatarFallback>
+      </Avatar> */}
+      <span className="text-gray-700 text-base font-medium">{userName}</span>
       <div className="relative" ref={menuRef}>
         <button
           className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-emerald-50 transition-colors duration-200 group"
@@ -45,10 +45,10 @@ export const Header = () => {
         </button>
         {open && (
           <div className="absolute right-0 mt-2 w-44 bg-white border border-gray-100 rounded-lg shadow-lg py-2 z-50 animate-fade-in">
-            <button className="w-full flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-emerald-50 hover:text-emerald-700 hover:cursor-pointer transition-colors duration-200">
+            {/* <button className="w-full flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-emerald-50 hover:text-emerald-700 hover:cursor-pointer transition-colors duration-200">
               <Settings className="w-5 h-5 text-gray-400 group-hover:text-emerald-600" />
               <span className="text-sm font-medium">Opções</span>
-            </button>
+            </button> */}
             <button className="w-full flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-emerald-50 hover:text-emerald-700 hover:cursor-pointer transition-colors duration-200">
               <LogOut className="w-5 h-5 text-gray-400 group-hover:text-emerald-600" />
               <button className="text-sm font-medium" onClick={handleLogout}>

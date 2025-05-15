@@ -9,11 +9,23 @@ import { Route, Routes } from "react-router-dom";
 import { LoginRoute } from "./modules/auth/components/login-route/LoginRoute";
 import { Toaster } from "sonner";
 import { GlobalLoader } from "./common/components/global-loader/GlobalLoader";
+import { useAuthBootstrap } from "./common/hooks/useAuthBoostrap";
+import { BoostrapLoader } from "./common/components/global-loader/BoostrapLoader";
 
 const queryClient = new QueryClient();
 
 const AppLayout = () => {
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+  const isBootstrapping = useAuthBootstrap();
+  console.log(isBootstrapping);
+
+  if (isBootstrapping) {
+    return (
+      <>
+        <BoostrapLoader />
+      </>
+    );
+  }
   return (
     <GlobalWrapper>
       {isAuthenticated && (
