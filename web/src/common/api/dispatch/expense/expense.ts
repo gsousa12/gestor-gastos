@@ -1,4 +1,4 @@
-import { api } from "../axios";
+import { api } from "../../axios";
 import {
   CreateExpenseRequest,
   CreateExpenseResponse,
@@ -6,7 +6,7 @@ import {
   ExpenseListResponse,
   GetExpenseCreateFormDataResponse,
   GetExpenseListRequest,
-} from "../types/api-interfaces";
+} from "../../types/api-interfaces";
 
 export const getExpenseList = async (
   request: GetExpenseListRequest

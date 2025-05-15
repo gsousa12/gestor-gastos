@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { useGetExpenseList } from "../../../../common/hooks/expense/useGetExpenseList";
+import { useGetExpenseList } from "../../../../common/api/mutations/expense/useGetExpenseList";
 import {
   getCurrentMonth,
   getCurrentYear,
 } from "../../../../common/utils/functions";
-import { useDeleteExpenseById } from "../../../../common/hooks/expense/useDeleteExpenseById";
+import { useDeleteExpenseById } from "../../../../common/api/mutations/expense/useDeleteExpenseById";
 
 export type ExpenseFilterValues = {
   supplierName: string;

@@ -1,9 +1,5 @@
-import { api } from "../axios";
-
-export interface LoginRequest {
-  email: string;
-  password: string;
-}
+import { api } from "../../axios";
+import { LoginRequest } from "../../types/api-interfaces";
 
 export const login = async (request: LoginRequest) => {
   const response = await api.post("/auth/login/", request);

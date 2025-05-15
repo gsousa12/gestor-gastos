@@ -11,7 +11,7 @@ import {
   getCurrentMonth,
   getCurrentYear,
 } from "../../../../common/utils/functions";
-import { useCreateExpense } from "../../../../common/hooks/expense/useCreateExpense";
+import { useCreateExpense } from "../../../../common/api/mutations/expense/useCreateExpense";
 import { cn } from "../../../../lib/utils";
 import { useEffect } from "react";
 import { showToast } from "../../../../common/components/toast/Toast";

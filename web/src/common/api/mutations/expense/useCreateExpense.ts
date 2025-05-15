@@ -2,8 +2,8 @@ import { useMutation, UseMutationResult } from "@tanstack/react-query";
 import {
   CreateExpenseRequest,
   CreateExpenseResponse,
-} from "../../api/types/api-interfaces";
-import { createExpense } from "../../api/expense/expense";
+} from "../../types/api-interfaces";
+import { createExpense } from "../../dispatch/expense/expense";
 
 export const useCreateExpense = (): UseMutationResult<
   CreateExpenseResponse,

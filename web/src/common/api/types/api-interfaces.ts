@@ -2,6 +2,11 @@ import { PaginationMeta } from "../../utils/types";
 import { Expense, ExpenseCreateFormData } from "./api-types";
 
 /* REQUEST */
+export interface LoginRequest {
+  email: string;
+  password: string;
+}
+
 export interface GetExpenseListRequest {
   page: number;
   supplierName?: string;

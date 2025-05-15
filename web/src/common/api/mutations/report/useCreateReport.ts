@@ -1,5 +1,8 @@
 import { UseMutationResult, useMutation } from "@tanstack/react-query";
-import { createReport, CreateReportRequest } from "../../api/report/report";
+import {
+  createReport,
+  CreateReportRequest,
+} from "../../dispatch/report/report";
 
 export const useCreateReport = (): UseMutationResult<
   { blob: Blob; filename: string }, // tipo do retorno

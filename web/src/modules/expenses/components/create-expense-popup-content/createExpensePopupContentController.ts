@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useGetCreateExpenseFormData } from "../../../../common/hooks/expense/useGetCreateExpenseFormData";
+import { useGetCreateExpenseFormData } from "../../../../common/api/mutations/expense/useGetCreateExpenseFormData";
 
 export const useCreateExpensePopupContentController = () => {
   const { mutate, data, isPending } = useGetCreateExpenseFormData();

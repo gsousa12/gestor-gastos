@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { ChevronDown, Settings, LogOut } from "lucide-react";
 import { Avatar, AvatarFallback } from "../../../components/ui/avatar";
 import { getUserInitials } from "../../utils/functions";
-import { useLogoutMutation } from "../../hooks/auth/useLogoutMutation";
+import { useLogoutMutation } from "../../api/mutations/auth/useLogoutMutation";
 import { useAuthStore } from "../../store/authStore";
 
 export const Header = () => {

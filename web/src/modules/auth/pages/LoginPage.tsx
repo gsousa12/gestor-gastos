@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLoginMutation } from "../../../common/hooks/auth/useLoginMutation";
+import { useLoginMutation } from "../../../common/api/mutations/auth/useLoginMutation";
 
 export const LoginPage = () => {
   const [email, setEmail] = useState("");

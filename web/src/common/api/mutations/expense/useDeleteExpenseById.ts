@@ -1,6 +1,6 @@
 import { useMutation, UseMutationResult } from "@tanstack/react-query";
-import { DeleteExpenseByIdResponse } from "../../api/types/api-interfaces";
-import { deleteExpenseById } from "../../api/expense/expense";
+import { DeleteExpenseByIdResponse } from "../../types/api-interfaces";
+import { deleteExpenseById } from "../../dispatch/expense/expense";
 
 export const useDeleteExpenseById = (): UseMutationResult<
   DeleteExpenseByIdResponse, // tipo do retorno
