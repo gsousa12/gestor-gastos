@@ -27,7 +27,8 @@ export const Pagination = ({
       {/* Mostrando itens visíveis */}
       <div className="text-sm text-muted-foreground">
         Mostrando {(currentPage - 1) * pageSize + 1} -{" "}
-        {Math.min(currentPage * pageSize, totalItems)} de {totalItems} itens
+        {totalPages !== 0 ? Math.min(currentPage * pageSize, totalItems) : 1} de{" "}
+        {totalItems} itens
       </div>
 
       {/* Controles de paginação */}
@@ -57,7 +58,7 @@ export const Pagination = ({
         {/* Indicador de página */}
         <div className="flex items-center gap-1">
           <span className="text-sm font-medium">
-            Página {currentPage} de {totalPages}
+            Página {currentPage} de {totalPages !== 0 ? totalPages : 1}
           </span>
         </div>
 

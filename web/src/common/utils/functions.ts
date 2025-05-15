@@ -37,15 +37,15 @@ export const getMonthName = (month: number): string => {
 };
 
 export const getCurrentMonth = (): number => {
-  const dataAtual = new Date();
-  const mes = dataAtual.getMonth();
-  return mes + 1;
+  const currentDate = new Date();
+  const month = currentDate.getMonth();
+  return month + 1;
 };
 
 export const getCurrentYear = (): string => {
-  const dataAtual = new Date();
-  const ano = dataAtual.getFullYear();
-  return ano.toString();
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  return year.toString();
 };
 
 export const formatAmount = (amount: number): number => {

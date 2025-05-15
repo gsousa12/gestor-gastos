@@ -6,9 +6,9 @@ import {
 import { createExpense } from "../../api/expense/expense";
 
 export const useCreateExpense = (): UseMutationResult<
-  CreateExpenseResponse, // tipo do retorno
-  unknown, // tipo do erro
-  CreateExpenseRequest // tipo do argumento
+  CreateExpenseResponse,
+  unknown,
+  CreateExpenseRequest
 > => {
   return useMutation({
     mutationFn: (request: CreateExpenseRequest) => createExpense(request),

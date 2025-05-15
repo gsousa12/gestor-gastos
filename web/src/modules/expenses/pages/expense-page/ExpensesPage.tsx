@@ -11,6 +11,7 @@ import {
   getCurrentYear,
 } from "../../../../common/utils/functions";
 import { DeleteConfirmationPopup } from "../../../../common/components/popups/deletion-confirmation-popup/DeleteConfirmationPopup";
+import { ContentTitle } from "../../../../common/components/content-title/ContentTitle";
 
 export const ExpensesPage = () => {
   const {
@@ -33,25 +34,28 @@ export const ExpensesPage = () => {
 
   return (
     <ContentWrapper>
-      <div className="flex flex-row justify-end gap-1 items-center mb-4">
-        <ExpenseFilterPopUp
-          filters={filters}
-          onApply={applyFilters}
-          onClear={clearFilters}
-        />
-        <GenerateReportButton
-          type="expense"
-          month={
-            typeof filters.month === "number"
-              ? filters.month
-              : getCurrentMonth()
-          }
-          year={filters.year !== "" ? filters.year : getCurrentYear()}
-        />
-        <CreateButton
-          label="Cadastrar Despesa"
-          openPopup={handleOpenCreateExpense}
-        />
+      <div className="flex flex-row justify-between items-center mb-4">
+        <ContentTitle label="Despesas" />
+        <div className="flex flex-row gap-1 items-center">
+          <ExpenseFilterPopUp
+            filters={filters}
+            onApply={applyFilters}
+            onClear={clearFilters}
+          />
+          <GenerateReportButton
+            type="expense"
+            month={
+              typeof filters.month === "number"
+                ? filters.month
+                : getCurrentMonth()
+            }
+            year={filters.year !== "" ? filters.year : getCurrentYear()}
+          />
+          <CreateButton
+            label="Cadastrar Despesa"
+            openPopup={handleOpenCreateExpense}
+          />
+        </div>
       </div>
 
       <CreateExpensePopup

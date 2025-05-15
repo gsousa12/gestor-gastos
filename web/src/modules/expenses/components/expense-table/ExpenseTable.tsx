@@ -6,7 +6,7 @@ import {
   TableHeader,
   TableRow,
 } from "../../../../components/ui/table";
-import { Check, Clock, DollarSign, Pencil, Trash, Trash2 } from "lucide-react";
+import { CircleCheck, Clock, DollarSign, Pencil, Trash2 } from "lucide-react";
 
 import {
   convertCentsToReal,
@@ -16,7 +16,7 @@ import {
 import { Expense } from "../../../../common/api/types/api-types";
 import { StatusBadge } from "../../../../common/components/badges/status-badge/StatusBadge";
 import { ExpenseStatus } from "../../../../common/utils/enums";
-import { cn } from "../../../../lib/utils";
+import { NotFoundItems } from "../../../../common/components/not-found-items/NotFoundItems";
 
 interface ExpenseTableProps {
   data: Expense[];
@@ -57,7 +57,10 @@ export const ExpenseTable = ({
           {data.length === 0 ? (
             <TableRow>
               <TableCell colSpan={7} className="text-center text-gray-300 py-8">
-                Nenhuma despesa encontrada.
+                <NotFoundItems
+                  title="Despesa não encontrada"
+                  description="Nenhuma despesa foi encontrada. Tente aplicar outro filtro."
+                />
               </TableCell>
             </TableRow>
           ) : (
@@ -94,9 +97,9 @@ export const ExpenseTable = ({
                       }
                       icon={
                         expense.status === ExpenseStatus.PENDING ? (
-                          <Clock className="w-3 h-3" />
+                          <Clock className="w-3 h-3 " />
                         ) : (
-                          <Check className="w-3 h-3" />
+                          <CircleCheck className="w-3 h-3" />
                         )
                       }
                     />
@@ -139,7 +142,7 @@ export const ExpenseTable = ({
                       className={`w-4 h-4   ${
                         expense.status === ExpenseStatus.PAID
                           ? "text-gray-400 cursor-not-allowed "
-                          : "text-gray-800 hover:text-amber-600 hover:cursor-pointer"
+                          : "text-gray-800 hover:text-yellow-600 hover:cursor-pointer"
                       }`}
                     />
                   </button>

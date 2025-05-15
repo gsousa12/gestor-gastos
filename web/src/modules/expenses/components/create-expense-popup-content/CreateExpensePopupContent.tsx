@@ -13,11 +13,18 @@ import {
 } from "../../../../common/utils/functions";
 import { useCreateExpense } from "../../../../common/hooks/expense/useCreateExpense";
 import { cn } from "../../../../lib/utils";
+import { useEffect } from "react";
+import { CheckCircle } from "lucide-react";
+import { showToast } from "../../../../common/components/toast/Toast";
 
 export const CreateExpensePopupContent = () => {
   const { createExpenseFormData, isPending } =
     useCreateExpensePopupContentController();
-  const { mutate: createExpenseMutation } = useCreateExpense();
+  const {
+    mutate: createExpenseMutation,
+    isSuccess,
+    isError,
+  } = useCreateExpense();
   const {
     register,
     handleSubmit,
@@ -38,6 +45,17 @@ export const CreateExpensePopupContent = () => {
     },
   });
 
+  useEffect(() => {
+    if (isSuccess) {
+      setValue("description", "");
+      showToast({
+        title: "Despesa criada com sucesso!",
+        description: "Sua despesa foi cadastrada.",
+        type: "success",
+      });
+    }
+  }, [isSuccess, isError]);
+
   if (isPending || !createExpenseFormData) {
     return (
       <div className="flex justify-center items-center h-32">
@@ -47,11 +65,8 @@ export const CreateExpensePopupContent = () => {
   }
 
   const onSubmit = (data: CreateExpenseFormValues) => {
-    console.log(data.amount);
-
     data.amount = formatAmount(data.amount);
     createExpenseMutation(data);
-    console.log(data);
   };
 
   return (
