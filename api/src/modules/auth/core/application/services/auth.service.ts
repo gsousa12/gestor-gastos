@@ -20,7 +20,7 @@ export class AuthService implements IAuthService {
     const user = await this.validateUser(request.email, request.password);
 
     const payload = {
-      sub: user.id,
+      userId: user.id,
       name: user.name,
       email: user.email,
       isActive: user.isActive,

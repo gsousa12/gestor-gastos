@@ -4,7 +4,19 @@ import { mainErrorResponse } from '@common/utils/main-error-response';
 import { CreateSupplierRequestDto } from '@modules/supplier/core/application/dtos/request/create-supplier.request.dto';
 import { SupplierMapper } from '@modules/supplier/core/application/mappers/supplier.mapper';
 import { SupplierService } from '@modules/supplier/core/application/services/supplier.service';
-import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Query, Request } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Post,
+  Query,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('supplier')
 export class SupplierController {
@@ -13,6 +25,7 @@ export class SupplierController {
     private readonly supplierMapper: SupplierMapper,
   ) {}
 
+  @UseGuards(AuthGuard('jwt'))
   @Post('/')
   @HttpCode(HttpStatus.OK)
   async createSupplier(@Body() request: CreateSupplierRequestDto) {
@@ -26,6 +39,7 @@ export class SupplierController {
     }
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get('/')
   @HttpCode(HttpStatus.OK)
   async getSupplierList(
@@ -50,6 +64,7 @@ export class SupplierController {
     }
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get('/:id')
   @HttpCode(HttpStatus.OK)
   async getSupplierById(@Request() req, @Param('id') id: number) {

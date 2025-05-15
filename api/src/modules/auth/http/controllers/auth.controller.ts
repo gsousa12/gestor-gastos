@@ -2,8 +2,9 @@ import { createApiResponse } from '@common/utils/api-response';
 import { mainErrorResponse } from '@common/utils/main-error-response';
 import { LoginRequestDto } from '@modules/auth/core/application/dtos/request/login.request.dto';
 import { AuthService } from '@modules/auth/core/application/services/auth.service';
-import { Body, Controller, HttpCode, HttpStatus, Post, Res } from '@nestjs/common';
-
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, Req, Res, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { Request } from 'express';
 import { Response } from 'express';
 
 @Controller('auth')
@@ -24,7 +25,24 @@ export class AuthController {
   @Post('/logout')
   @HttpCode(HttpStatus.OK)
   async logout(@Res({ passthrough: true }) res: Response) {
-    await this.authService.logout(res);
-    return createApiResponse('Deslogado com sucesso', {});
+    try {
+      await this.authService.logout(res);
+      return createApiResponse('Deslogado com sucesso', {});
+    } catch (error) {
+      return mainErrorResponse(error);
+    }
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('/get-user-info')
+  @HttpCode(HttpStatus.OK)
+  async getUserInfo(@Req() req: Request) {
+    try {
+      console.log('Teste');
+
+      return createApiResponse('Usuário encontrado com sucesso', req.user!);
+    } catch (error) {
+      return mainErrorResponse(error);
+    }
   }
 }

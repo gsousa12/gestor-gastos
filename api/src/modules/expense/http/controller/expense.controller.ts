@@ -15,7 +15,9 @@ import {
   Post,
   Query,
   Request,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('expense')
 export class ExpenseController {
@@ -24,6 +26,7 @@ export class ExpenseController {
     private readonly expenseMapper: ExpenseMapper,
   ) {}
 
+  @UseGuards(AuthGuard('jwt'))
   @Post('/')
   @HttpCode(HttpStatus.OK)
   async createExpense(@Body() request: CreateExpenseRequestDto) {
@@ -37,6 +40,7 @@ export class ExpenseController {
     }
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get('/creation-form-data')
   @HttpCode(HttpStatus.OK)
   async getCreationFormData() {
@@ -48,6 +52,7 @@ export class ExpenseController {
     }
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get('/')
   @HttpCode(HttpStatus.OK)
   async getExpenseList(
@@ -74,6 +79,7 @@ export class ExpenseController {
     }
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get('/:id')
   @HttpCode(HttpStatus.OK)
   async getExpenseById(@Param('id') id: number) {
@@ -87,6 +93,7 @@ export class ExpenseController {
     }
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Delete('/:id')
   @HttpCode(HttpStatus.OK)
   async deleteExpenseById(@Param('id') id: number) {

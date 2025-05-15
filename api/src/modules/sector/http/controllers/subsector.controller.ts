@@ -3,7 +3,8 @@ import { mainErrorResponse } from '@common/utils/main-error-response';
 import { CreateSubSectorRequestDto } from '@modules/sector/core/application/dto/request/create-subsector.request.dto';
 import { SectorMapper } from '@modules/sector/core/application/mappers/sector.mapper';
 import { SectorService } from '@modules/sector/core/application/services/sector.service';
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('sub-sector')
 export class SubSectorController {
@@ -12,6 +13,7 @@ export class SubSectorController {
     private readonly sectorMapper: SectorMapper,
   ) {}
 
+  @UseGuards(AuthGuard('jwt'))
   @Post('/')
   @HttpCode(HttpStatus.OK)
   async createSubSector(@Body() request: CreateSubSectorRequestDto) {

@@ -4,7 +4,8 @@ import { mainErrorResponse } from '@common/utils/main-error-response';
 import { CreatePaymentRequestDto } from '@modules/payment/core/application/dtos/request/create-payment.request.dto';
 import { PaymentMapper } from '@modules/payment/core/application/mappers/payment.mapper';
 import { PaymentService } from '@modules/payment/core/application/services/payment.service';
-import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Query, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('payment')
 export class PaymentController {
@@ -13,6 +14,7 @@ export class PaymentController {
     private readonly paymentMapper: PaymentMapper,
   ) {}
 
+  @UseGuards(AuthGuard('jwt'))
   @Post('/')
   @HttpCode(HttpStatus.OK)
   async createPayment(@Body() request: CreatePaymentRequestDto) {
@@ -26,6 +28,7 @@ export class PaymentController {
     }
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Post('/cancel/:id')
   @HttpCode(HttpStatus.OK)
   async cancelPayment(@Param('id') id: number) {
@@ -39,6 +42,7 @@ export class PaymentController {
     }
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get('/')
   @HttpCode(HttpStatus.OK)
   async getPaymentList(
@@ -64,6 +68,7 @@ export class PaymentController {
     }
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get('/:id')
   @HttpCode(HttpStatus.OK)
   async getPaymentById(@Param('id') id: number) {

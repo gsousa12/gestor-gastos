@@ -2,7 +2,8 @@ import { mainErrorResponse } from '@common/utils/main-error-response';
 import { CreateReportRequestDto } from '@modules/report/core/application/dtos/request/create-payment-report.request.dto';
 import { ReportMapper } from '@modules/report/core/application/mappers/report.mapper';
 import { ReportService } from '@modules/report/core/application/services/report.service';
-import { Body, Controller, HttpCode, HttpStatus, Post, Res } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post, Res, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { Response } from 'express';
 
 @Controller('report')
@@ -12,6 +13,7 @@ export class ReportController {
     private readonly reportMapper: ReportMapper,
   ) {}
 
+  @UseGuards(AuthGuard('jwt'))
   @Post('/')
   @HttpCode(HttpStatus.OK)
   async createReport(@Body() request: CreateReportRequestDto, @Res() res: Response) {
