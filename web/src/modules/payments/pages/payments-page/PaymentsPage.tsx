@@ -4,7 +4,7 @@ import {
   getCurrentMonth,
   getCurrentYear,
 } from "../../../../common/utils/functions";
-import { CreateButton } from "../../../expenses/components/create-button/CreateButton";
+import { CreateButton } from "../../../../common/components/create-button/CreateButton";
 import { PaymentsTable } from "../../components/payments-table/PaymentsTable";
 
 export const PaymentsPage = () => {

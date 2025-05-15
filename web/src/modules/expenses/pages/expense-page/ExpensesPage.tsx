@@ -1,6 +1,6 @@
 import { ContentWrapper } from "../../../../common/components/wrappers/content-wrapper/ContentWrapper";
 import { GenerateReportButton } from "../../../../common/components/generate-report-button/GenerateReportButton";
-import { CreateButton } from "../../components/create-button/CreateButton";
+import { CreateButton } from "../../../../common/components/create-button/CreateButton";
 import { CreateExpensePopup } from "../../components/create-expense-popup/CreateExpensePopup";
 import { ExpenseTable } from "../../components/expense-table/ExpenseTable";
 import { Pagination } from "../../../../common/components/pagination/Pagination";
