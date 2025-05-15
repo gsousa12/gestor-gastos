@@ -73,6 +73,7 @@ export const ExpensesPage = () => {
       <ExpenseTable
         data={expensesData}
         onDeleteExpenseById={onDeleteExpenseById}
+        isPending={isPending}
       />
 
       <Pagination

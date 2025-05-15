@@ -21,11 +21,13 @@ import { NotFoundItems } from "../../../../common/components/not-found-items/Not
 interface ExpenseTableProps {
   data: Expense[];
   onDeleteExpenseById: (id: number) => void;
+  isPending: boolean;
 }
 
 export const ExpenseTable = ({
   data,
   onDeleteExpenseById,
+  isPending,
 }: ExpenseTableProps) => {
   return (
     <div className="rounded-lg border border-gray-100 overflow-x-auto shadow-sm">
@@ -54,7 +56,7 @@ export const ExpenseTable = ({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.length === 0 ? (
+          {data.length === 0 && !isPending ? (
             <TableRow>
               <TableCell colSpan={7} className="text-center text-gray-300 py-8">
                 <NotFoundItems

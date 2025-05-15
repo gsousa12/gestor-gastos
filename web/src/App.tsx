@@ -8,6 +8,7 @@ import { useAuthStore } from "./common/store/authStore";
 import { Route, Routes } from "react-router-dom";
 import { LoginRoute } from "./modules/auth/components/login-route/LoginRoute";
 import { Toaster } from "sonner";
+import { GlobalLoader } from "./common/components/global-loader/GlobalLoader";
 
 const queryClient = new QueryClient();
 
@@ -17,6 +18,7 @@ const AppLayout = () => {
     <GlobalWrapper>
       {isAuthenticated && (
         <>
+          <GlobalLoader />
           <Toaster richColors />
           <Sidebar />
           <RightSideWrapper>

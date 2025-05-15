@@ -30,7 +30,9 @@ export const ComboBox = ({
 
   return (
     <div className="relative">
-      <label className="block text-xs text-gray-500 mb-1">{label}</label>
+      <label className="block text-sm font-medium text-slate-700 mb-1">
+        {label}
+      </label>
       <input
         ref={inputRef}
         className="w-full px-2 py-1 border border-gray-200 rounded-md text-sm focus:ring-1 focus:ring-gray-400 outline-none mb-1"
