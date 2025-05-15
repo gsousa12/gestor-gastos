@@ -28,9 +28,9 @@ export class ExpenseController {
   @HttpCode(HttpStatus.OK)
   async createExpense(@Body() request: CreateExpenseRequestDto) {
     try {
-      const expense = await this.expenseMapper.toMapperCreateExpenseRequest(request);
+      const expense = this.expenseMapper.toMapperCreateExpenseRequest(request);
       const createdExpense = await this.expenseService.createExpense(expense);
-      const response = await this.expenseMapper.toMapperCreateExpenseResponse(createdExpense);
+      const response = this.expenseMapper.toMapperCreateExpenseResponse(createdExpense);
       return createApiResponse('Despesa criada com sucesso', response);
     } catch (error) {
       return mainErrorResponse(error);
@@ -67,7 +67,7 @@ export class ExpenseController {
         parsedMonth,
         year,
       );
-      const response = await this.expenseMapper.toMapperGetExpenseListResponse(expenseList);
+      const response = this.expenseMapper.toMapperGetExpenseListResponse(expenseList);
       return createApiResponse('Lista de despesas', response, meta);
     } catch (error) {
       return mainErrorResponse(error);
@@ -80,7 +80,7 @@ export class ExpenseController {
     const expenseId = Number(id);
     try {
       const expense = await this.expenseService.getExpenseById(expenseId);
-      const response = await this.expenseMapper.toMapperGetExpenseByIdResponse(expense);
+      const response = this.expenseMapper.toMapperGetExpenseByIdResponse(expense);
       return createApiResponse('Despesa encontrado com sucesso', response);
     } catch (error) {
       return mainErrorResponse(error);

@@ -1,10 +1,9 @@
 import { Expense } from '@prisma/client';
 import { ExpenseEntity } from '../../domain/entities/expense.entity';
 import { CreateExpenseRequestDto } from '../dtos/request/create-expense.request.dto';
-import e from 'express';
 
 export class ExpenseMapper {
-  async toMapperCreateExpenseRequest(request: CreateExpenseRequestDto): Promise<ExpenseEntity> {
+  toMapperCreateExpenseRequest(request: CreateExpenseRequestDto): ExpenseEntity {
     const expense = new ExpenseEntity();
     expense.description = request.description;
     expense.month = request.month;
@@ -17,7 +16,7 @@ export class ExpenseMapper {
     return expense;
   }
 
-  async toMapperCreateExpenseResponse(createdExpense: Expense): Promise<ExpenseEntity> {
+  toMapperCreateExpenseResponse(createdExpense: Expense): ExpenseEntity {
     const response = new ExpenseEntity();
     response.description = createdExpense.description;
     response.month = createdExpense.month;
@@ -49,7 +48,7 @@ export class ExpenseMapper {
     }));
   }
 
-  async toMapperGetExpenseByIdResponse(expense: Expense): Promise<ExpenseEntity> {
+  toMapperGetExpenseByIdResponse(expense: Expense): ExpenseEntity {
     const response = new ExpenseEntity();
     response.description = expense.description;
     response.month = expense.month;
