@@ -31,7 +31,7 @@ export const Sidebar = () => {
             isMobile ? "justify-center" : "justify-between"
           )}
         >
-          <GalleryVerticalEnd className="w-8 h-8 text-teal-600" />
+          <GalleryVerticalEnd className="w-8 h-8 text-emerald-600" />
           {!isMobile && (
             <>
               <span className="text-lg font-bold text-gray-800 tracking-tight">

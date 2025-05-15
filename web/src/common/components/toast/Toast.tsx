@@ -15,7 +15,7 @@ export const showToast = ({
 }: ShowToastOptions) => {
   const iconMap: Record<string, ReactNode> = {
     success: (
-      <div className="bg-teal-100 p-1 rounded-full">
+      <div className="bg-emerald-100 p-1 rounded-full">
         <CheckCircle className="text-emerald-600 w-5 h-5" />
       </div>
     ),

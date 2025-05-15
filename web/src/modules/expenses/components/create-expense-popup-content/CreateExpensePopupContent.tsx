@@ -91,7 +91,7 @@ export const CreateExpensePopupContent = () => {
             min={1}
             step={0.01}
             {...register("amount", { valueAsNumber: true })}
-            className="w-full px-3 py-2 border border-slate-200 rounded-md text-sm focus:ring-1 focus:ring-teal-400 outline-none"
+            className="w-full px-3 py-2 border border-slate-200 rounded-md text-sm focus:ring-1 focus:ring-emerald-400 outline-none"
             placeholder="Valor"
           />
           {errors.amount && (
@@ -106,7 +106,7 @@ export const CreateExpensePopupContent = () => {
           </label>
           <input
             {...register("description")}
-            className="w-full px-3 py-2 border border-slate-200 rounded-md text-sm focus:ring-1 focus:ring-teal-400 outline-none"
+            className="w-full px-3 py-2 border border-slate-200 rounded-md text-sm focus:ring-1 focus:ring-emerald-400 outline-none"
             placeholder="Descrição da despesa"
           />
           {errors.description && (
@@ -128,7 +128,7 @@ export const CreateExpensePopupContent = () => {
             min={1}
             max={12}
             {...register("month", { valueAsNumber: true })}
-            className="w-full px-3 py-2 border border-slate-200 rounded-md text-sm focus:ring-1 focus:ring-teal-400 outline-none"
+            className="w-full px-3 py-2 border border-slate-200 rounded-md text-sm focus:ring-1 focus:ring-emerald-400 outline-none"
             placeholder="Mês"
           />
           {errors.month && (
@@ -142,7 +142,7 @@ export const CreateExpensePopupContent = () => {
           <input
             type="number"
             {...register("year")}
-            className="w-full px-3 py-2 border border-slate-200 rounded-md text-sm focus:ring-1 focus:ring-teal-400 outline-none"
+            className="w-full px-3 py-2 border border-slate-200 rounded-md text-sm focus:ring-1 focus:ring-emerald-400 outline-none"
             placeholder="Ano"
             maxLength={4}
           />
@@ -174,7 +174,7 @@ export const CreateExpensePopupContent = () => {
       <button
         type="submit"
         className={cn(
-          "mt-4 px-4 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700 transition-colors text-sm",
+          "mt-4 px-4 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors text-sm",
           !!errors.description?.message
             ? "cursor-not-allowed opacity-50"
             : "cursor-pointer"

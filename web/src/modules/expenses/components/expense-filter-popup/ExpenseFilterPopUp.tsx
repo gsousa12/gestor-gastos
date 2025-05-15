@@ -67,7 +67,7 @@ export const ExpenseFilterPopUp = ({
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <button
-          className="flex items-center gap-1 px-3 py-1 bg-white text-gray-600 hover:bg-teal-50 hover:text-teal-700 hover:cursor-pointer"
+          className="flex items-center gap-1 px-3 py-1 bg-white text-gray-600 hover:bg-emerald-50 hover:text-emerald-700 hover:cursor-pointer"
           type="button"
         >
           <Filter className="w-4 h-4" />
@@ -84,7 +84,7 @@ export const ExpenseFilterPopUp = ({
             name="supplierName"
             value={values.supplierName}
             onChange={handleChange}
-            className="w-full px-2 py-1 border border-gray-200 rounded-md text-sm focus:ring-1 focus:ring-teal-400 outline-none"
+            className="w-full px-2 py-1 border border-gray-200 rounded-md text-sm focus:ring-1 focus:ring-emerald-400 outline-none"
             placeholder="Nome do fornecedor"
           />
         </div>
@@ -95,7 +95,7 @@ export const ExpenseFilterPopUp = ({
               name="month"
               value={values.month}
               onChange={handleChange}
-              className="w-full px-2 py-1 border border-gray-200 rounded-md text-sm focus:ring-1 focus:ring-teal-400 outline-none"
+              className="w-full px-2 py-1 border border-gray-200 rounded-md text-sm focus:ring-1 focus:ring-emerald-400 outline-none"
             >
               {months.map((m) => (
                 <option key={m.value} value={m.value}>
@@ -111,7 +111,7 @@ export const ExpenseFilterPopUp = ({
               name="year"
               value={values.year}
               onChange={handleChange}
-              className="w-full px-2 py-1 border border-gray-200 rounded-md text-sm focus:ring-1 focus:ring-teal-400 outline-none"
+              className="w-full px-2 py-1 border border-gray-200 rounded-md text-sm focus:ring-1 focus:ring-emerald-400 outline-none"
               placeholder={getCurrentYear()}
               maxLength={4}
             />
@@ -126,7 +126,7 @@ export const ExpenseFilterPopUp = ({
             Limpar
           </button>
           <button
-            className="px-2 py-1 text-xs rounded bg-teal-600 text-white hover:bg-teal-700 hover:cursor-pointer"
+            className="px-2 py-1 text-xs rounded bg-emerald-600 text-white hover:bg-emerald-700 hover:cursor-pointer"
             onClick={handleApply}
             type="button"
           >

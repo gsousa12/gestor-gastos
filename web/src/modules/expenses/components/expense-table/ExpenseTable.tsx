@@ -109,7 +109,7 @@ export const ExpenseTable = ({
                 </TableCell>
                 <TableCell className="flex items-center justify-center gap-2">
                   <button
-                    className="p-1 rounded hover:bg-teal-50 transition"
+                    className="p-1 rounded hover:bg-emerald-50 transition"
                     title={
                       expense.status === ExpenseStatus.PAID
                         ? "Despesas já foi paga."
@@ -129,7 +129,7 @@ export const ExpenseTable = ({
                     />
                   </button>
                   <button
-                    className="p-1 rounded hover:bg-teal-50 transition"
+                    className="p-1 rounded hover:bg-emerald-50 transition"
                     title={
                       expense.status === ExpenseStatus.PAID
                         ? "Despesas já pagas não podem ser editadas."
