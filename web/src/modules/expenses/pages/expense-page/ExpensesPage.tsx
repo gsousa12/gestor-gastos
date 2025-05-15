@@ -1,6 +1,6 @@
 import { ContentWrapper } from "../../../../common/components/wrappers/content-wrapper/ContentWrapper";
 import { GenerateReportButton } from "../../../../common/components/generate-report-button/GenerateReportButton";
-import { CreateExpenseButton } from "../../components/create-expense-button/CreateExpenseButton";
+import { CreateButton } from "../../components/create-button/CreateButton";
 import { CreateExpensePopup } from "../../components/create-expense-popup/CreateExpensePopup";
 import { ExpenseTable } from "../../components/expense-table/ExpenseTable";
 import { Pagination } from "../../../../common/components/pagination/Pagination";
@@ -48,7 +48,7 @@ export const ExpensesPage = () => {
           }
           year={filters.year !== "" ? filters.year : getCurrentYear()}
         />
-        <CreateExpenseButton
+        <CreateButton
           label="Cadastrar Despesa"
           openPopup={handleOpenCreateExpense}
         />

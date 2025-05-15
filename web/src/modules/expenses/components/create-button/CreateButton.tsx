@@ -1,15 +1,12 @@
 import { Plus } from "lucide-react";
 import { useMobileDetect } from "../../../../common/hooks/useMobileDetect";
 
-interface CreateExpenseButtonProps {
+interface CreateButtonProps {
   label: string;
   openPopup: () => void;
 }
 
-export const CreateExpenseButton = ({
-  label,
-  openPopup,
-}: CreateExpenseButtonProps) => {
+export const CreateButton = ({ label, openPopup }: CreateButtonProps) => {
   const isMobile = useMobileDetect();
   return (
     <button

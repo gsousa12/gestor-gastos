@@ -51,3 +51,14 @@ export const getCurrentYear = (): string => {
 export const formatAmount = (amount: number): number => {
   return amount * 100;
 };
+
+export const formatExpenseStatus = (status: string): string => {
+  switch (status) {
+    case "pendente":
+      return "Pendente";
+    case "pago":
+      return "Pago";
+    default:
+      return status;
+  }
+};

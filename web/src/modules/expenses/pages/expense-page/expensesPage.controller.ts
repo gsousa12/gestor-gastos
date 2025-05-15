@@ -18,7 +18,7 @@ export const useExpensesController = () => {
 
   const [filters, setFilters] = useState<ExpenseFilterValues>({
     supplierName: "",
-    month: "",
+    month: getCurrentMonth(),
     year: getCurrentYear(),
   });
 

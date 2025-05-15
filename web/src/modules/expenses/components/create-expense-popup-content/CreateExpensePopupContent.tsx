@@ -112,7 +112,7 @@ export const CreateExpensePopupContent = () => {
           <span className="text-xs text-red-500">{errors.amount.message}</span>
         )}
       </div>
-      {/* FIXME: Não permitir que o texto do combobox seja diferente do valor/ alterado */}
+      {/* FIXME: Não permitir que o texto do combobox seja alterado */}
       <ComboBox
         label="Fornecedor"
         options={createExpenseFormData.supplierList ?? []}

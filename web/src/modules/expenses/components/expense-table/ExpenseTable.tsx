@@ -6,13 +6,17 @@ import {
   TableHeader,
   TableRow,
 } from "../../../../components/ui/table";
-import { Pencil, Trash2 } from "lucide-react";
+import { Check, Clock, DollarSign, Pencil, Trash, Trash2 } from "lucide-react";
 
 import {
   convertCentsToReal,
+  formatExpenseStatus,
   getMonthName,
 } from "../../../../common/utils/functions";
 import { Expense } from "../../../../common/api/types/api-types";
+import { StatusBadge } from "../../../../common/components/badges/status-badge/StatusBadge";
+import { ExpenseStatus } from "../../../../common/utils/enums";
+import { cn } from "../../../../lib/utils";
 
 interface ExpenseTableProps {
   data: Expense[];
@@ -41,6 +45,9 @@ export const ExpenseTable = ({
             </TableHead>
             <TableHead className="text-gray-400 font-semibold">Mês</TableHead>
             <TableHead className="text-gray-400 font-semibold">Ano</TableHead>
+            <TableHead className="text-gray-400 font-semibold">
+              Status de Pagamento
+            </TableHead>
             <TableHead className="text-gray-400 font-semibold text-center">
               Ações
             </TableHead>
@@ -76,19 +83,83 @@ export const ExpenseTable = ({
                   {getMonthName(expense.month)}
                 </TableCell>
                 <TableCell className="text-gray-700">{expense.year}</TableCell>
+                <TableCell className="text-gray-700">
+                  {
+                    <StatusBadge
+                      text={formatExpenseStatus(expense.status)}
+                      variant={
+                        expense.status === ExpenseStatus.PENDING
+                          ? "negative"
+                          : "positive"
+                      }
+                      icon={
+                        expense.status === ExpenseStatus.PENDING ? (
+                          <Clock className="w-3 h-3" />
+                        ) : (
+                          <Check className="w-3 h-3" />
+                        )
+                      }
+                    />
+                  }
+                </TableCell>
                 <TableCell className="flex items-center justify-center gap-2">
                   <button
                     className="p-1 rounded hover:bg-teal-50 transition"
-                    title="Editar"
+                    title={
+                      expense.status === ExpenseStatus.PAID
+                        ? "Despesas já foi paga."
+                        : "Pagar"
+                    }
+                    disabled={expense.status === ExpenseStatus.PAID}
+                    onClick={() => {
+                      alert("Pagar despesa");
+                    }}
                   >
-                    <Pencil className="w-4 h-4 text-gray-400 hover:text-teal-600 hover:cursor-pointer" />
+                    <DollarSign
+                      className={`w-4 h-4   ${
+                        expense.status === ExpenseStatus.PAID
+                          ? "text-gray-400 cursor-not-allowed "
+                          : "text-gray-800 hover:text-emerald-600 hover:cursor-pointer"
+                      }`}
+                    />
+                  </button>
+                  <button
+                    className="p-1 rounded hover:bg-teal-50 transition"
+                    title={
+                      expense.status === ExpenseStatus.PAID
+                        ? "Despesas já pagas não podem ser editadas."
+                        : "Editar"
+                    }
+                    disabled={expense.status === ExpenseStatus.PAID}
+                    onClick={() => {
+                      alert("Editar despesa");
+                    }}
+                  >
+                    <Pencil
+                      className={`w-4 h-4   ${
+                        expense.status === ExpenseStatus.PAID
+                          ? "text-gray-400 cursor-not-allowed "
+                          : "text-gray-800 hover:text-amber-600 hover:cursor-pointer"
+                      }`}
+                    />
                   </button>
                   <button
                     className="p-1 rounded hover:bg-red-50 transition"
-                    title="Deletar"
+                    title={
+                      expense.status === ExpenseStatus.PAID
+                        ? "Despesas já pagas não podem ser excluidas."
+                        : "Excluir"
+                    }
+                    disabled={expense.status === ExpenseStatus.PAID}
                     onClick={() => onDeleteExpenseById(expense.id)}
                   >
-                    <Trash2 className="w-4 h-4 text-gray-400 hover:text-red-600 hover:cursor-pointer" />
+                    <Trash2
+                      className={`w-4 h-4   ${
+                        expense.status === ExpenseStatus.PAID
+                          ? "text-gray-400 cursor-not-allowed "
+                          : "text-gray-800 hover:text-red-600 hover:cursor-pointer"
+                      }`}
+                    />
                   </button>
                 </TableCell>
               </TableRow>
