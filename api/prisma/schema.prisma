@@ -75,11 +75,11 @@ model Expense {
   month           Int
   year            String
   amount          Int
+  status          String
   createdAt       DateTime     @map("created_at")
   updatedAt       DateTime?    @map("updated_at")
 
   supplierId      Int          @map("supplier_id")
-  supplierName    String?      @map("supplier_name")
   supplier        Supplier     @relation(fields: [supplierId], references: [id], onDelete: Cascade)
 
   secretaryId     Int          @map("secretary_id")
@@ -107,7 +107,6 @@ model Payment {
   cacelledAt      DateTime?    @map("cancelled_at")
 
   supplierId      Int          @map("supplier_id")
-  supplierName    String?      @map("supplier_name")
   supplier        Supplier     @relation(fields: [supplierId], references: [id], onDelete: Cascade)
 
   sectorId        Int          @map("sector_id")
