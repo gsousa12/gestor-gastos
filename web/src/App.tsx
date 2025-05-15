@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useAuthStore } from "./common/store/authStore";
 import { Route, Routes } from "react-router-dom";
 import { LoginRoute } from "./modules/auth/components/login-route/LoginRoute";
+import { Toaster } from "sonner";
 
 const queryClient = new QueryClient();
 
@@ -16,6 +17,7 @@ const AppLayout = () => {
     <GlobalWrapper>
       {isAuthenticated && (
         <>
+          <Toaster richColors />
           <Sidebar />
           <RightSideWrapper>
             <Header />
