@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { PAYMENT_REPOSITORY } from '@common/tokens/repositories.tokens';
 import { IPaymentService } from '../interfaces/payment-service.interface';
 import { PaymentHelper } from '../helpers/payment.helper';
@@ -15,6 +15,10 @@ export class PaymentService implements IPaymentService {
   ) {}
 
   async createPayment(payment: PaymentEntity): Promise<Payment> {
+    const existingPayment = await this.paymentRepository.getPaymentByExpenseId(payment.expenseId);
+    if (existingPayment) {
+      throw new BadRequestException('Já existe um pagamento associado a esta despesa');
+    }
     const expense = await this.paymentRepository.getExpenseDetails(payment.expenseId);
     if (!expense) {
       throw new NotFoundException('Pagamento não encontrada');

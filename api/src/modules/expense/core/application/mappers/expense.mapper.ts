@@ -37,6 +37,7 @@ export class ExpenseMapper {
       month: expense.month,
       year: expense.year,
       amount: expense.amount,
+      status: expense.status,
       createdAt: expense.createdAt,
       updatedAt: expense.updatedAt,
       supplierId: expense.supplierId,

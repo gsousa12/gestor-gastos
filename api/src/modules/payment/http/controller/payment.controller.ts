@@ -42,15 +42,16 @@ export class PaymentController {
   @Get('/')
   @HttpCode(HttpStatus.OK)
   async getPaymentList(
-    @Query('page') page: number = 1,
+    @Query('page') page: number | undefined,
     @Query('supplierName') supplierName: string | undefined,
     @Query('month') month: number | undefined,
     @Query('year') year: string | undefined,
   ) {
     const limit = config.PAGINATION.LIST_PAGE_LIMIT;
+    const parsedPage = page ? Number(page) : 1;
     try {
       const { paymentList, meta } = await this.paymentService.getPaymentList(
-        page,
+        parsedPage,
         limit,
         supplierName,
         month,

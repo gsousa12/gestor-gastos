@@ -51,7 +51,7 @@ export class ExpenseController {
   @Get('/')
   @HttpCode(HttpStatus.OK)
   async getExpenseList(
-    @Query('page') page: number = 1,
+    @Query('page') page: number | undefined,
     @Query('supplierName') supplierName: string | undefined,
     @Query('month') month: number | undefined,
     @Query('year') year: string | undefined,

@@ -32,21 +32,22 @@ export class PaymentMapper {
     return response;
   }
 
-  async toMapperGetPaymentListResponse(supplierList: Payment[]): Promise<PaymentEntity[]> {
-    const response = supplierList.map((supplier) => {
-      const payment = new PaymentEntity();
-      payment.id = supplier.id;
-      payment.month = supplier.month;
-      payment.year = supplier.year;
-      payment.amount = supplier.amount;
-      payment.status = supplier.status;
-      payment.recurringDebitDeducted = supplier.recurringDebitDeducted;
-      payment.createdAt = supplier.createdAt;
-      payment.supplierId = supplier.supplierId;
-      payment.supplierName = supplier.supplierName;
-      return payment;
-    });
-    return response;
+  // FIXME: tipar parametro e resposta
+  async toMapperGetPaymentListResponse(paymentList: any[]): Promise<any[]> {
+    return paymentList.map((payment) => ({
+      id: payment.id,
+      month: payment.month,
+      year: payment.year,
+      amount: payment.amount,
+      status: payment.status,
+      recurringDebitDeducted: payment.recurringDebitDeducted,
+      recurringDebitDeductedType: payment.recurringDebitDeductedType,
+      createdAt: payment.createdAt,
+      updatedAt: payment.updatedAt,
+      canceledAt: payment.canceledAt ?? null,
+      supplierId: payment.expenseId,
+      supplierName: payment.supplier?.name || null,
+    }));
   }
 
   async toMapperGetPaymentByIdResponse(payment: Payment): Promise<PaymentEntity> {
@@ -58,7 +59,6 @@ export class PaymentMapper {
     response.recurringDebitDeducted = payment.recurringDebitDeducted;
     response.createdAt = payment.createdAt;
     response.supplierId = payment.supplierId;
-    response.supplierName = payment.supplierName;
     return response;
   }
 }

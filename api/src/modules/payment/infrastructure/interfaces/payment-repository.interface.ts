@@ -21,6 +21,7 @@ export interface IPaymentRepository {
     year?: string,
   ): Promise<{ paymentList: Payment[]; meta: PaginationMeta }>;
   getPaymentById(paymentId: number): Promise<Payment | null>;
+  getPaymentByExpenseId(expenseId: number): Promise<Payment | null>;
 
   // Others
   verifyExistence(payment: PaymentEntity): Promise<{ verifyExistence: boolean; message: string }>;

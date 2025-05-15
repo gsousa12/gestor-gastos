@@ -4,25 +4,22 @@ import { IExpenseRepository } from '../interfaces/expense-repository.interface';
 import { ExpenseEntity } from '@modules/expense/core/domain/entities/expense.entity';
 import { Expense, Secretary, Sector, SubSector, Supplier } from '@prisma/client';
 import { PaginationMeta } from '@common/structures/types';
+import { ExpenseStatus } from '@modules/expense/core/domain/enums/expense.enum';
 
 @Injectable()
 export class ExpenseRepository implements IExpenseRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async createExpense(expense: ExpenseEntity): Promise<Expense> {
-    const supplier = await this.prisma.supplier.findUnique({
-      where: { id: expense.supplierId },
-      select: { name: true },
-    });
     return await this.prisma.expense.create({
       data: {
         description: expense.description,
         month: expense.month,
         year: expense.year,
         amount: expense.amount,
+        status: ExpenseStatus.PENDING,
         createdAt: new Date(),
         supplierId: expense.supplierId,
-        supplierName: supplier?.name,
         secretaryId: expense.secretaryId,
         userId: expense.userId,
         subsectorId: expense.subsectorId,

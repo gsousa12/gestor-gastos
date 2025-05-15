@@ -4,6 +4,7 @@ export class ExpenseEntity {
   month: number;
   year: string;
   amount: number;
+  status: string;
   supplierId: number;
   secretaryId: number;
   userId: number;

@@ -5,17 +5,14 @@ import { PaymentEntity } from '@modules/payment/core/domain/entities/payment.ent
 import { Payment } from '@prisma/client';
 import { PaymentStatus, RecurringDebitDeductedType } from '@modules/payment/core/domain/enums/payment.enum';
 import { PaginationMeta } from '@common/structures/types';
+import { ExpenseStatus } from '@modules/expense/core/domain/enums/expense.enum';
 
 @Injectable()
 export class PaymentRepository implements IPaymentRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async createPayment(payment: PaymentEntity): Promise<Payment> {
-    const supplier = await this.prisma.supplier.findUnique({
-      where: { id: payment.supplierId },
-      select: { name: true },
-    });
-    return this.prisma.payment.create({
+    const createdPayment = await this.prisma.payment.create({
       data: {
         month: payment.month,
         year: payment.year,
@@ -25,11 +22,19 @@ export class PaymentRepository implements IPaymentRepository {
         recurringDebitDeductedType: payment.recurringDebitDeductedType,
         createdAt: new Date(),
         supplierId: payment.supplierId,
-        supplierName: supplier?.name,
         sectorId: payment.sectorId,
         expenseId: payment.expenseId,
       },
     });
+
+    await this.prisma.expense.update({
+      where: { id: createdPayment.expenseId },
+      data: {
+        status: ExpenseStatus.PAID,
+      },
+    });
+
+    return createdPayment;
   }
 
   async getExpenseDetails(expenseId: number) {
@@ -163,6 +168,13 @@ export class PaymentRepository implements IPaymentRepository {
         where: whereClause,
         skip,
         take: limit,
+        include: {
+          supplier: {
+            select: {
+              name: true,
+            },
+          },
+        },
       }),
       this.prisma.payment.count({
         where: whereClause,
@@ -180,5 +192,11 @@ export class PaymentRepository implements IPaymentRepository {
         totalPages,
       },
     };
+  }
+
+  async getPaymentByExpenseId(expenseId: number): Promise<Payment | null> {
+    return await this.prisma.payment.findFirst({
+      where: { expenseId: expenseId },
+    });
   }
 }
