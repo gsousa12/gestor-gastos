@@ -11,7 +11,7 @@ export function useAuthBootstrap() {
   const location = useLocation();
 
   useEffect(() => {
-    if (!useAuthStore.getState().user) {
+    if (!useAuthStore.getState().user && location.pathname !== "/login") {
       getUserInformation()
         .then((user) => {
           setUser(user.data);
