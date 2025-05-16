@@ -1,5 +1,4 @@
 import { createApiResponse } from '@common/utils/api-response';
-import { mainErrorResponse } from '@common/utils/main-error-response';
 import { LoginRequestDto } from '@modules/auth/core/application/dtos/request/login.request.dto';
 import { AuthService } from '@modules/auth/core/application/services/auth.service';
 import { Body, Controller, Get, HttpCode, HttpStatus, Post, Req, Res, UseGuards } from '@nestjs/common';
@@ -14,35 +13,21 @@ export class AuthController {
   @Post('/login')
   @HttpCode(HttpStatus.OK)
   async login(@Body() request: LoginRequestDto, @Res({ passthrough: true }) res: Response) {
-    try {
-      await this.authService.login(request, res);
-      return createApiResponse('Logado com sucesso', {});
-    } catch (error) {
-      return mainErrorResponse(error);
-    }
+    await this.authService.login(request, res);
+    return createApiResponse('Logado com sucesso', {});
   }
 
   @Post('/logout')
   @HttpCode(HttpStatus.OK)
   async logout(@Res({ passthrough: true }) res: Response) {
-    try {
-      await this.authService.logout(res);
-      return createApiResponse('Deslogado com sucesso', {});
-    } catch (error) {
-      return mainErrorResponse(error);
-    }
+    await this.authService.logout(res);
+    return createApiResponse('Deslogado com sucesso', {});
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Get('/get-user-info')
   @HttpCode(HttpStatus.OK)
   async getUserInfo(@Req() req: Request) {
-    try {
-      console.log('Teste');
-
-      return createApiResponse('Usuário encontrado com sucesso', req.user!);
-    } catch (error) {
-      return mainErrorResponse(error);
-    }
+    return createApiResponse('Usuário encontrado com sucesso', req.user!);
   }
 }

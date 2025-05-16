@@ -1,6 +1,5 @@
 import { config } from '@common/configuration/config';
 import { createApiResponse } from '@common/utils/api-response';
-import { mainErrorResponse } from '@common/utils/main-error-response';
 import { CreatePaymentRequestDto } from '@modules/payment/core/application/dtos/request/create-payment.request.dto';
 import { PaymentMapper } from '@modules/payment/core/application/mappers/payment.mapper';
 import { PaymentService } from '@modules/payment/core/application/services/payment.service';
@@ -18,14 +17,10 @@ export class PaymentController {
   @Post('/')
   @HttpCode(HttpStatus.OK)
   async createPayment(@Body() request: CreatePaymentRequestDto) {
-    try {
-      const payment = this.paymentMapper.toMapperCreatePaymentRequest(request);
-      const createdPayment = await this.paymentService.createPayment(payment);
-      const response = this.paymentMapper.toMapperCreatePaymentResponse(createdPayment);
-      return createApiResponse('Pagamento cadastrado com sucesso', response);
-    } catch (error) {
-      return mainErrorResponse(error);
-    }
+    const payment = this.paymentMapper.toMapperCreatePaymentRequest(request);
+    const createdPayment = await this.paymentService.createPayment(payment);
+    const response = this.paymentMapper.toMapperCreatePaymentResponse(createdPayment);
+    return createApiResponse('Pagamento cadastrado com sucesso', response);
   }
 
   @UseGuards(AuthGuard('jwt'))
@@ -33,13 +28,10 @@ export class PaymentController {
   @HttpCode(HttpStatus.OK)
   async cancelPayment(@Param('id') id: number) {
     const paymentId = Number(id);
-    try {
-      const canceledPayment = await this.paymentService.cancelPaymentById(paymentId);
-      const response = this.paymentMapper.toMapperCancelPaymentResponse(canceledPayment);
-      return createApiResponse('Pagamento cancelado com sucesso', response);
-    } catch (error) {
-      return mainErrorResponse(error);
-    }
+
+    const canceledPayment = await this.paymentService.cancelPaymentById(paymentId);
+    const response = this.paymentMapper.toMapperCancelPaymentResponse(canceledPayment);
+    return createApiResponse('Pagamento cancelado com sucesso', response);
   }
 
   @UseGuards(AuthGuard('jwt'))
@@ -53,19 +45,16 @@ export class PaymentController {
   ) {
     const limit = config.PAGINATION.LIST_PAGE_LIMIT;
     const parsedPage = page ? Number(page) : 1;
-    try {
-      const { paymentList, meta } = await this.paymentService.getPaymentList(
-        parsedPage,
-        limit,
-        supplierName,
-        month,
-        year,
-      );
-      const response = await this.paymentMapper.toMapperGetPaymentListResponse(paymentList);
-      return createApiResponse('Lista de pagamentos', response, meta);
-    } catch (error) {
-      return mainErrorResponse(error);
-    }
+
+    const { paymentList, meta } = await this.paymentService.getPaymentList(
+      parsedPage,
+      limit,
+      supplierName,
+      month,
+      year,
+    );
+    const response = await this.paymentMapper.toMapperGetPaymentListResponse(paymentList);
+    return createApiResponse('Lista de pagamentos', response, meta);
   }
 
   @UseGuards(AuthGuard('jwt'))
@@ -73,12 +62,9 @@ export class PaymentController {
   @HttpCode(HttpStatus.OK)
   async getPaymentById(@Param('id') id: number) {
     const paymentId = Number(id);
-    try {
-      const payment = await this.paymentService.getPaymentById(paymentId);
-      const response = await this.paymentMapper.toMapperGetPaymentByIdResponse(payment);
-      return createApiResponse('Pagamento encontrado com sucesso', response);
-    } catch (error) {
-      return mainErrorResponse(error);
-    }
+
+    const payment = await this.paymentService.getPaymentById(paymentId);
+    const response = await this.paymentMapper.toMapperGetPaymentByIdResponse(payment);
+    return createApiResponse('Pagamento encontrado com sucesso', response);
   }
 }

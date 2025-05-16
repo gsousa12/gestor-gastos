@@ -1,4 +1,3 @@
-import { mainErrorResponse } from '@common/utils/main-error-response';
 import { CreateReportRequestDto } from '@modules/report/core/application/dtos/request/create-payment-report.request.dto';
 import { ReportMapper } from '@modules/report/core/application/mappers/report.mapper';
 import { ReportService } from '@modules/report/core/application/services/report.service';
@@ -30,7 +29,7 @@ export class ReportController {
 
       res.end(pdfBuffer);
     } catch (error) {
-      res.status(500).json(mainErrorResponse(error));
+      res.status(500).json(error);
     }
   }
 }
