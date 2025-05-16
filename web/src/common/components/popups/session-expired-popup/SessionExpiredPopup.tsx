@@ -1,4 +1,12 @@
-export const SessionExpiredPopup = ({ open, onConfirm }: any) => {
+interface SessionExpiredPopupProps {
+  open: boolean;
+  onConfirm: () => void;
+}
+
+export const SessionExpiredPopup = ({
+  open,
+  onConfirm,
+}: SessionExpiredPopupProps) => {
   if (!open) return null;
   return (
     <div className="fixed inset-0 z-[99999] bg-black/40 flex items-center justify-center">

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { env } from "../configurations/env";
 import { showSessionExpiredPopup } from "../components/popups/session-expired-popup/session-expired-popup-manager";
+import { useAuthStore } from "../store/authStore";
 
 export const api = axios.create({
   baseURL: env.API_BASE_URL,
@@ -10,7 +11,11 @@ export const api = axios.create({
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
+    // Só mostra o modal se o usuário estava autenticado
+    if (
+      error.response?.status === 401 &&
+      useAuthStore.getState().isAuthenticated
+    ) {
       showSessionExpiredPopup();
     }
     return Promise.reject(error);

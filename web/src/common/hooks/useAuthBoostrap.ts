@@ -11,11 +11,14 @@ export function useAuthBootstrap() {
   const location = useLocation();
 
   useEffect(() => {
-    if (!useAuthStore.getState().user && location.pathname !== "/login") {
+    if (!useAuthStore.getState().user) {
       getUserInformation()
         .then((user) => {
           setUser(user.data);
           setAuthenticated(true);
+          if (location.pathname === "/") {
+            navigate("/dashboard", { replace: true });
+          }
         })
         .catch(() => {
           setAuthenticated(false);

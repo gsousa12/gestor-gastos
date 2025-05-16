@@ -6,6 +6,8 @@ import { config } from '@common/configuration/config';
 import { SingleErrorPipe } from '@common/pipes/single-error.pipe';
 import { DelayInterceptor } from '@common/interceptors/delay.interceptor';
 
+// TODO: Implementar retentativa de conexão com o banco de dados
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(
@@ -26,7 +28,7 @@ async function bootstrap() {
   const logger = new Logger('Bootstrap');
   const port = config.PORT;
 
-  //app.useGlobalInterceptors(new DelayInterceptor());
+  app.useGlobalInterceptors(new DelayInterceptor());
   app.setGlobalPrefix('api');
   app.use(cookieParser());
 

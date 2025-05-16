@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { ChevronDown, Settings, LogOut } from "lucide-react";
 import { Avatar, AvatarFallback } from "../../../components/ui/avatar";
-import { getUserInitials } from "../../utils/functions";
+import { getAccost, getUserInitials } from "../../utils/functions";
 import { useLogoutMutation } from "../../api/mutations/auth/useLogoutMutation";
 import { useAuthStore } from "../../store/authStore";
 
@@ -32,10 +32,11 @@ export const Header = () => {
 
   return (
     <header className="w-full h-16 px-6 flex items-center justify-end bg-white border-b border-gray-200 shadow-sm">
-      {/* <Avatar className="w-9 h-9 bg-white text-emerald-700 font-bold text-base mr-2">
+      {/* <span>{`${getAccost()},${" "} ${userName}!`}</span> */}
+      <Avatar className="w-9 h-9 bg-white text-emerald-700 font-bold text-base mr-2">
         <AvatarFallback>{getUserInitials(userName)}</AvatarFallback>
-      </Avatar> */}
-      <span className="text-gray-700 text-base font-medium">{userName}</span>
+      </Avatar>
+      {/* <span className="text-gray-700 text-base font-medium">{userName}</span> */}
       <div className="relative" ref={menuRef}>
         <button
           className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-emerald-50 transition-colors duration-200 group"
