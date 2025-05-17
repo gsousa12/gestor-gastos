@@ -5,5 +5,5 @@ interface ContentTitleProps {
 }
 export const ContentTitle = ({ label }: ContentTitleProps) => {
   const isMobile = useMobileDetect();
-  return isMobile ? <></> : <div className="text-2xl font-bold">{label}</div>;
+  return isMobile ? <></> : <div className="text-2xl font-bold ">{label}</div>;
 };

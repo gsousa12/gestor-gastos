@@ -17,7 +17,7 @@ export const PaymentsPage = () => {
           month={getCurrentMonth()}
           year={getCurrentYear()}
         />
-        <CreateButton label="Cadastrar Pagamento" openPopup={() => {}} />
+        <CreateButton label="Registrar Pagamento" openPopup={() => {}} />
       </div>
 
       <PaymentsTable />

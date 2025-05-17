@@ -14,7 +14,7 @@ export const SessionExpiredPopup = ({
         <h2 className="text-lg font-semibold mb-2">Sessão expirada</h2>
         <p className="mb-4 text-gray-600">Por favor, faça login novamente.</p>
         <button
-          className="px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700 hover:cursor-pointer"
+          className="px-4 py-2 bg-sky-600 text-white rounded hover:bg-sky-700 hover:cursor-pointer"
           onClick={onConfirm}
         >
           OK

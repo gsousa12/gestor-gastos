@@ -7,7 +7,7 @@ export const ExpenseFilterButton = ({ onClick }: { onClick?: () => void }) => {
   return (
     <button
       ref={buttonRef}
-      className="flex items-center gap-1 px-3 py-1 bg-white border border-gray-200 rounded-md text-gray-600 hover:bg-emerald-50 hover:text-emerald-700 transition-colors duration-150 shadow-sm"
+      className="flex items-center gap-1 px-3 py-1 bg-white border border-gray-200 rounded-md text-gray-600 hover:bg-sky-50 hover:text-sky-700 transition-colors duration-150 shadow-sm"
       onClick={onClick}
       type="button"
     >

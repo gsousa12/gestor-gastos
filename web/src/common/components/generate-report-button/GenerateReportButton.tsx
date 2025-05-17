@@ -29,8 +29,8 @@ export const GenerateReportButton = ({
     <button
       className={
         isMobile
-          ? "flex items-center justify-center p-2 bg-white hover:cursor-pointer text-gray-700 rounded-md hover:bg-emerald-50 hover:text-emerald-700 transition-colors duration-150 focus:outline-none focus:ring-1 focus:ring-emerald-400 disabled:opacity-60"
-          : "flex flex-row items-center gap-1 px-3 py-1 bg-white hover:cursor-pointer text-gray-700 text-sm font-medium rounded-md hover:bg-emerald-50 hover:text-emerald-700 transition-colors duration-150 focus:outline-none focus:ring-1 focus:ring-emerald-400 disabled:opacity-60"
+          ? "flex items-center justify-center p-2 bg-white hover:cursor-pointer text-gray-700 rounded-md hover:bg-sky-50 hover:text-sky-700 transition-colors duration-150 focus:outline-none focus:ring-1 focus:ring-sky-400 disabled:opacity-60"
+          : "flex flex-row items-center gap-1 px-3 py-1 bg-white hover:cursor-pointer text-gray-700 text-sm font-medium rounded-md hover:bg-sky-50 hover:text-sky-700 transition-colors duration-150 focus:outline-none focus:ring-1 focus:ring-sky-400 disabled:opacity-60"
       }
       onClick={handleGenerateReport}
       disabled={isPending}

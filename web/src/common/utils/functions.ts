@@ -73,3 +73,29 @@ export const getAccost = (): string => {
     return "Boa noite";
   }
 };
+
+export const formatDateAndHoursToPTBR = (dataISO: string): string => {
+  const data = new Date(dataISO);
+
+  // Verifica se a data é válida
+  if (isNaN(data.getTime())) {
+    return "Data inválida";
+  }
+
+  // Formata o dia com 2 dígitos
+  const dia = String(data.getDate()).padStart(2, "0");
+
+  // Formata o mês com 2 dígitos (janeiro é 0)
+  const mes = String(data.getMonth() + 1).padStart(2, "0");
+
+  // Obtém o ano
+  const ano = data.getFullYear();
+
+  // Formata as horas com 2 dígitos
+  const horas = String(data.getHours()).padStart(2, "0");
+
+  // Formata os minutos com 2 dígitos
+  const minutos = String(data.getMinutes()).padStart(2, "0");
+
+  return `${dia}/${mes}/${ano} às ${horas}:${minutos}`;
+};

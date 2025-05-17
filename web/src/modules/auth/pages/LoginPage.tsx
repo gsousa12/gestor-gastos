@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLoginPageController } from "../components/login-route/login-page-controller";
+import { useLoginPageController } from "./login-page-controller";
 import { Eye, EyeOff, GalleryVerticalEnd, Lock, Mail } from "lucide-react";
 
 export const LoginPage = () => {
@@ -7,6 +7,7 @@ export const LoginPage = () => {
     useLoginPageController();
 
   const [showPassword, setShowPassword] = useState(false);
+  const disableLoginButton = isPending || email === "" || password === "";
 
   return (
     <div className="min-h-screen flex bg-slate-100">
@@ -15,7 +16,7 @@ export const LoginPage = () => {
         <div className="w-full max-w-md mx-auto flex flex-col gap-8">
           {/* Logo */}
           <div>
-            <GalleryVerticalEnd className="w-7 h-7 text-emerald-600" />
+            <GalleryVerticalEnd className="w-7 h-7 text-sky-600" />
           </div>
           {/* Saudação */}
           <div>
@@ -36,7 +37,7 @@ export const LoginPage = () => {
               >
                 Email
               </label>
-              <div className="flex items-center border border-gray-200 rounded-lg bg-white focus-within:ring-2 focus-within:ring-emerald-400 transition">
+              <div className="flex items-center border border-gray-200 rounded-lg bg-white focus-within:ring-2 focus-within:ring-sky-400 transition">
                 <Mail className="w-5 h-5 text-gray-400 ml-3" />
                 <input
                   id="email"
@@ -59,7 +60,7 @@ export const LoginPage = () => {
               >
                 Senha
               </label>
-              <div className="flex items-center border border-gray-200 rounded-lg bg-white focus-within:ring-2 focus-within:ring-emerald-400 transition">
+              <div className="flex items-center border border-gray-200 rounded-lg bg-white focus-within:ring-2 focus-within:ring-sky-400 transition">
                 <Lock className="w-5 h-5 text-gray-400 ml-3" />
                 <input
                   id="password"
@@ -90,17 +91,21 @@ export const LoginPage = () => {
             {/* Botão de login */}
             <button
               type="submit"
-              className="w-full py-2 mt-2 bg-emerald-600 hover:bg-emerald-700 hover:cursor-pointer text-white font-semibold rounded-lg transition"
-              disabled={isPending}
+              className={
+                disableLoginButton
+                  ? "w-full py-2 mt-2 bg-gray-400 hover:cursor-not-allowed text-white font-semibold rounded-lg transition"
+                  : "w-full py-2 mt-2 bg-sky-600 hover:bg-sky-700 hover:cursor-pointer text-white font-semibold rounded-lg transition"
+              }
+              disabled={disableLoginButton}
             >
-              {"Efetuar Login"}
+              {"Entrar"}
             </button>
           </form>
         </div>
       </div>
-      {/* Lado direito: fundo teal com moldura branca */}
+      {/* Lado direito: fundo sky com moldura branca */}
       <div className="hidden md:flex w-1/2 items-center justify-center relative">
-        <div className="absolute inset-0 bg-emerald-600 rounded-r-3xl m-8" />
+        <div className="absolute inset-0 bg-sky-600 rounded-r-3xl m-8" />
       </div>
     </div>
   );

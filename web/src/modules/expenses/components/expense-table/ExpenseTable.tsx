@@ -109,11 +109,11 @@ export const ExpenseTable = ({
                 </TableCell>
                 <TableCell className="flex items-center justify-center gap-2">
                   <button
-                    className="p-1 rounded hover:bg-emerald-50 transition"
+                    className="p-1 rounded hover:bg-sky-50 transition"
                     title={
                       expense.status === ExpenseStatus.PAID
                         ? "Despesas já foi paga."
-                        : "Pagar"
+                        : "Registrar pagamento"
                     }
                     disabled={expense.status === ExpenseStatus.PAID}
                     onClick={() => {
@@ -124,15 +124,15 @@ export const ExpenseTable = ({
                       className={`w-4 h-4   ${
                         expense.status === ExpenseStatus.PAID
                           ? "text-gray-400 cursor-not-allowed "
-                          : "text-gray-800 hover:text-emerald-600 hover:cursor-pointer"
+                          : "text-gray-800 hover:text-sky-600 hover:cursor-pointer"
                       }`}
                     />
                   </button>
                   <button
-                    className="p-1 rounded hover:bg-emerald-50 transition"
+                    className="p-1 rounded hover:bg-sky-50 transition"
                     title={
                       expense.status === ExpenseStatus.PAID
-                        ? "Despesas já pagas não podem ser editadas."
+                        ? "Despesas pagas não podem ser editadas."
                         : "Editar"
                     }
                     disabled={expense.status === ExpenseStatus.PAID}
@@ -152,7 +152,7 @@ export const ExpenseTable = ({
                     className="p-1 rounded hover:bg-red-50 transition"
                     title={
                       expense.status === ExpenseStatus.PAID
-                        ? "Despesas já pagas não podem ser excluidas."
+                        ? "Despesas pagas não podem ser excluidas."
                         : "Excluir"
                     }
                     disabled={expense.status === ExpenseStatus.PAID}

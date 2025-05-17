@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import { useMobileDetect } from "../../hooks/useMobileDetect";
+import logo from "../../assets/logo.png";
 
 export const Sidebar = () => {
   const location = useLocation();
@@ -31,7 +32,7 @@ export const Sidebar = () => {
             isMobile ? "justify-center" : "justify-between"
           )}
         >
-          <GalleryVerticalEnd className="w-8 h-8 text-emerald-600" />
+          <GalleryVerticalEnd className="w-8 h-8 text-sky-600" />
           {!isMobile && (
             <>
               <span className="text-lg font-bold text-gray-800 tracking-tight">

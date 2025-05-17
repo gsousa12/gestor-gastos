@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "../../../../common/store/authStore";
-import { useLoginMutation } from "../../../../common/api/mutations/auth/useLoginMutation";
-import { getUserInformation } from "../../../../common/api/dispatch/auth/auth";
-import { showToast } from "../../../../common/components/toast/Toast";
+import { useAuthStore } from "../../../common/store/authStore";
+import { useLoginMutation } from "../../../common/api/mutations/auth/useLoginMutation";
+import { getUserInformation } from "../../../common/api/dispatch/auth/auth";
+import { showToast } from "../../../common/components/toast/Toast";
 
 export const useLoginPageController = () => {
   const [email, setEmail] = useState("");
