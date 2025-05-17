@@ -1,9 +1,11 @@
 import { ArrowUpRight } from "lucide-react";
 import { ReactNode } from "react";
+import { convertCentsToReal } from "../../utils/functions";
 
 interface InformationCardProps {
   icon: ReactNode;
-  value: string | number;
+  value: number;
+  valueType: "money" | "quantity";
   description: string;
   onRedirect?: () => void;
 }
@@ -11,6 +13,7 @@ interface InformationCardProps {
 export const InformationCard = ({
   icon,
   value,
+  valueType,
   description,
   onRedirect,
 }: InformationCardProps) => {
@@ -34,7 +37,9 @@ export const InformationCard = ({
       </div>
 
       <div className="mt-4">
-        <h3 className="text-2xl font-semibold text-gray-900">{value}</h3>
+        <h3 className="text-xl font-semibold text-gray-900">
+          {valueType === "money" ? `R$ ${convertCentsToReal(value)}` : value}
+        </h3>
         <p className="text-sm text-gray-500 mt-1">{description}</p>
       </div>
     </div>

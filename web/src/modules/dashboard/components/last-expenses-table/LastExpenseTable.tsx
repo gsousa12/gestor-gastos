@@ -24,7 +24,7 @@ export const LastExpenseTable = ({ expenses }: LastExpenseTableProps) => {
       className={`bg-gray-50 p-5  hover:shadow-lg border 
       border-gray-200 shadow-sm shadow-gray-300 rounded-md ${
         isMobile ? "p-2" : "p-4"
-      } w-full max-w-xl`}
+      } w-full max-w-[100%]`}
     >
       <h3
         className={`${
