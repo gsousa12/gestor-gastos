@@ -28,7 +28,7 @@ async function bootstrap() {
   const logger = new Logger('Bootstrap');
   const port = config.PORT;
 
-  app.useGlobalInterceptors(new DelayInterceptor());
+  //app.useGlobalInterceptors(new DelayInterceptor());
   app.setGlobalPrefix('api');
   app.use(cookieParser());
 

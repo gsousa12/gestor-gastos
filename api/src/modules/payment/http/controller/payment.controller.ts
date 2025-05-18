@@ -45,12 +45,13 @@ export class PaymentController {
   ) {
     const limit = config.PAGINATION.LIST_PAGE_LIMIT;
     const parsedPage = page ? Number(page) : 1;
+    const parserdMonth = month ? Number(month) : new Date().getMonth() + 1;
 
     const { paymentList, meta } = await this.paymentService.getPaymentList(
       parsedPage,
       limit,
       supplierName,
-      month,
+      parserdMonth,
       year,
     );
     const response = await this.paymentMapper.toMapperGetPaymentListResponse(paymentList);
