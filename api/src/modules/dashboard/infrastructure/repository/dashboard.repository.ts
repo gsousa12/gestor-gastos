@@ -49,7 +49,7 @@ export class DashboardRepository implements IDashboardRepository {
     // 4. Last 4 expenses (with supplier name)
     const lastExpensesRaw = await this.prisma.expense.findMany({
       orderBy: { createdAt: 'desc' },
-      take: 4,
+      take: 5,
       include: {
         supplier: {
           select: {
