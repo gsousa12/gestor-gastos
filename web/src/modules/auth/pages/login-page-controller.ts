@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../../common/store/authStore";
-import { useLoginMutation } from "../../../common/api/mutations/auth/useLoginMutation";
 import { getUserInformation } from "../../../common/api/dispatch/auth/auth";
 import { showToast } from "../../../common/components/toast/Toast";
+import { loginMutation } from "../../../common/api/mutations/auth/loginMutation";
 
 export const useLoginPageController = () => {
   const [email, setEmail] = useState("");
@@ -12,7 +12,7 @@ export const useLoginPageController = () => {
   const setAuthenticated = useAuthStore((s) => s.setAuthenticated);
   const setUser = useAuthStore((s) => s.setUser);
 
-  const { mutate: loginMutate, isPending, isError, error } = useLoginMutation();
+  const { mutate: loginMutate, isPending, isError, error } = loginMutation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

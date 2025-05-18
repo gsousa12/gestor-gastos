@@ -6,12 +6,26 @@ export interface GetExpenseListRequest {
   year?: string;
 }
 
+export interface CreateExpenseRequest {
+  description: string | null;
+  month: number;
+  year: string;
+  amount: number;
+  supplierId: number;
+  secretaryId: number;
+  userId: number;
+}
+
+export interface DeleteExpenseByIdRequest {
+  id: number;
+}
+
 // Response
 
 export interface CreateExpenseFormData {
-  supplierList: { id: number; name: string }[];
-  secretaryList: { id: number; name: string }[];
-  subSectorList: { id: number; name: string }[];
+  supplierList: CreateExpenseFormListContent[];
+  secretaryList: CreateExpenseFormListContent[];
+  subSectorList: CreateExpenseFormListContent[];
 }
 
 // Others
@@ -31,3 +45,8 @@ export type Expense = {
   supplierName: string;
   subsectorName: string;
 };
+
+interface CreateExpenseFormListContent {
+  id: number;
+  name: string;
+}

@@ -1,13 +1,14 @@
-import { logout } from "../../dispatch/auth/auth";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { useAuthStore } from "../../../store/authStore";
+import { logoutDispatch } from "../../dispatch/auth/auth";
+import { ApiResponse } from "../../interfaces/api-response";
 
-export const useLogoutMutation = () => {
+export const logoutMutation = () => {
   const setAuthenticated = useAuthStore((s) => s.setAuthenticated);
   const navigate = useNavigate();
-  return useMutation({
-    mutationFn: () => logout(),
+  return useMutation<ApiResponse<{}>>({
+    mutationFn: () => logoutDispatch(),
     onSuccess: () => {
       setAuthenticated(false);
       navigate("/login", { replace: true });

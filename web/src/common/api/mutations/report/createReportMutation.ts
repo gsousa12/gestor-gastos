@@ -1,6 +1,6 @@
 import { UseMutationResult, useMutation } from "@tanstack/react-query";
 import {
-  createReport,
+  createReportDispatch,
   CreateReportRequest,
 } from "../../dispatch/report/report";
 
@@ -10,7 +10,7 @@ export const useCreateReport = (): UseMutationResult<
   CreateReportRequest
 > => {
   return useMutation({
-    mutationFn: (request: CreateReportRequest) => createReport(request),
+    mutationFn: (request: CreateReportRequest) => createReportDispatch(request),
     onSuccess: (result: { blob: Blob; filename: string }) => {
       const { blob, filename } = result;
       const url = window.URL.createObjectURL(blob);

@@ -3,8 +3,9 @@ import {
   getCurrentMonth,
   getCurrentYear,
 } from "../../../../common/utils/functions";
-import { useDeleteExpenseById } from "../../../../common/api/mutations/expense/useDeleteExpenseById";
 import { getExpenseListQuery } from "../../../../common/api/queries/expenses/getExpenseListQuery";
+import { deleteExpenseByIdMutation } from "../../../../common/api/mutations/expense/deleteExpenseByIdMutation";
+import { showToast } from "../../../../common/components/toast/Toast";
 
 export const getCreateExpenseFormDataEmpty = {
   supplierList: [],
@@ -19,7 +20,7 @@ export type ExpenseFilterValues = {
 };
 
 export const useExpensesController = () => {
-  const { mutateAsync: deleteExpenseById } = useDeleteExpenseById();
+  const { mutateAsync: deleteExpenseByIdMutate } = deleteExpenseByIdMutation();
 
   const [filters, setFilters] = useState<ExpenseFilterValues>({
     supplierName: "",
@@ -59,10 +60,15 @@ export const useExpensesController = () => {
 
   const handleConfirmDelete = async () => {
     if (selectedIdToDelete !== null) {
-      await deleteExpenseById(selectedIdToDelete);
+      await deleteExpenseByIdMutate({ id: selectedIdToDelete });
       setOpenDeletePopup(false);
       setSelectedIdToDelete(null);
       refetchExpenseList();
+      showToast({
+        title: "Despesa Deletada!",
+        description: `Despesa deletada com sucesso.`,
+        type: "success",
+      });
     }
   };
 

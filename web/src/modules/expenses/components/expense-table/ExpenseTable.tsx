@@ -13,10 +13,10 @@ import {
   formatExpenseStatus,
   getMonthName,
 } from "../../../../common/utils/functions";
-import { Expense } from "../../../../common/api/types/api-types";
 import { StatusBadge } from "../../../../common/components/badges/status-badge/StatusBadge";
 import { ExpenseStatus } from "../../../../common/utils/enums";
 import { NotFoundItems } from "../../../../common/components/not-found-items/NotFoundItems";
+import { Expense } from "../../../../common/api/interfaces/expense/expense-api-interfaces";
 
 interface ExpenseTableProps {
   data: Expense[];

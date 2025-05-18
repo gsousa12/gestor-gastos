@@ -12,7 +12,7 @@ function extractFilename(contentDisposition?: string): string {
   return match && match[1] ? match[1] : "relatorio.pdf";
 }
 
-export const createReport = async (
+export const createReportDispatch = async (
   request: CreateReportRequest
 ): Promise<{ blob: Blob; filename: string }> => {
   const response = await api.post("/report/", request, {

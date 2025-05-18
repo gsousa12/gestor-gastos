@@ -5,20 +5,7 @@ import {
 } from "../interfaces/expense/expense-api-interfaces";
 
 /* REQUEST */
-export interface LoginRequest {
-  email: string;
-  password: string;
-}
 
-export interface CreateExpenseRequest {
-  description: string | null;
-  month: number;
-  year: string;
-  amount: number;
-  supplierId: number;
-  secretaryId: number;
-  userId: number;
-}
 // FIXME: Padronizar o response do data sendo ARRAY OU OBJETO
 /* RESPONSE */
 export interface ExpenseListResponse {

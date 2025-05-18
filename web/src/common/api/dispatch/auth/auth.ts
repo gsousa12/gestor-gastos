@@ -1,14 +1,18 @@
 import { api } from "../../axios";
-import { LoginRequest } from "../../types/api-interfaces";
+import { ApiResponse } from "../../interfaces/api-response";
+import { LoginRequest } from "../../interfaces/auth/auth-api-interfaces";
+import { getApiResponse } from "../../interfaces/get-api-response";
 
-export const login = async (request: LoginRequest) => {
+export const loginDispatch = async (
+  request: LoginRequest
+): Promise<ApiResponse<{}>> => {
   const response = await api.post("/auth/login/", request);
-  return response.data;
+  return getApiResponse<{}>(response.data, {});
 };
 
-export const logout = async () => {
+export const logoutDispatch = async (): Promise<ApiResponse<{}>> => {
   const response = await api.post("/auth/logout/");
-  return response.data;
+  return getApiResponse<{}>(response.data, {});
 };
 
 export const getUserInformation = async () => {

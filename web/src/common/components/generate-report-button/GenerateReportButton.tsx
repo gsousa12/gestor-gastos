@@ -1,5 +1,5 @@
 import { FileChartColumn } from "lucide-react";
-import { useCreateReport } from "../../api/mutations/report/useCreateReport";
+import { useCreateReport } from "../../api/mutations/report/createReportMutation";
 import { useMobileDetect } from "../../hooks/useMobileDetect";
 
 export interface GenerateReportButtonProps {

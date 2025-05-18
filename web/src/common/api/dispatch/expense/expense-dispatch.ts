@@ -3,12 +3,13 @@ import { api } from "../../axios";
 import { ApiResponse } from "../../interfaces/api-response";
 import {
   CreateExpenseFormData,
+  CreateExpenseRequest,
+  DeleteExpenseByIdRequest,
   Expense,
   GetExpenseListRequest,
 } from "../../interfaces/expense/expense-api-interfaces";
 import { getApiResponse } from "../../interfaces/get-api-response";
 import {
-  CreateExpenseRequest,
   CreateExpenseResponse,
   DeleteExpenseByIdResponse,
   GetExpenseCreateFormDataResponse,
@@ -40,16 +41,17 @@ export const getCreateExpenseFormDataDispatch = async (): Promise<
   );
 };
 
-export const createExpense = async (
+export const createExpenseDispatch = async (
   request: CreateExpenseRequest
-): Promise<CreateExpenseResponse> => {
+): Promise<ApiResponse<Expense>> => {
   const response = await api.post("/expense/", request);
-  return response.data ?? [];
+  return getApiResponse<Expense>(response.data, {} as Expense);
 };
 
-export const deleteExpenseById = async (
-  id: number
-): Promise<DeleteExpenseByIdResponse> => {
+export const deleteExpenseByIdDispatch = async (
+  request: DeleteExpenseByIdRequest
+): Promise<ApiResponse<[]>> => {
+  const { id } = request;
   const response = await api.delete(`/expense/${id}`);
-  return response.data ?? [];
+  return getApiResponse<[]>(response.data, []);
 };

@@ -11,18 +11,18 @@ import {
   getCurrentMonth,
   getCurrentYear,
 } from "../../../../common/utils/functions";
-import { useCreateExpense } from "../../../../common/api/mutations/expense/useCreateExpense";
 import { cn } from "../../../../lib/utils";
 import { useEffect } from "react";
 import { showToast } from "../../../../common/components/toast/Toast";
 import { CreateExpensePopupSkeleton } from "../../../../common/components/skeletons/create-expense-skeleton/CreateExpenseSkeleton";
 import { useAuthStore } from "../../../../common/store/authStore";
+import { createExpenseMutation } from "../../../../common/api/mutations/expense/createExpenseMutation";
 
 export const CreateExpensePopupContent = () => {
   const userId = useAuthStore((state) => state.user?.userId);
   const { createExpenseFormData, isPending } =
     useCreateExpensePopupContentController();
-  const { mutate: createExpenseMutation, isSuccess } = useCreateExpense();
+  const { mutate: createExpenseMutate, isSuccess } = createExpenseMutation();
   const {
     register,
     handleSubmit,
@@ -68,7 +68,7 @@ export const CreateExpensePopupContent = () => {
 
   const onSubmit = (data: CreateExpenseFormValues) => {
     data.amount = formatAmount(data.amount);
-    createExpenseMutation(data);
+    createExpenseMutate(data);
   };
 
   return (
