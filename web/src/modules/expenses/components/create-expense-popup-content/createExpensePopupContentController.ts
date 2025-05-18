@@ -1,10 +1,8 @@
-import { useEffect } from "react";
-import { useGetCreateExpenseFormData } from "../../../../common/api/mutations/expense/useGetCreateExpenseFormData";
+import { getCreateExpenseFormDataQuery } from "../../../../common/api/queries/expenses/getCreateExpenseFormDataQuery";
 
 export const useCreateExpensePopupContentController = () => {
-  const { mutate, data, isPending } = useGetCreateExpenseFormData();
-  useEffect(() => {
-    mutate();
-  }, []);
-  return { createExpenseFormData: data?.data, isPending };
+  const { data: createExpenseFormData, isPending } =
+    getCreateExpenseFormDataQuery();
+
+  return { createExpenseFormData: createExpenseFormData?.data, isPending };
 };

@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
-import { ChevronDown, Settings, LogOut } from "lucide-react";
+import { ChevronDown, LogOut } from "lucide-react";
 import { Avatar, AvatarFallback } from "../../../components/ui/avatar";
-import { getAccost, getUserInitials } from "../../utils/functions";
+import { getUserInitials } from "../../utils/functions";
 import { useLogoutMutation } from "../../api/mutations/auth/useLogoutMutation";
 import { useAuthStore } from "../../store/authStore";
 

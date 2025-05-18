@@ -1,16 +1,24 @@
 import { create } from "zustand";
 
-// FIXME: Tipar o user
+interface User {
+  userId: number;
+  name: string;
+  email: string;
+  isActive: boolean;
+  iat: number;
+  exp: number;
+}
+
 interface AuthState {
   isAuthenticated: boolean;
-  user: any;
+  user: User | null;
   setAuthenticated: (value: boolean) => void;
-  setUser: (user: any | null) => any;
+  setUser: (user: User | null) => void;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
   isAuthenticated: false,
   user: null,
   setAuthenticated: (value) => set({ isAuthenticated: value }),
-  setUser: (user: any) => set({ user }),
+  setUser: (user) => set({ user }),
 }));

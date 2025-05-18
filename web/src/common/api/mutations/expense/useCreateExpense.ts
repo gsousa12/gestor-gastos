@@ -3,7 +3,7 @@ import {
   CreateExpenseRequest,
   CreateExpenseResponse,
 } from "../../types/api-interfaces";
-import { createExpense } from "../../dispatch/expense/expense";
+import { createExpense } from "../../dispatch/expense/expense-dispatch";
 
 export const useCreateExpense = (): UseMutationResult<
   CreateExpenseResponse,

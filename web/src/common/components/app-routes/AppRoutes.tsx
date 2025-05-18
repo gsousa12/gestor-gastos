@@ -1,4 +1,4 @@
-import { replace, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { ProtectedRoute } from "../protected-route/ProtectedRoute";
 import { DashboardPage } from "../../../modules/dashboard/pages/DashboardPage";
 import { ExpensesPage } from "../../../modules/expenses/pages/expense-page/ExpensesPage";

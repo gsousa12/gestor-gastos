@@ -15,7 +15,7 @@ import { ContentTitle } from "../../../../common/components/content-title/Conten
 
 export const ExpensesPage = () => {
   const {
-    expensesData,
+    expenseListData,
     pagination,
     isPending,
     filters,
@@ -71,7 +71,7 @@ export const ExpensesPage = () => {
       />
 
       <ExpenseTable
-        data={expensesData}
+        data={expenseListData}
         onDeleteExpenseById={onDeleteExpenseById}
         isPending={isPending}
       />

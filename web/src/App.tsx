@@ -1,8 +1,7 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
 import { AppController } from "./common/components/app-controller/AppController";
 import { AppLayout } from "./common/components/app-layout/AppLayout";
-
-const queryClient = new QueryClient();
+import { queryClient } from "./common/api/query-client";
 
 const App = () => (
   <QueryClientProvider client={queryClient}>

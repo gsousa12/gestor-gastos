@@ -11,7 +11,6 @@ export const api = axios.create({
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    // Só mostra o modal se o usuário estava autenticado
     if (
       error.response?.status === 401 &&
       useAuthStore.getState().isAuthenticated

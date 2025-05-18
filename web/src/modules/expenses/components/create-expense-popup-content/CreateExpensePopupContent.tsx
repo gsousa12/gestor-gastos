@@ -16,8 +16,10 @@ import { cn } from "../../../../lib/utils";
 import { useEffect } from "react";
 import { showToast } from "../../../../common/components/toast/Toast";
 import { CreateExpensePopupSkeleton } from "../../../../common/components/skeletons/create-expense-skeleton/CreateExpenseSkeleton";
+import { useAuthStore } from "../../../../common/store/authStore";
 
 export const CreateExpensePopupContent = () => {
+  const userId = useAuthStore((state) => state.user?.userId);
   const { createExpenseFormData, isPending } =
     useCreateExpensePopupContentController();
   const { mutate: createExpenseMutation, isSuccess } = useCreateExpense();
@@ -36,7 +38,7 @@ export const CreateExpensePopupContent = () => {
       amount: 100,
       supplierId: undefined,
       secretaryId: undefined,
-      userId: 1, // FIXME: Fazer endpoint para pegar o id do usuário logado
+      userId: userId,
       subsectorId: undefined,
     },
   });

@@ -6,14 +6,12 @@ import {
   GalleryVerticalEnd,
   Receipt,
   ArrowRightCircle,
-  FileText,
   Truck,
   Layers2,
   Building,
 } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import { useMobileDetect } from "../../hooks/useMobileDetect";
-import logo from "../../assets/logo.png";
 
 export const Sidebar = () => {
   const location = useLocation();

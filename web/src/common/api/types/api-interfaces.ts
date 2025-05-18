@@ -1,17 +1,13 @@
-import { PaginationMeta } from "../../utils/types";
-import { Expense, ExpenseCreateFormData } from "./api-types";
+import { PaginationMeta } from "../interfaces/api-response";
+import {
+  CreateExpenseFormData,
+  Expense,
+} from "../interfaces/expense/expense-api-interfaces";
 
 /* REQUEST */
 export interface LoginRequest {
   email: string;
   password: string;
-}
-
-export interface GetExpenseListRequest {
-  page: number;
-  supplierName?: string;
-  month?: number;
-  year?: string;
 }
 
 export interface CreateExpenseRequest {
@@ -44,5 +40,19 @@ export interface DeleteExpenseByIdResponse {
 export interface GetExpenseCreateFormDataResponse {
   message: string;
   pagination: PaginationMeta;
-  data: ExpenseCreateFormData;
+  data: CreateExpenseFormData;
+}
+
+export interface SupplierWithDebit {
+  id: number;
+  name: string;
+  recurringDebit: number;
+}
+
+export interface LastExpenses {
+  id: number;
+  supplierName: string;
+  description: string | null;
+  amount: number;
+  date: string;
 }

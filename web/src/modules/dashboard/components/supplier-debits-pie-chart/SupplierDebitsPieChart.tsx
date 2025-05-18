@@ -63,7 +63,10 @@ export function SupplierDebitsPieChart({
   );
 
   return (
-    <Card className="flex flex-col">
+    <Card
+      className="flex flex-col bg-gray-50 p-5  hover:shadow-lg border 
+    border-gray-200 shadow-sm shadow-gray-300 rounded-md"
+    >
       <CardHeader className="items-center pb-0">
         <CardTitle className="text-base">
           Fornecedores com maiores débitos em aberto

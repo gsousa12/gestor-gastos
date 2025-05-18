@@ -7,7 +7,7 @@ import {
 interface LastExpensesData {
   id: number;
   supplierName: string;
-  description: string;
+  description: string | null;
   amount: number;
   date: string;
 }

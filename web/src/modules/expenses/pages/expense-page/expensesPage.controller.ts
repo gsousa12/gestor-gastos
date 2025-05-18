@@ -1,10 +1,16 @@
-import { useEffect, useState } from "react";
-import { useGetExpenseList } from "../../../../common/api/mutations/expense/useGetExpenseList";
+import { useState } from "react";
 import {
   getCurrentMonth,
   getCurrentYear,
 } from "../../../../common/utils/functions";
 import { useDeleteExpenseById } from "../../../../common/api/mutations/expense/useDeleteExpenseById";
+import { getExpenseListQuery } from "../../../../common/api/queries/expenses/getExpenseListQuery";
+
+export const getCreateExpenseFormDataEmpty = {
+  supplierList: [],
+  secretaryList: [],
+  subSectorList: [],
+};
 
 export type ExpenseFilterValues = {
   supplierName: string;
@@ -13,7 +19,6 @@ export type ExpenseFilterValues = {
 };
 
 export const useExpensesController = () => {
-  const { mutate: getExpenseList, data, isPending } = useGetExpenseList();
   const { mutateAsync: deleteExpenseById } = useDeleteExpenseById();
 
   const [filters, setFilters] = useState<ExpenseFilterValues>({
@@ -28,15 +33,6 @@ export const useExpensesController = () => {
   const [selectedIdToDelete, setSelectedIdToDelete] = useState<number | null>(
     null
   );
-
-  useEffect(() => {
-    getExpenseList({
-      page,
-      supplierName: filters.supplierName,
-      month: filters.month === "" ? undefined : filters.month,
-      year: filters.year === "" ? getCurrentYear() : filters.year,
-    });
-  }, [filters, page, getExpenseList]);
 
   const applyFilters = (newFilters: ExpenseFilterValues) => {
     setFilters(newFilters);
@@ -66,12 +62,7 @@ export const useExpensesController = () => {
       await deleteExpenseById(selectedIdToDelete);
       setOpenDeletePopup(false);
       setSelectedIdToDelete(null);
-      getExpenseList({
-        page,
-        supplierName: filters.supplierName,
-        month: filters.month === "" ? undefined : filters.month,
-        year: filters.year === "" ? getCurrentYear() : filters.year,
-      });
+      refetchExpenseList();
     }
   };
 
@@ -83,9 +74,20 @@ export const useExpensesController = () => {
     setOpenDeletePopup(false);
   };
 
+  const {
+    data: expenseListData,
+    isPending,
+    refetch: refetchExpenseList,
+  } = getExpenseListQuery({
+    page: page,
+    supplierName: filters.supplierName,
+    month: filters.month === "" ? undefined : filters.month,
+    year: filters.year === "" ? getCurrentYear() : filters.year,
+  });
+
   return {
-    expensesData: data?.data ?? [],
-    pagination: data?.pagination,
+    expenseListData: expenseListData?.data ?? [],
+    pagination: expenseListData?.pagination,
     isPending,
     filters,
     openCreateExpensePopup,

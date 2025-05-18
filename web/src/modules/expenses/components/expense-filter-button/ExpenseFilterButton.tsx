@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import { Filter } from "lucide-react";
 
 export const ExpenseFilterButton = ({ onClick }: { onClick?: () => void }) => {
