@@ -12,7 +12,7 @@ export class DashboardService implements IDashboardService {
     private readonly dashboardHelper: DashboardHelper,
   ) {}
 
-  async getDashboardData(month: number): Promise<{ dashboardData: DashboardData[] }> {
+  async getDashboardData(month: number, year: string): Promise<{ dashboardData: DashboardData[] }> {
     const { dashboardData } = await this.dashboardRepository.getDashboardData(month);
 
     return !dashboardData || dashboardData.length === 0

@@ -11,12 +11,13 @@ export class DashboardController {
     private readonly dashboardMapper: DashboardMapper,
   ) {}
 
+  // TODO: Adicionar o year como parâmetro de filtragem
   @UseGuards(AuthGuard('jwt'))
   @Get('/')
   @HttpCode(HttpStatus.OK)
-  async getDashboardData(@Query('month') month: number) {
+  async getDashboardData(@Query('month') month: number, @Query('year') year: string) {
     const getMonth = month ? Number(month) : new Date().getMonth() + 1;
-    const { dashboardData } = await this.dashboardService.getDashboardData(getMonth);
+    const { dashboardData } = await this.dashboardService.getDashboardData(getMonth, year);
     return createApiResponse('Informações do dashboard', dashboardData);
   }
 }
