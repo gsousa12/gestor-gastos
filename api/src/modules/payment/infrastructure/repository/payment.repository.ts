@@ -127,7 +127,7 @@ export class PaymentRepository implements IPaymentRepository {
   }
 
   async cancelPayment(payment: Payment): Promise<Payment> {
-    return await this.prisma.payment.update({
+    const updatedPayment = await this.prisma.payment.update({
       where: { id: payment.id },
       data: {
         status: PaymentStatus.CANCELED,
@@ -138,6 +138,16 @@ export class PaymentRepository implements IPaymentRepository {
         supplier: true,
       },
     });
+
+    await this.prisma.expense.update({
+      where: { id: payment.expenseId },
+      data: {
+        status: ExpenseStatus.PENDING,
+        updatedAt: new Date(),
+      },
+    });
+
+    return updatedPayment;
   }
 
   async getPaymentList(
@@ -196,7 +206,11 @@ export class PaymentRepository implements IPaymentRepository {
 
   async getPaymentByExpenseId(expenseId: number): Promise<Payment | null> {
     return await this.prisma.payment.findFirst({
-      where: { expenseId: expenseId },
+      where: {
+        expenseId,
+        status: { not: PaymentStatus.CANCELED },
+      },
+      orderBy: { createdAt: 'desc' },
     });
   }
 }

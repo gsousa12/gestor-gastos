@@ -6,6 +6,7 @@ import { PaymentRepository } from '@modules/payment/infrastructure/repository/pa
 import { Payment } from '@prisma/client';
 import { PaymentEntity } from '../../domain/entities/payment.entity';
 import { PaginationMeta } from '@common/structures/types';
+import { PaymentStatus } from '../../domain/enums/payment.enum';
 
 @Injectable()
 export class PaymentService implements IPaymentService {
@@ -16,7 +17,7 @@ export class PaymentService implements IPaymentService {
 
   async createPayment(payment: PaymentEntity): Promise<Payment> {
     const existingPayment = await this.paymentRepository.getPaymentByExpenseId(payment.expenseId);
-    if (existingPayment) {
+    if (existingPayment?.status === PaymentStatus.ACTIVE) {
       throw new BadRequestException('Já existe um pagamento associado a esta despesa');
     }
     const expense = await this.paymentRepository.getExpenseDetails(payment.expenseId);
@@ -44,6 +45,9 @@ export class PaymentService implements IPaymentService {
     const payment = await this.paymentRepository.getPaymentById(paymentId);
     if (!payment) {
       throw new NotFoundException('Pagamento não encontrado');
+    }
+    if (payment.status === 'cancelado') {
+      throw new BadRequestException('Pagamento já cancelado');
     }
 
     const canceledPayment = await this.paymentRepository.cancelPayment(payment);
