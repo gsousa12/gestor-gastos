@@ -18,11 +18,14 @@ export interface Payment {
   status: string;
   recurringDebitDeducted: number | null;
   recurringDebitDeductedType: string | null;
-  createdAt: Date;
-  updatedAt: Date | null;
-  canceledAt: Date | null;
+  createdAt: string;
+  updatedAt: string | null;
+  canceledAt: string | null;
   supplierId: number;
   supplierName: string;
-  sectorId: number;
+  // sectorId: number;
   expenseId: number;
+  expenseDesciption: string;
+  expenseStatus: string;
+  expenseAmount: number;
 }

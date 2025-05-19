@@ -37,7 +37,7 @@ export const PaymentsPage = () => {
         </div>
       </div>
 
-      <PaymentsTable />
+      <PaymentsTable data={paymentListData} isPendending={false} />
       <Pagination
         currentPage={1}
         totalPages={1}

@@ -1,7 +1,7 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@lib/utils";
 
-const statusBadgeVariants = cva(
+const StatusBadgeVariants = cva(
   "inline-flex items-center rounded-md px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
   {
     variants: {
@@ -22,7 +22,7 @@ const statusBadgeVariants = cva(
 
 export interface StatusBadgeProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof statusBadgeVariants> {
+    VariantProps<typeof StatusBadgeVariants> {
   text: string;
   icon?: React.ReactNode;
 }
@@ -35,7 +35,7 @@ export const StatusBadge = ({
   ...props
 }: StatusBadgeProps) => {
   return (
-    <div className={cn(statusBadgeVariants({ variant, className }))} {...props}>
+    <div className={cn(StatusBadgeVariants({ variant, className }))} {...props}>
       {icon && <span className="mr-1">{icon}</span>}
       {text}
     </div>

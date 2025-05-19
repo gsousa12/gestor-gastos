@@ -13,10 +13,11 @@ import {
   formatExpenseStatus,
   getMonthName,
 } from "@common/utils/functions";
-import { StatusBadge } from "@components/badges/status-badge/StatusBadge";
+
 import { ExpenseStatus } from "@common/utils/enums";
 import { NotFoundItems } from "@components/not-found-items/NotFoundItems";
 import { Expense } from "@common/api/interfaces/expense/expense-api-interfaces";
+import { StatusBadge } from "@/common/components/badges/status-badge/StatusBadge";
 
 interface ExpenseTableProps {
   data: Expense[];
@@ -45,8 +46,9 @@ export const ExpenseTable = ({
             <TableHead className="text-gray-400 font-semibold">
               Sub-Setor
             </TableHead>
-            <TableHead className="text-gray-400 font-semibold">Mês</TableHead>
-            <TableHead className="text-gray-400 font-semibold">Ano</TableHead>
+            <TableHead className="text-gray-400 font-semibold">
+              Competência
+            </TableHead>
             <TableHead className="text-gray-400 font-semibold">
               Status de Pagamento
             </TableHead>
@@ -85,9 +87,8 @@ export const ExpenseTable = ({
                   {expense.subsectorName}
                 </TableCell>
                 <TableCell className="text-gray-700">
-                  {getMonthName(expense.month)}
+                  {`${String(expense.month).padStart(2, "0")}/${expense.year}`}
                 </TableCell>
-                <TableCell className="text-gray-700">{expense.year}</TableCell>
                 <TableCell className="text-gray-700">
                   {
                     <StatusBadge

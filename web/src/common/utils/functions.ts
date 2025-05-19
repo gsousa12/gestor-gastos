@@ -63,6 +63,17 @@ export const formatExpenseStatus = (status: string): string => {
   }
 };
 
+export const formatPaymentStatus = (status: string): string => {
+  switch (status) {
+    case "cancelado":
+      return "Cancelado";
+    case "ativo":
+      return "Ativo";
+    default:
+      return status;
+  }
+};
+
 export const getAccost = (): string => {
   const currentHour = new Date().getHours();
   if (currentHour >= 6 && currentHour < 12) {
