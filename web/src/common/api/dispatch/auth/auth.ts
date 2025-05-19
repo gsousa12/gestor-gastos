@@ -14,8 +14,3 @@ export const logoutDispatch = async (): Promise<ApiResponse<{}>> => {
   const response = await api.post("/auth/logout/");
   return getApiResponse<{}>(response.data, {});
 };
-
-export const getUserInformation = async () => {
-  const response = await api.get("/auth/get-user-info/");
-  return response.data;
-};
