@@ -124,7 +124,7 @@ export const ExpenseTable = ({
                       className={`w-4 h-4   ${
                         expense.status === ExpenseStatus.PAID
                           ? "text-gray-400 cursor-not-allowed "
-                          : "text-gray-800 hover:text-sky-600 hover:cursor-pointer"
+                          : "text-gray-800 hover:text-emerald-600 hover:cursor-pointer"
                       }`}
                     />
                   </button>

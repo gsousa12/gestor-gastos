@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuthStore } from "../store/authStore";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getUserInformation } from "../api/dispatch/auth/auth";
+import { getUserInformation } from "../api/dispatch/user/user-dispatch";
 
 export function useAuthBootstrap() {
   const setUser = useAuthStore((s) => s.setUser);
