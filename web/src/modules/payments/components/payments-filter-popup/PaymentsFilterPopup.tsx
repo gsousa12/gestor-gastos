@@ -1,29 +1,29 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useMobileDetect } from "../../../../common/hooks/useMobileDetect";
+import { PaymentsFilterValues } from "../../pages/payments-page/payments-page-controller";
 import { Filter } from "lucide-react";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "../../../../components/ui/popover";
-import { ExpenseFilterValues } from "../../pages/expense-page/expensesPage.controller";
-import { useMobileDetect } from "../../../../common/hooks/useMobileDetect";
-import { getCurrentYear } from "../../../../common/utils/functions";
 import { months } from "../../../../common/utils/constants";
+import { getCurrentYear } from "../../../../common/utils/functions";
 
-interface ExpenseFilterPopUpProps {
-  filters: ExpenseFilterValues;
-  onApply: (values: ExpenseFilterValues) => void;
+interface PaymentsFilterPopupProps {
+  filters: PaymentsFilterValues;
+  onApply: (values: PaymentsFilterValues) => void;
   onClear: () => void;
 }
 
-export const ExpenseFilterPopUp = ({
+export const PaymentsFilterPopup = ({
   filters,
   onApply,
   onClear,
-}: ExpenseFilterPopUpProps) => {
+}: PaymentsFilterPopupProps) => {
   const isMobile = useMobileDetect();
   const [open, setOpen] = useState(false);
-  const [values, setValues] = useState<ExpenseFilterValues>(filters);
+  const [values, setValues] = useState<PaymentsFilterValues>(filters);
 
   useEffect(() => {
     setValues(filters);

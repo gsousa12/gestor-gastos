@@ -50,9 +50,12 @@ export const Header = () => {
               <Settings className="w-5 h-5 text-gray-400 group-hover:text-sky-600" />
               <span className="text-sm font-medium">Opções</span>
             </button> */}
-            <button className="w-full flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-sky-50 hover:text-sky-700 hover:cursor-pointer transition-colors duration-200">
-              <LogOut className="w-5 h-5 text-gray-400 group-hover:text-sky-600" />
-              <button className="text-sm font-medium" onClick={handleLogout}>
+            <button
+              className="w-full flex items-center gap-3 px-4 py-2 text-gray-700 hover:cursor-pointer transition-colors duration-200"
+              onClick={handleLogout}
+            >
+              <LogOut className="w-5 h-5 text-gray-400" />
+              <button className="text-sm hover:bg-sky-50 hover:cursor-pointer">
                 Logout
               </button>
             </button>

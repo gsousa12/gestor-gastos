@@ -20,8 +20,6 @@ export type ExpenseFilterValues = {
 };
 
 export const useExpensesController = () => {
-  const { mutateAsync: deleteExpenseByIdMutate } = deleteExpenseByIdMutation();
-
   const [filters, setFilters] = useState<ExpenseFilterValues>({
     supplierName: "",
     month: getCurrentMonth(),
@@ -90,6 +88,8 @@ export const useExpensesController = () => {
     month: filters.month === "" ? undefined : filters.month,
     year: filters.year === "" ? getCurrentYear() : filters.year,
   });
+
+  const { mutateAsync: deleteExpenseByIdMutate } = deleteExpenseByIdMutation();
 
   return {
     expenseListData: expenseListData?.data ?? [],

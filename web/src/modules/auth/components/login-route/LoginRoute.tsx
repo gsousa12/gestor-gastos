@@ -6,12 +6,12 @@ import { useSessionExpiredPopupStore } from "../../../../common/components/popup
 
 export const LoginRoute = () => {
   const hide = useSessionExpiredPopupStore((s) => s.hide);
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
 
   useEffect(() => {
     hide();
   }, [hide]);
 
-  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   if (isAuthenticated) {
     return <Navigate to="/dashboard" replace />;
   }

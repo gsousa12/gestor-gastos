@@ -9,9 +9,6 @@ import { dashboardPageController } from "./dashboard-page-controller";
 
 export const DashboardPage = () => {
   const { dashboardData } = dashboardPageController();
-
-  console.log("Dashboard Data: ", dashboardData);
-
   return (
     <ContentWrapper>
       <ContentTitle label="Dashboard" />

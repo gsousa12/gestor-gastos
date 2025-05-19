@@ -9,11 +9,6 @@ import {
   GetExpenseListRequest,
 } from "../../interfaces/expense/expense-api-interfaces";
 import { getApiResponse } from "../../interfaces/get-api-response";
-import {
-  CreateExpenseResponse,
-  DeleteExpenseByIdResponse,
-  GetExpenseCreateFormDataResponse,
-} from "../../types/api-interfaces";
 export const getExpenseListEmpty = {};
 
 export const getExpenseListDispatch = async (
