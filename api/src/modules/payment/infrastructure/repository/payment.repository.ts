@@ -184,6 +184,13 @@ export class PaymentRepository implements IPaymentRepository {
               name: true,
             },
           },
+          expense: {
+            select: {
+              description: true,
+              amount: true,
+              status: true,
+            },
+          },
         },
       }),
       this.prisma.payment.count({

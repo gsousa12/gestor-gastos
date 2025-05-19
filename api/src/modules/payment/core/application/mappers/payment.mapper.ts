@@ -47,6 +47,10 @@ export class PaymentMapper {
       canceledAt: payment.canceledAt ?? null,
       supplierId: payment.expenseId,
       supplierName: payment.supplier?.name || null,
+      expenseId: payment.expenseId,
+      expenseDesciption: payment.expense?.description || null,
+      expenseStatus: payment.expense?.status || null,
+      expenseAmount: payment.expense?.amount || null,
     }));
   }
 

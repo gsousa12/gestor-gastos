@@ -1,6 +1,7 @@
 import { PrismaService } from '@common/modules/prisma/service/prisma.service';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { IReportRepository } from '../interfaces/report-repository.interface';
+import { PaymentStatus } from '@modules/payment/core/domain/enums/payment.enum';
 
 @Injectable()
 export class ReportRepository implements IReportRepository {
@@ -24,6 +25,7 @@ export class ReportRepository implements IReportRepository {
       where: {
         month: month,
         year: year,
+        status: PaymentStatus.ACTIVE,
       },
       include: {
         expense: true,
