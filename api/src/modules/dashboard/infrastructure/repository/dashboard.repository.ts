@@ -2,6 +2,7 @@ import { PrismaService } from '@common/modules/prisma/service/prisma.service';
 import { Injectable } from '@nestjs/common';
 import { IDashboardRepository } from '../interfaces/dashboard-repository.interface';
 import { DashboardData, PaginationMeta } from '@common/structures/types';
+import { PaymentStatus } from '@modules/payment/core/domain/enums/payment.enum';
 
 @Injectable()
 export class DashboardRepository implements IDashboardRepository {
@@ -39,6 +40,7 @@ export class DashboardRepository implements IDashboardRepository {
         amount: true,
       },
       where: {
+        status: { not: PaymentStatus.CANCELED },
         createdAt: {
           gte: startDate,
           lte: endDate,

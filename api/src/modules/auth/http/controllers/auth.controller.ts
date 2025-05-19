@@ -24,11 +24,4 @@ export class AuthController {
     await this.authService.logout(res);
     return createApiResponse('Deslogado com sucesso', {});
   }
-
-  @UseGuards(AuthGuard('jwt'))
-  @Get('/get-user-info')
-  @HttpCode(HttpStatus.OK)
-  async getUserInfo(@Req() req: Request) {
-    return createApiResponse('Usuário encontrado com sucesso', req.user!);
-  }
 }
