@@ -17,6 +17,7 @@ export class AuthController {
     return createApiResponse('Logado com sucesso', {});
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Post('/logout')
   @HttpCode(HttpStatus.OK)
   async logout(@Res({ passthrough: true }) res: Response) {
