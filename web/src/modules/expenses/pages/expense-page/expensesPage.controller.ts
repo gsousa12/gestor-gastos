@@ -1,11 +1,8 @@
 import { useState } from "react";
-import {
-  getCurrentMonth,
-  getCurrentYear,
-} from "../../../../common/utils/functions";
-import { getExpenseListQuery } from "../../../../common/api/queries/expenses/getExpenseListQuery";
-import { deleteExpenseByIdMutation } from "../../../../common/api/mutations/expense/deleteExpenseByIdMutation";
-import { showToast } from "../../../../common/components/toast/Toast";
+import { getCurrentMonth, getCurrentYear } from "@common/utils/functions";
+import { getExpenseListQuery } from "@common/api/queries/expenses/getExpenseListQuery";
+import { deleteExpenseByIdMutation } from "@common/api/mutations/expense/deleteExpenseByIdMutation";
+import { showToast } from "@components/toast/Toast";
 
 export const getCreateExpenseFormDataEmpty = {
   supplierList: [],

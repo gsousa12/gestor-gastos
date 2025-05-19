@@ -1,17 +1,14 @@
-import { ContentWrapper } from "../../../../common/components/wrappers/content-wrapper/ContentWrapper";
-import { GenerateReportButton } from "../../../../common/components/generate-report-button/GenerateReportButton";
-import { CreateButton } from "../../../../common/components/create-button/CreateButton";
+import { ContentWrapper } from "@components/wrappers/content-wrapper/ContentWrapper";
+import { GenerateReportButton } from "@components/generate-report-button/GenerateReportButton";
+import { CreateButton } from "@components/create-button/CreateButton";
 import { CreateExpensePopup } from "../../components/create-expense-popup/CreateExpensePopup";
 import { ExpenseTable } from "../../components/expense-table/ExpenseTable";
-import { Pagination } from "../../../../common/components/pagination/Pagination";
+import { Pagination } from "@components/pagination/Pagination";
 import { useExpensesController } from "./expensesPage.controller";
 import { ExpenseFilterPopUp } from "../../components/expense-filter-popup/ExpenseFilterPopUp";
-import {
-  getCurrentMonth,
-  getCurrentYear,
-} from "../../../../common/utils/functions";
-import { DeleteConfirmationPopup } from "../../../../common/components/popups/deletion-confirmation-popup/DeleteConfirmationPopup";
-import { ContentTitle } from "../../../../common/components/content-title/ContentTitle";
+import { getCurrentMonth, getCurrentYear } from "@common/utils/functions";
+import { DeleteConfirmationPopup } from "@components/popups/deletion-confirmation-popup/DeleteConfirmationPopup";
+import { ContentTitle } from "@components/content-title/ContentTitle";
 
 export const ExpensesPage = () => {
   const {

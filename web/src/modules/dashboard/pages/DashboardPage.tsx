@@ -1,9 +1,9 @@
 import { ArrowRightCircle, Receipt, Truck } from "lucide-react";
-import { ContentTitle } from "../../../common/components/content-title/ContentTitle";
-import { InformationCard } from "../../../common/components/information-card/InformationCard";
-import { ContentWrapper } from "../../../common/components/wrappers/content-wrapper/ContentWrapper";
+import { ContentTitle } from "@common/components/content-title/ContentTitle";
+import { InformationCard } from "@common/components/information-card/InformationCard";
+import { ContentWrapper } from "@common/components/wrappers/content-wrapper/ContentWrapper";
 import { LastExpenseTable } from "../components/last-expenses-table/LastExpenseTable";
-import { getCurrentMonth, getMonthName } from "../../../common/utils/functions";
+import { getCurrentMonth, getMonthName } from "@common/utils/functions";
 import { SupplierDebitsPieChart } from "../components/supplier-debits-pie-chart/SupplierDebitsPieChart";
 import { dashboardPageController } from "./dashboard-page-controller";
 

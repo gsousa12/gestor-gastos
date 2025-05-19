@@ -1,8 +1,8 @@
-import { useMobileDetect } from "../../../../common/hooks/useMobileDetect";
+import { useMobileDetect } from "@common/hooks/useMobileDetect";
 import {
   convertCentsToReal,
   formatDateAndHoursToPTBR,
-} from "../../../../common/utils/functions";
+} from "@common/utils/functions";
 
 interface LastExpensesData {
   id: number;

@@ -5,7 +5,11 @@ import { useSessionExpiredPopupStore } from "../popups/session-expired-popup/ses
 import { BoostrapLoader } from "../global-loader/BoostrapLoader";
 import { SessionExpiredPopup } from "../popups/session-expired-popup/SessionExpiredPopup";
 
-export const AppController = ({ children }: { children: React.ReactNode }) => {
+interface AppControllerProps {
+  children: React.ReactNode;
+}
+
+export const AppController = ({ children }: AppControllerProps) => {
   const isBootstrapping = useAuthBootstrap();
   const open = useSessionExpiredPopupStore((s) => s.open);
   const hide = useSessionExpiredPopupStore((s) => s.hide);

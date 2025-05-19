@@ -1,5 +1,5 @@
-import { Skeleton } from "../../../../components/ui/skeleton";
-// w-[460px] h-[350px]
+import { Skeleton } from "@ui/skeleton";
+
 export const CreateExpensePopupSkeleton = () => {
   return (
     <div className="flex flex-col gap-4 w-[100%]">

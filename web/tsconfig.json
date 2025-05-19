@@ -7,7 +7,12 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@common/*": ["./src/common/*"],
+      "@modules/*": ["./src/modules/*"],
+      "@components/*": ["./src/common/components/*"],
+      "@ui/*": ["./src/common/components/ui/*"],
+      "@lib/*": ["./src/common/lib/*"]
     }
   }
 }

@@ -1,4 +1,4 @@
-import { cn } from "../../../lib/utils";
+import { cn } from "../../lib/utils";
 import { SideBarGroupTitle } from "../sidebar-group-title/SideBarGroupTitle";
 import { SidebarItem } from "../sidebar-item/SidebarItem";
 import {

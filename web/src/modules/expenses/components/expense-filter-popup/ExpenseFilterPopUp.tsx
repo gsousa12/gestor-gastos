@@ -4,11 +4,11 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "../../../../components/ui/popover";
+} from "@components/ui/popover";
 import { ExpenseFilterValues } from "../../pages/expense-page/expensesPage.controller";
-import { useMobileDetect } from "../../../../common/hooks/useMobileDetect";
-import { getCurrentYear } from "../../../../common/utils/functions";
-import { months } from "../../../../common/utils/constants";
+import { useMobileDetect } from "@common/hooks/useMobileDetect";
+import { getCurrentYear } from "@common/utils/functions";
+import { months } from "@common/utils/constants";
 
 interface ExpenseFilterPopUpProps {
   filters: ExpenseFilterValues;

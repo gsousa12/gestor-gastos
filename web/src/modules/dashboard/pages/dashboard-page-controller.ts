@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { getCurrentMonth } from "../../../common/utils/functions";
-import { getDashboardDataQuery } from "../../../common/api/queries/dashboard/getDashboardDataQuery";
+import { getCurrentMonth } from "@common/utils/functions";
+import { getDashboardDataQuery } from "@common/api/queries/dashboard/getDashboardDataQuery";
 
 export const getDashboardDataEmpty = {
   activeSuppliers: 0,

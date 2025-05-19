@@ -4,14 +4,14 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-} from "../../../../components/ui/card";
+} from "@common/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
-} from "../../../../components/ui/chart";
+} from "@common/components/ui/chart";
 import { Label, Pie, PieChart } from "recharts";
-import { convertCentsToReal } from "../../../../common/utils/functions";
+import { convertCentsToReal } from "@common/utils/functions";
 
 interface SupplierDebitData {
   id: number;

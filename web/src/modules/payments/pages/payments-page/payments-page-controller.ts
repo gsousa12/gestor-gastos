@@ -1,9 +1,6 @@
 import { useState } from "react";
-import {
-  getCurrentMonth,
-  getCurrentYear,
-} from "../../../../common/utils/functions";
-import { getPaymentListQuery } from "../../../../common/api/queries/payments/getPaymentListQuery";
+import { getCurrentMonth, getCurrentYear } from "@common/utils/functions";
+import { getPaymentListQuery } from "@common/api/queries/payments/getPaymentListQuery";
 
 export type PaymentsFilterValues = {
   supplierName: string;

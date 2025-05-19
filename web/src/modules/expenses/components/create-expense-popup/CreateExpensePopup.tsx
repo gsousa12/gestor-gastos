@@ -3,7 +3,7 @@ import {
   DialogClose,
   DialogContent,
   DialogTitle,
-} from "../../../../components/ui/dialog";
+} from "@common/components/ui/dialog";
 import { X } from "lucide-react";
 import { CreateExpensePopupContent } from "../create-expense-popup-content/CreateExpensePopupContent";
 

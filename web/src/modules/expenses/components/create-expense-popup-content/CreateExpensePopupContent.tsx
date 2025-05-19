@@ -5,18 +5,18 @@ import {
   CreateExpenseFormValues,
   createExpenseSchema,
 } from "../../schemas/create-expense-schema";
-import { ComboBox } from "../../../../common/components/combobox/Combobox";
+import { ComboBox } from "@components/combobox/Combobox";
 import {
   formatAmount,
   getCurrentMonth,
   getCurrentYear,
-} from "../../../../common/utils/functions";
-import { cn } from "../../../../lib/utils";
+} from "@common/utils/functions";
+import { cn } from "@common/lib/utils";
 import { useEffect } from "react";
-import { showToast } from "../../../../common/components/toast/Toast";
-import { CreateExpensePopupSkeleton } from "../../../../common/components/skeletons/create-expense-skeleton/CreateExpenseSkeleton";
-import { useAuthStore } from "../../../../common/store/authStore";
-import { createExpenseMutation } from "../../../../common/api/mutations/expense/createExpenseMutation";
+import { showToast } from "@components/toast/Toast";
+import { CreateExpensePopupSkeleton } from "@components/skeletons/create-expense-skeleton/CreateExpenseSkeleton";
+import { useAuthStore } from "@common/store/authStore";
+import { createExpenseMutation } from "@common/api/mutations/expense/createExpenseMutation";
 
 export const CreateExpensePopupContent = () => {
   const userId = useAuthStore((state) => state.user?.userId);

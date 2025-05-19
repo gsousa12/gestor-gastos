@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import { useMobileDetect } from "../../../../common/hooks/useMobileDetect";
+import { useMobileDetect } from "@common/hooks/useMobileDetect";
 import { PaymentsFilterValues } from "../../pages/payments-page/payments-page-controller";
 import { Filter } from "lucide-react";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "../../../../components/ui/popover";
-import { months } from "../../../../common/utils/constants";
-import { getCurrentYear } from "../../../../common/utils/functions";
+} from "@components/ui/popover";
+import { months } from "@common/utils/constants";
+import { getCurrentYear } from "@common/utils/functions";
 
 interface PaymentsFilterPopupProps {
   filters: PaymentsFilterValues;
