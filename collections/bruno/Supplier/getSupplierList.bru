@@ -5,12 +5,12 @@ meta {
 }
 
 get {
-  url: http://localhost:3000/api/supplier/?page=1&has_debits=false
+  url: http://localhost:3000/api/supplier/?page=1
   body: none
   auth: inherit
 }
 
 params:query {
   page: 1
-  has_debits: false
+  ~has_debits: false
 }
