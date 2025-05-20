@@ -110,3 +110,24 @@ export const formatDateAndHoursToPTBR = (dataISO: string): string => {
 
   return `${dia}/${mes}/${ano} às ${horas}:${minutos}`;
 };
+
+export const formatTaxId = (taxId: string): string => {
+  // Remove tudo que não for dígito
+  const cleaned = taxId.replace(/\D/g, "");
+
+  // Formata como CPF (000.000.000-00) se tiver 11 dígitos
+  if (cleaned.length === 11) {
+    return cleaned.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+  }
+
+  // Formata como CNPJ (00.000.000/0000-00) se tiver 14 dígitos
+  if (cleaned.length === 14) {
+    return cleaned.replace(
+      /(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/,
+      "$1.$2.$3/$4-$5"
+    );
+  }
+
+  // Retorna o original se não for CPF nem CNPJ válido
+  return taxId;
+};

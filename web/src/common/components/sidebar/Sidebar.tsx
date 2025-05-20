@@ -81,7 +81,7 @@ export const Sidebar = () => {
           />
         </div>
         <div className="flex flex-col gap-2">
-          {!isMobile && <SideBarGroupTitle label="Outros" />}
+          {!isMobile && <SideBarGroupTitle label="Gestão" />}
           <SidebarItem
             key={"Suppliers"}
             icon={<Truck />}

@@ -5,6 +5,7 @@ import { ExpensesPage } from "@/modules/expenses/pages/expense-page/ExpensesPage
 import { LoginRoute } from "@/modules/auth/components/login-route/LoginRoute";
 import { PaymentsPage } from "@/modules/payments/pages/payments-page/PaymentsPage";
 import { NotFoundPage } from "../not-found-page/NotFoundPage";
+import { SuppliersPage } from "@/modules/suppliers/pages/supplies-page/SuppliersPage";
 
 export const AppRoutes = () => {
   return (
@@ -17,6 +18,7 @@ export const AppRoutes = () => {
           <Route path="/expenses" element={<ExpensesPage />} />
           <Route path="/login" element={<LoginRoute />} />
           <Route path="/payments" element={<PaymentsPage />} />
+          <Route path="/suppliers" element={<SuppliersPage />} />
         </Route>
       </Routes>
     </main>
