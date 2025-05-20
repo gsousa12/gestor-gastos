@@ -7,11 +7,11 @@ export interface GetSupplierListRequest {
 export interface Supplier {
   id: number;
   name: string;
-  companyName: string;
+  companyName: string | null;
   recurringDebit: number;
-  taxId: string;
-  contactEmail: string;
-  contactPhone: string;
+  taxId: string | null;
+  contactEmail: string | null;
+  contactPhone: string | null;
   createdAt: string;
   updatedAt: string | null;
 }

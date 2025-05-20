@@ -37,7 +37,7 @@ export const SupplierDetailsCard = ({ supplier }: SupplierDetailsCardProps) => {
             {supplier.name}
           </h3>
           <p className="text-xs text-gray-600 font-medium">
-            {supplier.companyName}
+            {supplier.companyName ?? "-"}
           </p>
         </div>
       </div>
@@ -76,11 +76,15 @@ export const SupplierDetailsCard = ({ supplier }: SupplierDetailsCardProps) => {
         </div>
         <div className="flex items-center gap-2">
           <Mail className="w-4 h-4 text-gray-400" />
-          <span className="text-xs text-gray-700">{supplier.contactEmail}</span>
+          <span className="text-xs text-gray-700">
+            {supplier.contactEmail ?? "-"}
+          </span>
         </div>
         <div className="flex items-center gap-2">
           <Phone className="w-4 h-4 text-gray-400" />
-          <span className="text-xs text-gray-700">{supplier.contactPhone}</span>
+          <span className="text-xs text-gray-700">
+            {supplier.contactPhone ?? "-"}
+          </span>
         </div>
       </div>
     </div>

@@ -66,9 +66,9 @@ export const LastExpenseTable = ({ expenses }: LastExpenseTableProps) => {
               </td>
             </tr>
           )}
-          {expenses.map((exp) => (
+          {expenses.map((expense) => (
             <tr
-              key={exp.id}
+              key={expense.id}
               className={`border-b last:border-b-0 hover:bg-slate-50 transition ${
                 isMobile ? "text-[11px]" : "text-sm"
               }`}
@@ -79,7 +79,7 @@ export const LastExpenseTable = ({ expenses }: LastExpenseTableProps) => {
                     isMobile ? "text-[10px]" : ""
                   }`}
                 >
-                  {exp.supplierName}
+                  {expense.supplierName}
                 </div>
                 {isMobile ? (
                   <></>
@@ -89,7 +89,7 @@ export const LastExpenseTable = ({ expenses }: LastExpenseTableProps) => {
                       isMobile ? "" : "text-xs"
                     }`}
                   >
-                    {exp.description}
+                    {expense.description ?? "-"}
                   </div>
                 )}
               </td>
@@ -98,14 +98,14 @@ export const LastExpenseTable = ({ expenses }: LastExpenseTableProps) => {
                   isMobile ? "py-2 text-[8px]" : "py-3 text-[12px]"
                 } text-center font-semibold text-red-600 whitespace-nowrap`}
               >
-                {`R$ ${convertCentsToReal(exp.amount)}`}
+                {`R$ ${convertCentsToReal(expense.amount)}`}
               </td>
               <td
                 className={`${
                   isMobile ? "py-2 pr-1 text-[8px]" : "py-3 pr-2 text-[13px]"
                 } text-center  text-gray-800 whitespace-nowrap`}
               >
-                {formatDateAndHoursToPTBR(exp.date)}
+                {formatDateAndHoursToPTBR(expense.date)}
               </td>
             </tr>
           ))}

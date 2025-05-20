@@ -77,7 +77,7 @@ export const ExpenseTable = ({
                   {expense.supplierName}
                 </TableCell>
                 <TableCell className="text-gray-700">
-                  {expense.description}
+                  {expense.description ?? "-"}
                 </TableCell>
                 <TableCell className="text-gray-700">
                   {`R$ ${convertCentsToReal(expense.amount)}`}

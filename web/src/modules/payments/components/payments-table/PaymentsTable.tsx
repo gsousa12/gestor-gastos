@@ -84,7 +84,7 @@ export const PaymentsTable = ({ data, isPendending }: PaymentsTableProps) => {
                             className="text-xs text-gray-700 font-semibold truncate max-w-[80px]"
                             title={payment.expenseDesciption ?? ""}
                           >
-                            {payment.expenseDesciption}
+                            {payment.expenseDesciption ?? "-"}
                           </span>
                         </div>
                         <span className="text-[10px] text-gray-400 mt-0.5">
