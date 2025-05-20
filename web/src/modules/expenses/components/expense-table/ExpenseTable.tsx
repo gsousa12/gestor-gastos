@@ -6,7 +6,18 @@ import {
   TableHeader,
   TableRow,
 } from "@components/ui/table";
-import { CircleCheck, Clock, DollarSign, Pencil, Trash2 } from "lucide-react";
+import {
+  Calendar,
+  CheckCircle,
+  CircleCheck,
+  Clock,
+  DollarSign,
+  Info,
+  Layers,
+  Pencil,
+  Trash2,
+  User,
+} from "lucide-react";
 
 import {
   convertCentsToReal,
@@ -31,28 +42,41 @@ export const ExpenseTable = ({
   isPending,
 }: ExpenseTableProps) => {
   return (
-    <div className="rounded-lg border border-gray-100 overflow-x-auto shadow-sm">
+    <div className="rounded-lg border border-gray-100 overflow-x-auto shadow-sm bg-white">
       <Table>
         <TableHeader>
-          <TableRow className="bg-white">
-            <TableHead className="text-gray-400 font-semibold">
-              Fornecedor
+          <TableRow className="bg-sky-50">
+            <TableHead className="text-sky-700 font-bold">
+              <span className="inline-flex items-center gap-1">
+                <User className="w-4 h-4 text-sky-400" />
+                Fornecedor
+              </span>
             </TableHead>
-            <TableHead className="text-gray-400 font-semibold">
-              Descrição
+            <TableHead className="text-sky-700 font-bold">
+              <span className="inline-flex items-center gap-1">
+                <Layers className="w-4 h-4 text-sky-400" />
+                Sub-Setor
+              </span>
             </TableHead>
-            <TableHead className="text-gray-400 font-semibold">Valor</TableHead>
-
-            <TableHead className="text-gray-400 font-semibold">
-              Sub-Setor
+            <TableHead className="text-sky-700 font-bold">
+              <span className="inline-flex items-center gap-1">
+                <Calendar className="w-4 h-4 text-sky-400" />
+                Competência
+              </span>
             </TableHead>
-            <TableHead className="text-gray-400 font-semibold">
-              Competência
+            <TableHead className="text-sky-700 font-bold">
+              <span className="inline-flex items-center gap-1">
+                <DollarSign className="w-4 h-4 text-sky-400" />
+                Valor
+              </span>
             </TableHead>
-            <TableHead className="text-gray-400 font-semibold">
-              Status de Pagamento
+            <TableHead className="text-sky-700 font-bold">
+              <span className="inline-flex items-center gap-1">
+                <CheckCircle className="w-4 h-4 text-sky-400" />
+                Status
+              </span>
             </TableHead>
-            <TableHead className="text-gray-400 font-semibold text-center">
+            <TableHead className="text-sky-700 font-bold text-center">
               Ações
             </TableHead>
           </TableRow>
@@ -60,7 +84,7 @@ export const ExpenseTable = ({
         <TableBody>
           {data.length === 0 && !isPending ? (
             <TableRow>
-              <TableCell colSpan={7} className="text-center text-gray-300 py-8">
+              <TableCell colSpan={6} className="text-center text-gray-300 py-8">
                 <NotFoundItems
                   title="Despesa não encontrada"
                   description="Nenhuma despesa foi encontrada. Tente aplicar outro filtro."
@@ -69,51 +93,55 @@ export const ExpenseTable = ({
             </TableRow>
           ) : (
             data.map((expense) => (
-              <TableRow
-                key={expense.id}
-                className="hover:bg-gray-50 transition"
-              >
+              <TableRow key={expense.id} className="hover:bg-sky-50 transition">
+                {/* Fornecedor */}
                 <TableCell className="text-gray-700">
                   {expense.supplierName}
                 </TableCell>
-                <TableCell className="text-gray-700">
-                  {expense.description ?? "-"}
-                </TableCell>
-                <TableCell className="text-gray-700">
-                  {`R$ ${convertCentsToReal(expense.amount)}`}
-                </TableCell>
-
+                {/* Sub-Setor */}
                 <TableCell className="text-gray-700">
                   {expense.subsectorName}
                 </TableCell>
-                <TableCell className="text-gray-700">
-                  {`${String(expense.month).padStart(2, "0")}/${expense.year}`}
+                {/* Competência */}
+                <TableCell>
+                  <div className="flex items-center gap-1">
+                    <Calendar className="w-3 h-3 text-gray-400" />
+                    <span className="text-xs text-gray-600">
+                      {String(expense.month).padStart(2, "0")}/{expense.year}
+                    </span>
+                  </div>
                 </TableCell>
-                <TableCell className="text-gray-700">
-                  {
-                    <StatusBadge
-                      text={formatExpenseStatus(expense.status)}
-                      variant={
-                        expense.status === ExpenseStatus.PENDING
-                          ? "negative"
-                          : "positive"
-                      }
-                      icon={
-                        expense.status === ExpenseStatus.PENDING ? (
-                          <Clock className="w-3 h-3 " />
-                        ) : (
-                          <CircleCheck className="w-3 h-3" />
-                        )
-                      }
-                    />
-                  }
+                {/* Valor */}
+                <TableCell>
+                  <span className="text-sm font-bold text-red-700 bg-red-50 rounded px-2 py-1">
+                    R$ {convertCentsToReal(expense.amount)}
+                  </span>
                 </TableCell>
+                {/* Status */}
+                <TableCell>
+                  <StatusBadge
+                    text={formatExpenseStatus(expense.status)}
+                    variant={
+                      expense.status === ExpenseStatus.PENDING
+                        ? "negative"
+                        : "positive"
+                    }
+                    icon={
+                      expense.status === ExpenseStatus.PENDING ? (
+                        <Clock className="w-3 h-3" />
+                      ) : (
+                        <CircleCheck className="w-3 h-3" />
+                      )
+                    }
+                  />
+                </TableCell>
+                {/* Ações */}
                 <TableCell className="flex items-center justify-center gap-2">
                   <button
-                    className="p-1 rounded hover:bg-sky-50 transition"
+                    className="px-2 py-1 rounded bg-emerald-500 text-white hover:bg-emerald-600 transition text-xs font-semibold disabled:bg-gray-200 disabled:text-gray-400"
                     title={
                       expense.status === ExpenseStatus.PAID
-                        ? "Despesas já foi paga."
+                        ? "Despesa já foi paga."
                         : "Registrar pagamento"
                     }
                     disabled={expense.status === ExpenseStatus.PAID}
@@ -121,16 +149,11 @@ export const ExpenseTable = ({
                       alert("Pagar despesa");
                     }}
                   >
-                    <DollarSign
-                      className={`w-4 h-4   ${
-                        expense.status === ExpenseStatus.PAID
-                          ? "text-gray-400 cursor-not-allowed "
-                          : "text-gray-800 hover:text-emerald-600 hover:cursor-pointer"
-                      }`}
-                    />
+                    <DollarSign className="w-4 h-4 inline mr-1" />
+                    Pagar
                   </button>
                   <button
-                    className="p-1 rounded hover:bg-sky-50 transition"
+                    className="p-1 rounded hover:bg-yellow-50 transition"
                     title={
                       expense.status === ExpenseStatus.PAID
                         ? "Despesas pagas não podem ser editadas."
@@ -142,9 +165,9 @@ export const ExpenseTable = ({
                     }}
                   >
                     <Pencil
-                      className={`w-4 h-4   ${
+                      className={`w-4 h-4 ${
                         expense.status === ExpenseStatus.PAID
-                          ? "text-gray-400 cursor-not-allowed "
+                          ? "text-gray-400 cursor-not-allowed"
                           : "text-gray-800 hover:text-yellow-600 hover:cursor-pointer"
                       }`}
                     />
@@ -160,9 +183,9 @@ export const ExpenseTable = ({
                     onClick={() => onDeleteExpenseById(expense.id)}
                   >
                     <Trash2
-                      className={`w-4 h-4   ${
+                      className={`w-4 h-4 ${
                         expense.status === ExpenseStatus.PAID
-                          ? "text-gray-400 cursor-not-allowed "
+                          ? "text-gray-400 cursor-not-allowed"
                           : "text-gray-800 hover:text-red-600 hover:cursor-pointer"
                       }`}
                     />

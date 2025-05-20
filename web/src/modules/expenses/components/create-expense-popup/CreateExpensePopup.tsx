@@ -18,7 +18,7 @@ export const CreateExpensePopup = ({
 }: CreateExpensePopupProps) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
+      <DialogContent aria-describedby={undefined}>
         <div className="flex items-center justify-between w-full">
           <DialogTitle>Cadastrar Despesa</DialogTitle>
           <DialogClose asChild>

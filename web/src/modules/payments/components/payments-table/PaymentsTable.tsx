@@ -16,10 +16,13 @@ import {
 } from "@common/components/ui/table";
 import {
   Calendar,
+  CheckCircle,
   CircleCheck,
   CircleX,
+  DollarSign,
   Info,
   ReceiptText,
+  User,
 } from "lucide-react";
 
 interface PaymentsTableProps {
@@ -34,20 +37,32 @@ export const PaymentsTable = ({ data, isPendending }: PaymentsTableProps) => {
     <div className="rounded-lg border border-gray-100 overflow-x-auto shadow-sm bg-white">
       <Table>
         <TableHeader>
-          <TableRow>
-            <TableHead className="text-gray-400 font-semibold">
-              Fornecedor
+          <TableRow className="bg-sky-50">
+            <TableHead className="text-sky-700 font-bold">
+              <span className="inline-flex items-center gap-1">
+                <User className="w-4 h-4 text-sky-400" />
+                Fornecedor
+              </span>
             </TableHead>
-            <TableHead className="text-gray-400 font-semibold">
-              Informações da Despesa
+            <TableHead className="text-sky-700 font-bold">
+              <span className="inline-flex items-center gap-1">
+                <Info className="w-4 h-4 text-sky-400" />
+                Informações da Despesa
+              </span>
             </TableHead>
-            <TableHead className="text-gray-400 font-semibold">
-              Valor pago
+            <TableHead className="text-sky-700 font-bold">
+              <span className="inline-flex items-center gap-1">
+                <DollarSign className="w-4 h-4 text-sky-400" />
+                Valor pago
+              </span>
             </TableHead>
-            <TableHead className="text-gray-400 font-semibold">
-              Status do Pagamento
+            <TableHead className="text-sky-700 font-bold">
+              <span className="inline-flex items-center gap-1">
+                <CheckCircle className="w-4 h-4 text-sky-400" />
+                Status do Pagamento
+              </span>
             </TableHead>
-            <TableHead className="text-gray-400 font-semibold text-center">
+            <TableHead className="text-sky-700 font-bold text-center">
               Ações
             </TableHead>
           </TableRow>
@@ -64,61 +79,67 @@ export const PaymentsTable = ({ data, isPendending }: PaymentsTableProps) => {
             </TableRow>
           ) : (
             data.map((payment) => (
-              <TableRow
-                key={payment.id}
-                className="hover:bg-slate-50 transition"
-              >
+              <TableRow key={payment.id} className="hover:bg-sky-50 transition">
                 {/* Fornecedor */}
                 <TableCell className="font-medium text-gray-700">
                   {payment.supplierName}
                 </TableCell>
                 {/* Informações da Despesa */}
                 <TableCell>
-                  <div className="flex flex-col">
-                    <div className="flex items-center gap-12 ">
-                      {/* Descrição */}
-                      <div className="flex flex-col items-start min-w-[70px]">
-                        <div className="flex gap-1">
-                          <Info className="w-3 h-3 text-gray-500" />
-                          <span
-                            className="text-xs text-gray-700 font-semibold truncate max-w-[80px]"
-                            title={payment.expenseDesciption ?? ""}
-                          >
-                            {payment.expenseDesciption ?? "-"}
-                          </span>
-                        </div>
-                        <span className="text-[10px] text-gray-400 mt-0.5">
-                          Descrição
+                  <div className="flex flex-row items-stretch gap-0">
+                    {/* Descrição */}
+                    <div
+                      className="flex flex-col items-start justify-center min-w-[90px] max-w-[120px] pr-4"
+                      style={{ flex: "0 0 120px" }}
+                    >
+                      <div className="flex gap-1 items-center w-full">
+                        <Info className="w-3 h-3 text-gray-500 flex-shrink-0" />
+                        <span
+                          className="text-xs text-gray-700 font-semibold truncate block w-full"
+                          title={payment.expenseDesciption ?? ""}
+                          style={{
+                            maxWidth: "80px",
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                          }}
+                        >
+                          {payment.expenseDesciption ?? "-"}
                         </span>
                       </div>
-                      {/* Competência */}
-                      <div className="flex flex-col items-center min-w-[70px] border-l border-slate-200 pl-4">
-                        <div className="flex items-start gap-1">
-                          <Calendar className="w-3 h-3 text-gray-400" />
-                          <span className="text-[11px] font-medium text-gray-600">
-                            {String(payment.month).padStart(2, "0")}/
-                            {payment.year}
-                          </span>
-                        </div>
-                        <span className="text-[10px] text-gray-400 mt-0.5">
-                          Competência
+                      <span className="text-[10px] text-gray-400 mt-0.5">
+                        Descrição
+                      </span>
+                    </div>
+                    {/* Competência */}
+                    <div className="flex flex-col items-center justify-center min-w-[70px] border-l border-slate-200 pl-4 pr-12">
+                      <div className="flex items-center gap-1">
+                        <Calendar className="w-3 h-3 text-gray-400 flex-shrink-0" />
+                        <span className="text-[11px] font-medium text-gray-600">
+                          {String(payment.month).padStart(2, "0")}/
+                          {payment.year}
                         </span>
                       </div>
-                      {/* Valor da despesa */}
-                      <div className="flex flex-col items-center min-w-[70px] border-l border-slate-200 pl-4">
-                        <span className="text-[11px] font-semibold text-red-700">
-                          R$ {convertCentsToReal(payment.expenseAmount)}
-                        </span>
-                        <span className="text-[10px] text-gray-400 mt-0.5">
-                          Valor da despesa
-                        </span>
-                      </div>
+                      <span className="text-[10px] text-gray-400 mt-0.5">
+                        Competência
+                      </span>
+                    </div>
+                    {/* Valor da despesa */}
+                    <div className="flex flex-col items-center justify-center min-w-[90px] border-l border-slate-200 pl-4">
+                      <span className="text-[11px] font-semibold text-red-700">
+                        R$ {convertCentsToReal(payment.expenseAmount)}
+                      </span>
+                      <span className="text-[10px] text-gray-400 mt-0.5">
+                        Valor da despesa
+                      </span>
                     </div>
                   </div>
                 </TableCell>
                 {/* Valor pago */}
-                <TableCell className="font-semibold text-emerald-600">
-                  R$ {convertCentsToReal(payment.amount)}
+                <TableCell>
+                  <span className="text-sm font-bold text-emerald-700 bg-emerald-50 rounded px-2 py-1">
+                    R$ {convertCentsToReal(payment.amount)}
+                  </span>
                 </TableCell>
                 {/* Status do Pagamento */}
                 <TableCell>

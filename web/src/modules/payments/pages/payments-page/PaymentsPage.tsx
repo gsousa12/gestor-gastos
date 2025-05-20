@@ -12,8 +12,6 @@ export const PaymentsPage = () => {
   const { paymentListData, filters, applyFilters, clearFilters } =
     usePaymentsPageController();
 
-  console.log(paymentListData);
-
   return (
     <ContentWrapper>
       <div className="flex flex-row justify-between items-center mb-4">
@@ -33,7 +31,7 @@ export const PaymentsPage = () => {
             }
             year={filters.year !== "" ? filters.year : getCurrentYear()}
           />
-          <CreateButton label="Registrar Pagamento" openPopup={() => {}} />
+          {/* <CreateButton label="Registrar Pagamento" openPopup={() => {}} /> */}
         </div>
       </div>
 

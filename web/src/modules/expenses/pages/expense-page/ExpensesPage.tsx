@@ -34,6 +34,10 @@ export const ExpensesPage = () => {
       <div className="flex flex-row justify-between items-center mb-4">
         <ContentTitle label="Despesas" />
         <div className="flex flex-row gap-1 items-center">
+          <CreateButton
+            label="Cadastrar Despesa"
+            openPopup={handleOpenCreateExpense}
+          />
           <ExpenseFilterPopUp
             filters={filters}
             onApply={applyFilters}
@@ -47,10 +51,6 @@ export const ExpensesPage = () => {
                 : getCurrentMonth()
             }
             year={filters.year !== "" ? filters.year : getCurrentYear()}
-          />
-          <CreateButton
-            label="Cadastrar Despesa"
-            openPopup={handleOpenCreateExpense}
           />
         </div>
       </div>
