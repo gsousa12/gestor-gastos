@@ -1,8 +1,8 @@
 import { validationMessages } from '@common/utils/validation-message';
-import { IsDefined, IsNumber, IsString, Length, Max, Min } from 'class-validator';
+import { IsNumber, IsOptional, IsString, Length, Max, Min } from 'class-validator';
 
 export class CreateExpenseRequestDto {
-  @IsDefined()
+  @IsOptional()
   @IsString({ message: validationMessages.isString })
   @Length(3, 50, { message: validationMessages.Length })
   description: string | null;
