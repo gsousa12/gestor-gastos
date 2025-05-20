@@ -22,6 +22,7 @@ import {
   DollarSign,
   Info,
   ReceiptText,
+  Truck,
   User,
 } from "lucide-react";
 
@@ -40,7 +41,7 @@ export const PaymentsTable = ({ data, isPendending }: PaymentsTableProps) => {
           <TableRow className="bg-sky-50">
             <TableHead className="text-sky-700 font-bold">
               <span className="inline-flex items-center gap-1">
-                <User className="w-4 h-4 text-sky-400" />
+                <Truck className="w-4 h-4 text-sky-400" />
                 Fornecedor
               </span>
             </TableHead>

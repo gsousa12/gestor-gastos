@@ -16,6 +16,7 @@ import {
   Layers,
   Pencil,
   Trash2,
+  Truck,
   User,
 } from "lucide-react";
 
@@ -48,8 +49,14 @@ export const ExpenseTable = ({
           <TableRow className="bg-sky-50">
             <TableHead className="text-sky-700 font-bold">
               <span className="inline-flex items-center gap-1">
-                <User className="w-4 h-4 text-sky-400" />
+                <Truck className="w-4 h-4 text-sky-400" />
                 Fornecedor
+              </span>
+            </TableHead>
+            <TableHead className="text-sky-700 font-bold">
+              <span className="inline-flex items-center gap-1">
+                <Info className="w-4 h-4 text-sky-400" />
+                Descrição
               </span>
             </TableHead>
             <TableHead className="text-sky-700 font-bold">
@@ -98,6 +105,10 @@ export const ExpenseTable = ({
                 <TableCell className="text-gray-700">
                   {expense.supplierName}
                 </TableCell>
+                {/* Descrição */}
+                <TableCell className="text-gray-700">
+                  {expense.description ?? "-"}
+                </TableCell>
                 {/* Sub-Setor */}
                 <TableCell className="text-gray-700">
                   {expense.subsectorName}
@@ -138,7 +149,7 @@ export const ExpenseTable = ({
                 {/* Ações */}
                 <TableCell className="flex items-center justify-center gap-2">
                   <button
-                    className="px-2 py-1 rounded bg-emerald-500 text-white hover:bg-emerald-600 transition text-xs font-semibold disabled:bg-gray-200 disabled:text-gray-400"
+                    className="px-2 py-1 rounded bg-emerald-500 text-white hover:bg-emerald-600 transition text-xs font-semibold disabled:bg-gray-200 disabled:text-gray-400 hover:cursor-pointer"
                     title={
                       expense.status === ExpenseStatus.PAID
                         ? "Despesa já foi paga."
