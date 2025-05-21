@@ -34,7 +34,11 @@ export const usePaymentsPageController = () => {
     setPage(newPage);
   };
 
-  const { data: paymentListData } = getPaymentListQuery({
+  const {
+    data: paymentListData,
+    isPending,
+    isFetching,
+  } = getPaymentListQuery({
     page: page,
     supplierName: filters.supplierName,
     month: filters.month === "" ? undefined : filters.month,
@@ -43,8 +47,12 @@ export const usePaymentsPageController = () => {
 
   return {
     paymentListData: paymentListData?.data ?? [],
+    pagination: paymentListData?.pagination,
+    page,
     filters,
     applyFilters,
     clearFilters,
+    handlePageChange,
+    isPending: isFetching,
   };
 };

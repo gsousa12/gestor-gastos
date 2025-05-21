@@ -1,6 +1,8 @@
 import { Payment } from "@/common/api/interfaces/payment/payment-api-interfaces";
 import { StatusBadge } from "@/common/components/badges/status-badge/StatusBadge";
 import { NotFoundItems } from "@/common/components/not-found-items/NotFoundItems";
+import { PaymentTableSkeleton } from "@/common/components/skeletons/payment-table-skeleton/PaymentTableSkeleton";
+
 import { PaymentStatus } from "@/common/utils/enums";
 import {
   convertCentsToReal,
@@ -69,9 +71,15 @@ export const PaymentsTable = ({ data, isPendending }: PaymentsTableProps) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.length === 0 && !isPendending ? (
+          {isPendending ? (
             <TableRow>
-              <TableCell colSpan={5} className="text-center text-gray-400 py-8">
+              <TableCell colSpan={5} className="text-center text-gray-400">
+                <PaymentTableSkeleton />
+              </TableCell>
+            </TableRow>
+          ) : data.length === 0 && !isPendending ? (
+            <TableRow>
+              <TableCell colSpan={5} className="text-gray-400 py-8">
                 <NotFoundItems
                   title="Pagamento não encontrada"
                   description="Nenhum pagamento foi encontrado. Tente aplicar outro filtro."
@@ -96,7 +104,7 @@ export const PaymentsTable = ({ data, isPendending }: PaymentsTableProps) => {
                       <div className="flex gap-1 items-center w-full">
                         <Info className="w-3 h-3 text-gray-500 flex-shrink-0" />
                         <span
-                          className="text-xs text-gray-700 font-semibold truncate block w-full"
+                          className="text-xs text-gray-700 font-medium truncate block w-full"
                           title={payment.expenseDesciption ?? ""}
                           style={{
                             maxWidth: "80px",
@@ -127,7 +135,7 @@ export const PaymentsTable = ({ data, isPendending }: PaymentsTableProps) => {
                     </div>
                     {/* Valor da despesa */}
                     <div className="flex flex-col items-center justify-center min-w-[90px] border-l border-slate-200 pl-4">
-                      <span className="text-[11px] font-semibold text-red-700">
+                      <span className="text-[11px] font-medium text-red-700">
                         R$ {convertCentsToReal(payment.expenseAmount)}
                       </span>
                       <span className="text-[10px] text-gray-400 mt-0.5">

@@ -78,6 +78,7 @@ export const useExpensesController = () => {
   const {
     data: expenseListData,
     isPending,
+    isFetching,
     refetch: refetchExpenseList,
   } = getExpenseListQuery({
     page: page,
@@ -91,7 +92,7 @@ export const useExpensesController = () => {
   return {
     expenseListData: expenseListData?.data ?? [],
     pagination: expenseListData?.pagination,
-    isPending,
+    isPending: isFetching || isPending,
     filters,
     openCreateExpensePopup,
     openDeletePopup,

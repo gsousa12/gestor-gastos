@@ -30,6 +30,7 @@ import { ExpenseStatus } from "@common/utils/enums";
 import { NotFoundItems } from "@components/not-found-items/NotFoundItems";
 import { Expense } from "@common/api/interfaces/expense/expense-api-interfaces";
 import { StatusBadge } from "@/common/components/badges/status-badge/StatusBadge";
+import { ExpenseTableSkeleton } from "@/common/components/skeletons/expense-table-skeleton/ExpenseTableSkeleton";
 
 interface ExpenseTableProps {
   data: Expense[];
@@ -89,7 +90,13 @@ export const ExpenseTable = ({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.length === 0 && !isPending ? (
+          {isPending ? (
+            <TableRow>
+              <TableCell colSpan={7} className="text-center text-gray-400">
+                <ExpenseTableSkeleton />
+              </TableCell>
+            </TableRow>
+          ) : data.length === 0 && !isPending ? (
             <TableRow>
               <TableCell colSpan={6} className="text-center text-gray-300 py-8">
                 <NotFoundItems
@@ -102,22 +109,22 @@ export const ExpenseTable = ({
             data.map((expense) => (
               <TableRow key={expense.id} className="hover:bg-sky-50 transition">
                 {/* Fornecedor */}
-                <TableCell className="text-gray-700">
+                <TableCell className="text-gray-700 font-medium">
                   {expense.supplierName}
                 </TableCell>
                 {/* Descrição */}
-                <TableCell className="text-gray-700">
+                <TableCell className="text-gray-700 font-medium">
                   {expense.description ?? "-"}
                 </TableCell>
                 {/* Sub-Setor */}
-                <TableCell className="text-gray-700">
+                <TableCell className="text-gray-700 font-medium">
                   {expense.subsectorName}
                 </TableCell>
                 {/* Competência */}
                 <TableCell>
                   <div className="flex items-center gap-1">
                     <Calendar className="w-3 h-3 text-gray-400" />
-                    <span className="text-xs text-gray-600">
+                    <span className="text-xs text-gray-700 font-medium">
                       {String(expense.month).padStart(2, "0")}/{expense.year}
                     </span>
                   </div>
@@ -149,7 +156,8 @@ export const ExpenseTable = ({
                 {/* Ações */}
                 <TableCell className="flex items-center justify-center gap-2">
                   <button
-                    className="px-2 py-1 rounded bg-emerald-500 text-white hover:bg-emerald-600 transition text-xs font-semibold disabled:bg-gray-200 disabled:text-gray-400 hover:cursor-pointer"
+                    className="px-2 py-1 rounded bg-emerald-500 text-white hover:bg-emerald-600 transition text-xs font-semibold 
+                    disabled:bg-gray-200 disabled:text-gray-400 hover:cursor-pointer"
                     title={
                       expense.status === ExpenseStatus.PAID
                         ? "Despesa já foi paga."

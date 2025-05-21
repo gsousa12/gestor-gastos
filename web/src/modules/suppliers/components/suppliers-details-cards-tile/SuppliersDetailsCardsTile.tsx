@@ -1,10 +1,16 @@
 import { SupplierDetailsCardSkeleton } from "@/common/components/skeletons/supplier-details-skeleton/SupplierDetailsCardSkeleton";
 import { SupplierDetailsCard } from "../supplier-details-card/SupplierDetailsCard";
-import { useSuppliersDetailsCardsTileController } from "./suppliers-details-cards-tile-controller";
+import { Supplier } from "@/common/api/interfaces/supplier/supplier-api-interfaces";
 
-export const SuppliersDetailsCardsTile = () => {
-  const { supplierListData, isPending } =
-    useSuppliersDetailsCardsTileController();
+interface SuppliersDetailsCardsTileProps {
+  supplierListData: Supplier[];
+  isPending: boolean;
+}
+
+export const SuppliersDetailsCardsTile = ({
+  supplierListData,
+  isPending,
+}: SuppliersDetailsCardsTileProps) => {
   if (isPending) {
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">

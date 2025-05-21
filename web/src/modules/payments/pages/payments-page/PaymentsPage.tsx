@@ -9,8 +9,16 @@ import { PaymentsFilterPopup } from "../../components/payments-filter-popup/Paym
 import { Pagination } from "@common/components/pagination/Pagination";
 
 export const PaymentsPage = () => {
-  const { paymentListData, filters, applyFilters, clearFilters } =
-    usePaymentsPageController();
+  const {
+    paymentListData,
+    filters,
+    applyFilters,
+    clearFilters,
+    page,
+    pagination,
+    handlePageChange,
+    isPending,
+  } = usePaymentsPageController();
 
   return (
     <ContentWrapper>
@@ -35,12 +43,12 @@ export const PaymentsPage = () => {
         </div>
       </div>
 
-      <PaymentsTable data={paymentListData} isPendending={false} />
+      <PaymentsTable data={paymentListData} isPendending={isPending} />
       <Pagination
-        currentPage={1}
-        totalPages={1}
-        totalItems={0}
-        onPageChange={() => {}}
+        currentPage={page}
+        totalPages={pagination?.totalPages ?? 1}
+        totalItems={pagination?.totalItems ?? 0}
+        onPageChange={handlePageChange}
       />
     </ContentWrapper>
   );
