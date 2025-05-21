@@ -58,11 +58,9 @@ export class SupplierController {
   @UseGuards(AuthGuard('jwt'))
   @Get('/:id')
   @HttpCode(HttpStatus.OK)
-  async getSupplierById(@Request() req, @Param('id') id: number) {
+  async getSupplierById(@Param('id') id: number) {
     const supplierId = Number(id);
-
-    const supplier = await this.supplierService.getSupplierById(supplierId);
-    const response = await this.supplierMapper.toMapperGetSupplierByIdResponse(supplier);
-    return createApiResponse('Fornecedor encontrado com sucesso', response);
+    const details = await this.supplierService.getSupplierDetails(supplierId);
+    return createApiResponse('Fornecedor encontrado com sucesso', details);
   }
 }

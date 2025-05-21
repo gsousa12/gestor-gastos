@@ -6,6 +6,7 @@ import { SupplierHelper } from '../helpers/supplier.helper';
 import { Supplier } from '@prisma/client';
 import { SupplierEntity } from '../../domain/entities/supplier.entity';
 import { PaginationMeta } from '@common/structures/types';
+import { getCurrentMonth, getCurrentYear } from '@common/utils/data-functions';
 
 @Injectable()
 export class SupplierService implements ISupplierService {
@@ -48,5 +49,33 @@ export class SupplierService implements ISupplierService {
     }
 
     return supplier;
+  }
+
+  async getSupplierDetails(supplierId: number) {
+    const supplier = await this.getSupplierById(supplierId);
+
+    const [recentExpenses, payments, totalPaidThisMonth, totalPendingExpenses, paymentHistoryByMonth] =
+      await Promise.all([
+        this.supplierRepository.getRecentExpensesBySupplierId(supplierId, 5),
+        this.supplierRepository.getPaymentsBySupplierId(supplierId),
+        this.supplierRepository.getTotalPaidThisMonth(supplierId, getCurrentMonth(), getCurrentYear()),
+        this.supplierRepository.getTotalPendingExpenses(supplierId),
+        this.supplierRepository.getPaymentHistoryByMonth(supplierId, 6),
+      ]);
+
+    return {
+      supplierInformation: supplier,
+      financialSummary: {
+        totalPaidThisMonth,
+        totalPendingExpenses,
+        paymentHistoryByMonth: paymentHistoryByMonth.map((payment) => ({
+          month: payment.month,
+          year: payment.year,
+          totalPaid: payment._sum.amount,
+        })),
+      },
+      recentExpenses,
+      paymentHistory: payments,
+    };
   }
 }

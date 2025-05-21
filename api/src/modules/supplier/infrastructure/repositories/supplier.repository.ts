@@ -4,6 +4,8 @@ import { ISupplierRepository } from '../interfaces/supplier-rerpository.interfac
 import { Supplier } from '@prisma/client';
 import { SupplierEntity } from '@modules/supplier/core/domain/entities/supplier.entity';
 import { PaginationMeta } from '@common/structures/types';
+import { PaymentStatus } from '@modules/payment/core/domain/enums/payment.enum';
+import { ExpenseStatus } from '@modules/expense/core/domain/enums/expense.enum';
 
 @Injectable()
 export class SupplierRepository implements ISupplierRepository {
@@ -78,5 +80,55 @@ export class SupplierRepository implements ISupplierRepository {
     });
 
     return supplier;
+  }
+
+  async getRecentExpensesBySupplierId(supplierId: number, limit = 5) {
+    return this.prisma.expense.findMany({
+      where: { supplierId },
+      orderBy: { createdAt: 'desc' },
+      take: limit,
+    });
+  }
+
+  async getPaymentsBySupplierId(supplierId: number) {
+    return this.prisma.payment.findMany({
+      where: { supplierId },
+      orderBy: { createdAt: 'desc' },
+      take: 5,
+    });
+  }
+
+  async getTotalPaidThisMonth(supplierId: number, month: number, year: string) {
+    const result = await this.prisma.payment.aggregate({
+      _sum: { amount: true },
+      where: {
+        supplierId,
+        month,
+        year,
+        status: PaymentStatus.ACTIVE,
+      },
+    });
+    return result._sum.amount || 0;
+  }
+
+  async getTotalPendingExpenses(supplierId: number) {
+    const result = await this.prisma.expense.aggregate({
+      _sum: { amount: true },
+      where: {
+        supplierId,
+        status: ExpenseStatus.PENDING,
+      },
+    });
+    return result._sum.amount || 0;
+  }
+
+  async getPaymentHistoryByMonth(supplierId: number, monthsBack = 6) {
+    return this.prisma.payment.groupBy({
+      by: ['month', 'year'],
+      where: { supplierId, status: PaymentStatus.ACTIVE },
+      _sum: { amount: true },
+      orderBy: [{ year: 'desc' }, { month: 'desc' }],
+      take: monthsBack,
+    });
   }
 }
