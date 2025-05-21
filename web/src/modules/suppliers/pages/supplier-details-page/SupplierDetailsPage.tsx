@@ -21,6 +21,7 @@ import {
 import {
   convertCentsToReal,
   formatDateAndHoursToPTBR,
+  formatTaxId,
   getCurrentMonth,
   getMonthName,
 } from "@/common/utils/functions";
@@ -33,6 +34,14 @@ import {
 import { InfoRow } from "../../components/supplier-info-row/SupplierInfoRow";
 import { StatCard } from "../../components/supplier-stat-card/SupplierStatCard";
 import { TimelineItem } from "../../components/supplier-timeline-item/SupplierTimelineItem";
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/common/components/ui/chart";
+import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import { SupplierPaymentHistoryChart } from "../../components/supplier-payment-history-chart/SupplierPaymentHistoryChart";
 
 export const SupplierDetailsPage = () => {
   const { supplierDetailsData, isSuccess } = useSupplierDetailsPageController();
@@ -45,6 +54,14 @@ export const SupplierDetailsPage = () => {
     recentExpenses,
     paymentHistory,
   } = supplierDetailsData;
+
+  console.log(financialSummary.paymentHistoryByMonth);
+
+  // Prepara os dados para o gráfico
+  const chartData = financialSummary.paymentHistoryByMonth.map((item) => ({
+    month: getMonthName(item.month).slice(0, 3), // Ex: "Mai"
+    totalPaid: item.totalPaid / 100,
+  }));
 
   return (
     <ContentWrapper>
@@ -66,7 +83,7 @@ export const SupplierDetailsPage = () => {
           <InfoRow
             icon={FileText}
             label="CNPJ/CPF"
-            value={supplierInformation.taxId}
+            value={formatTaxId(supplierInformation.taxId)}
           />
           <InfoRow
             icon={Mail}
@@ -95,9 +112,15 @@ export const SupplierDetailsPage = () => {
 
       <Tabs defaultValue="financeiro" className="mt-6">
         <TabsList className="mb-4">
-          <TabsTrigger value="financeiro">Financeiro</TabsTrigger>
-          <TabsTrigger value="despesas">Últimas Despesas</TabsTrigger>
-          <TabsTrigger value="pagamentos">Pagamentos Recentes</TabsTrigger>
+          <TabsTrigger value="financeiro" className="hover:cursor-pointer">
+            Financeiro
+          </TabsTrigger>
+          <TabsTrigger value="despesas" className="hover:cursor-pointer">
+            Últimas Despesas
+          </TabsTrigger>
+          <TabsTrigger value="pagamentos" className="hover:cursor-pointer">
+            Pagamentos Recentes
+          </TabsTrigger>
         </TabsList>
 
         {/* TAB FINANCEIRO */}
@@ -118,29 +141,7 @@ export const SupplierDetailsPage = () => {
               )}`}
             />
           </div>
-          <Card className="border-gray-200 shadow-sm">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm text-gray-600 flex items-center gap-1">
-                <History className="w-4 h-4 text-sky-500" />
-                Últimos 6 meses
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="flex gap-2 flex-wrap">
-              {financialSummary.paymentHistoryByMonth.map((item) => (
-                <div
-                  key={`${item.month}-${item.year}`}
-                  className="border rounded px-3 py-1 text-center text-sm shadow-sm"
-                >
-                  <div className="text-xs text-gray-400">
-                    {getMonthName(item.month)}/{item.year}
-                  </div>
-                  <div className="font-semibold text-gray-700">
-                    R$ {convertCentsToReal(item.totalPaid)}
-                  </div>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
+          <SupplierPaymentHistoryChart chartData={chartData} />
         </TabsContent>
 
         {/* TAB DESPESAS */}
