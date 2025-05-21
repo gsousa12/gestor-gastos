@@ -2,7 +2,7 @@ import { ContentTitle } from "@/common/components/content-title/ContentTitle";
 import { ContentWrapper } from "@/common/components/wrappers/content-wrapper/ContentWrapper";
 import { SuppliersDetailsCardsTile } from "../../components/suppliers-details-cards-tile/SuppliersDetailsCardsTile";
 import { Pagination } from "@/common/components/pagination/Pagination";
-import { useSuppliersPageController } from "./supplier-page-controller";
+import { useSuppliersPageController } from "./suppliers-page-controller";
 
 export const SuppliersPage = () => {
   const { supplierListData, isPending } = useSuppliersPageController();

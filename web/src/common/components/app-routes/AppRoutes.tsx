@@ -6,6 +6,7 @@ import { LoginRoute } from "@/modules/auth/components/login-route/LoginRoute";
 import { PaymentsPage } from "@/modules/payments/pages/payments-page/PaymentsPage";
 import { NotFoundPage } from "../not-found-page/NotFoundPage";
 import { SuppliersPage } from "@/modules/suppliers/pages/supplies-page/SuppliersPage";
+import { SupplierDetailsPage } from "@/modules/suppliers/pages/supplier-details-page/SupplierDetailsPage";
 
 export const AppRoutes = () => {
   return (
@@ -19,6 +20,7 @@ export const AppRoutes = () => {
           <Route path="/login" element={<LoginRoute />} />
           <Route path="/payments" element={<PaymentsPage />} />
           <Route path="/suppliers" element={<SuppliersPage />} />
+          <Route path="/suppliers/details" element={<SupplierDetailsPage />} />
         </Route>
       </Routes>
     </main>

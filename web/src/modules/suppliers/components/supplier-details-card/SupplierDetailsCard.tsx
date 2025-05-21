@@ -2,14 +2,19 @@ import { Supplier } from "@/common/api/interfaces/supplier/supplier-api-interfac
 import { cn } from "@/common/lib/utils";
 import { convertCentsToReal, formatTaxId } from "@/common/utils/functions";
 import { Eye, Truck, Mail, Phone, BadgeDollarSign, IdCard } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface SupplierDetailsCardProps {
   supplier: Supplier;
 }
 
 export const SupplierDetailsCard = ({ supplier }: SupplierDetailsCardProps) => {
+  const navigate = useNavigate();
+
   const handleViewDetails = () => {
-    alert("Detalhes do fornecedor: " + supplier.name);
+    navigate("/suppliers/details", {
+      state: { supplierId: supplier.id },
+    });
   };
 
   return (
