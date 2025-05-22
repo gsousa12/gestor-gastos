@@ -53,8 +53,8 @@ export class ExpenseController {
     @Query('year') year: string | undefined,
   ) {
     const limit = config.PAGINATION.LIST_PAGE_LIMIT;
-    const parsedMonth = month !== undefined ? Number(month) : undefined;
-    const parsedPage = page !== undefined ? Number(page) : 1;
+    const parsedMonth = month ? Number(month) : undefined;
+    const parsedPage = page ? Number(page) : 1;
 
     const { expenseList, meta } = await this.expenseService.getExpenseList(
       parsedPage,

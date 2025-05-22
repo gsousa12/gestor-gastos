@@ -43,9 +43,13 @@ export class PaymentController {
     @Query('month') month: number | undefined,
     @Query('year') year: string | undefined,
   ) {
+    console.log(page, supplierName, month, year);
+
     const limit = config.PAGINATION.LIST_PAGE_LIMIT;
     const parsedPage = page ? Number(page) : 1;
-    const parserdMonth = month ? Number(month) : new Date().getMonth() + 1;
+    const parserdMonth = month ? Number(month) : undefined;
+
+    console.log(parsedPage, supplierName, parserdMonth, year, limit);
 
     const { paymentList, meta } = await this.paymentService.getPaymentList(
       parsedPage,
