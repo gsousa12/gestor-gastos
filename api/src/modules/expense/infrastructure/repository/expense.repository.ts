@@ -57,7 +57,12 @@ export class ExpenseRepository implements IExpenseRepository {
     const whereClause: any = {};
 
     if (supplierName) {
-      whereClause.supplierName = { contains: supplierName, mode: 'insensitive' };
+      whereClause.supplier = {
+        name: {
+          contains: supplierName,
+          mode: 'insensitive',
+        },
+      };
     }
 
     if (month) {
@@ -94,7 +99,7 @@ export class ExpenseRepository implements IExpenseRepository {
     const totalPages = Math.ceil(totalCount / limit);
 
     return {
-      expenseList: expenseList,
+      expenseList,
       meta: {
         totalItems: totalCount,
         itemsPerPage: limit,

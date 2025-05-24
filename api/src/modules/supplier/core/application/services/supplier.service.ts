@@ -1,5 +1,5 @@
 import { SUPPLIER_REPOSITORY } from '@common/tokens/repositories.tokens';
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { ISupplierService } from '../interfaces/supplier-service.interface';
 import { SupplierRepository } from '@modules/supplier/infrastructure/repositories/supplier.repository';
 import { SupplierHelper } from '../helpers/supplier.helper';
@@ -52,6 +52,9 @@ export class SupplierService implements ISupplierService {
   }
 
   async getSupplierDetails(supplierId: number) {
+    if (!supplierId) {
+      throw new BadRequestException('Id do fornecedor em formato incorreto.');
+    }
     const supplier = await this.getSupplierById(supplierId);
 
     const [recentExpenses, payments, totalPaidThisMonth, totalPendingExpenses, paymentHistoryByMonth] =
