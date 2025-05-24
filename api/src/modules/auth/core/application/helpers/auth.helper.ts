@@ -1,5 +1,4 @@
 import { BcryptAdapter } from '@common/adapters/bcrypt.adapter';
-import { config } from '@common/configuration/config';
 import { Injectable } from '@nestjs/common';
 import { Response } from 'express';
 
@@ -12,19 +11,22 @@ export class AuthHelper {
   }
 
   async implementsCookies(access_token: string, res: Response) {
+    const isProductionEnvironment = process.env.NODE_ENV === 'production';
+
     res.cookie('access_token', access_token, {
       httpOnly: true,
-      secure: config.NODE_ENV === 'development' ? false : true,
-      sameSite: 'strict',
-      maxAge: config.JWT.JWT_MAX_AGE,
+      secure: isProductionEnvironment,
+      sameSite: isProductionEnvironment ? 'none' : 'lax',
+      maxAge: Number(process.env.JWT_MAX_AGE),
     });
   }
 
   async clearCookies(res: Response) {
+    const isProductionEnvironment = process.env.NODE_ENV === 'production';
     res.clearCookie('access_token', {
       httpOnly: true,
-      secure: config.NODE_ENV === 'development' ? false : true,
-      sameSite: 'strict',
+      sameSite: isProductionEnvironment ? 'none' : 'lax',
+      maxAge: Number(process.env.JWT_MAX_AGE),
     });
   }
 }

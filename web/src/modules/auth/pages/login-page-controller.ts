@@ -21,8 +21,10 @@ export const useLoginPageController = () => {
       { email, password },
       {
         onSuccess: async () => {
-          setAuthenticated(true);
+          console.log("Entrou aqui");
+
           const user = await getUserInformation();
+          setAuthenticated(true);
           setUser(user.data);
           navigate("/dashboard", { replace: true });
         },

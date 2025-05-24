@@ -10,8 +10,10 @@ export function useAuthBootstrap() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const isInLoginPage = location.pathname === "/login";
+
   useEffect(() => {
-    if (!useAuthStore.getState().user) {
+    if (!useAuthStore.getState().user && !isInLoginPage) {
       getUserInformation()
         .then((user) => {
           setUser(user.data);
