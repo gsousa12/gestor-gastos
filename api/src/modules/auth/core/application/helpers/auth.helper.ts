@@ -17,16 +17,17 @@ export class AuthHelper {
       httpOnly: true,
       secure: isProductionEnvironment,
       sameSite: isProductionEnvironment ? 'none' : 'lax',
-      maxAge: Number(process.env.JWT_MAX_AGE),
+      maxAge: Number(3600000),
     });
   }
 
   async clearCookies(res: Response) {
     const isProductionEnvironment = process.env.NODE_ENV === 'production';
+
     res.clearCookie('access_token', {
       httpOnly: true,
       sameSite: isProductionEnvironment ? 'none' : 'lax',
-      maxAge: Number(process.env.JWT_MAX_AGE),
+      maxAge: Number(3600000),
     });
   }
 }
