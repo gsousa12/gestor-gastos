@@ -34,11 +34,7 @@ export const usePaymentsPageController = () => {
     setPage(newPage);
   };
 
-  const {
-    data: paymentListData,
-    isPending,
-    isFetching,
-  } = getPaymentListQuery({
+  const { data: paymentListData, isFetching } = getPaymentListQuery({
     page: page,
     supplierName: filters.supplierName,
     month: filters.month === "" ? undefined : filters.month,

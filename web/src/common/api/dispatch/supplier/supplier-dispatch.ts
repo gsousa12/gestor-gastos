@@ -26,6 +26,9 @@ export const getSupplierByIdDispatch = async (
   request: GetSupplierByIdRequest
 ): Promise<ApiResponse<SupplierDetailsResponse>> => {
   const { id } = request;
+  if (!id) {
+    throw new Error("Id do fornecedor em formato incorreto.");
+  }
   const response = await api.get(`/supplier/${id}`);
   return getApiResponse<any>(response.data, {} as SupplierDetailsResponse);
 };

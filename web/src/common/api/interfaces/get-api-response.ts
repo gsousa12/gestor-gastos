@@ -1,7 +1,7 @@
 export function getApiResponse<T>(
   response: any,
   emptyData: T
-): { message: string; data: T; pagination?: any } {
+): { data: T; pagination?: any } {
   let data = response?.data;
 
   if (Array.isArray(emptyData)) {
@@ -17,7 +17,6 @@ export function getApiResponse<T>(
   }
 
   return {
-    message: response?.message ?? "",
     data,
     ...(response?.pagination ? { pagination: response.pagination } : {}),
   };

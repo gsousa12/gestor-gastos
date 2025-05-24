@@ -10,15 +10,18 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/common/components/ui/chart";
+import { cn } from "@/common/lib/utils";
 import { History } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
 interface SupplierPaymentHistoryChartProps {
   chartData: any;
+  isMobile: boolean;
 }
 
 export const SupplierPaymentHistoryChart = ({
   chartData,
+  isMobile,
 }: SupplierPaymentHistoryChartProps) => {
   const chartConfig = {
     totalPaid: {
@@ -27,10 +30,15 @@ export const SupplierPaymentHistoryChart = ({
     },
   } satisfies ChartConfig;
   return (
-    <Card className="border-gray-200 shadow-sm w-[50%]">
+    <Card
+      className={cn(
+        "border-gray-200 shadow-sm",
+        isMobile ? "w-[100%]" : "w-[50%]"
+      )}
+    >
       <CardHeader className="pb-2">
         <CardTitle className="text-sm text-gray-600 flex items-center gap-1">
-          <History className="w-4 h-4 text-sky-500" />
+          {isMobile ? <></> : <History className="w-4 h-4 text-sky-500" />}
           Valores pagos ao fornecedor nos últimos 6 meses
         </CardTitle>
       </CardHeader>

@@ -9,6 +9,7 @@ export const useSupplierDetailsPageController = () => {
   const navigate = useNavigate();
 
   const supplierId = location?.state?.supplierId;
+
   const { data, isError, isFetching, isSuccess } = getSupplierByIdQuery({
     id: supplierId,
   });

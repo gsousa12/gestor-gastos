@@ -34,17 +34,13 @@ import {
 import { InfoRow } from "../../components/supplier-info-row/SupplierInfoRow";
 import { StatCard } from "../../components/supplier-stat-card/SupplierStatCard";
 import { TimelineItem } from "../../components/supplier-timeline-item/SupplierTimelineItem";
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/common/components/ui/chart";
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 import { SupplierPaymentHistoryChart } from "../../components/supplier-payment-history-chart/SupplierPaymentHistoryChart";
+import { useMobileDetect } from "@/common/hooks/useMobileDetect";
+import { cn } from "@/common/lib/utils";
 
 export const SupplierDetailsPage = () => {
   const { supplierDetailsData, isSuccess } = useSupplierDetailsPageController();
+  const isMobile = useMobileDetect();
 
   if (!isSuccess || !supplierDetailsData) return null;
 
@@ -55,9 +51,6 @@ export const SupplierDetailsPage = () => {
     paymentHistory,
   } = supplierDetailsData;
 
-  console.log(financialSummary.paymentHistoryByMonth);
-
-  // Prepara os dados para o gráfico
   const chartData = financialSummary.paymentHistoryByMonth.map((item) => ({
     month: getMonthName(item.month).slice(0, 3), // Ex: "Mai"
     totalPaid: item.totalPaid / 100,
@@ -79,21 +72,29 @@ export const SupplierDetailsPage = () => {
             icon={Landmark}
             label="Razão Social"
             value={supplierInformation.companyName}
+            isMobile={isMobile}
           />
           <InfoRow
             icon={FileText}
             label="CNPJ/CPF"
-            value={formatTaxId(supplierInformation.taxId)}
+            value={
+              supplierInformation.taxId
+                ? formatTaxId(supplierInformation.taxId)
+                : null
+            }
+            isMobile={isMobile}
           />
           <InfoRow
             icon={Mail}
             label="E-mail"
             value={supplierInformation.contactEmail}
+            isMobile={isMobile}
           />
           <InfoRow
             icon={Phone}
             label="Telefone"
             value={supplierInformation.contactPhone}
+            isMobile={isMobile}
           />
           <InfoRow
             icon={DollarSign}
@@ -101,24 +102,41 @@ export const SupplierDetailsPage = () => {
             value={`R$ ${convertCentsToReal(
               supplierInformation.recurringDebit
             )}`}
+            isMobile={isMobile}
           />
           <InfoRow
             icon={Calendar}
             label="Criado em"
             value={formatDateAndHoursToPTBR(supplierInformation.createdAt)}
+            isMobile={isMobile}
           />
         </CardContent>
       </Card>
 
       <Tabs defaultValue="financeiro" className="mt-6">
         <TabsList className="mb-4">
-          <TabsTrigger value="financeiro" className="hover:cursor-pointer">
+          <TabsTrigger
+            value="financeiro"
+            className={`hover:cursor-pointer ${
+              isMobile ? "text-[9.2px]" : "text-[14px]"
+            }`}
+          >
             Financeiro
           </TabsTrigger>
-          <TabsTrigger value="despesas" className="hover:cursor-pointer">
+          <TabsTrigger
+            value="despesas"
+            className={`hover:cursor-pointer ${
+              isMobile ? "text-[9.2px]" : "text-[14px]"
+            }`}
+          >
             Últimas Despesas
           </TabsTrigger>
-          <TabsTrigger value="pagamentos" className="hover:cursor-pointer">
+          <TabsTrigger
+            value="pagamentos"
+            className={`hover:cursor-pointer ${
+              isMobile ? "text-[9.2px]" : "text-[14px] w-[25rem]"
+            }`}
+          >
             Pagamentos Recentes
           </TabsTrigger>
         </TabsList>
@@ -132,6 +150,7 @@ export const SupplierDetailsPage = () => {
               value={`R$ ${convertCentsToReal(
                 financialSummary.totalPaidThisMonth
               )}`}
+              isMobile={isMobile}
             />
             <StatCard
               icon={FileText}
@@ -139,9 +158,13 @@ export const SupplierDetailsPage = () => {
               value={`R$ ${convertCentsToReal(
                 financialSummary.totalPendingExpenses
               )}`}
+              isMobile={isMobile}
             />
           </div>
-          <SupplierPaymentHistoryChart chartData={chartData} />
+          <SupplierPaymentHistoryChart
+            chartData={chartData}
+            isMobile={isMobile}
+          />
         </TabsContent>
 
         {/* TAB DESPESAS */}
