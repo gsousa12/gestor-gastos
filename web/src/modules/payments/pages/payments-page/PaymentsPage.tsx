@@ -1,7 +1,6 @@
 import { GenerateReportButton } from "@common/components/generate-report-button/GenerateReportButton";
 import { ContentWrapper } from "@common/components/wrappers/content-wrapper/ContentWrapper";
 import { getCurrentMonth, getCurrentYear } from "@common/utils/functions";
-import { CreateButton } from "@common/components/create-button/CreateButton";
 import { PaymentsTable } from "../../components/payments-table/PaymentsTable";
 import { usePaymentsPageController } from "./payments-page-controller";
 import { ContentTitle } from "@common/components/content-title/ContentTitle";

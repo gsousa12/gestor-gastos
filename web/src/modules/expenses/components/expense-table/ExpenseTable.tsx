@@ -17,17 +17,14 @@ import {
   Pencil,
   Trash2,
   Truck,
-  User,
 } from "lucide-react";
 
 import {
   convertCentsToReal,
   formatExpenseStatus,
-  getMonthName,
 } from "@common/utils/functions";
 
 import { ExpenseStatus } from "@common/utils/enums";
-import { NotFoundItems } from "@components/not-found-items/NotFoundItems";
 import { Expense } from "@common/api/interfaces/expense/expense-api-interfaces";
 import { StatusBadge } from "@/common/components/badges/status-badge/StatusBadge";
 import { ExpenseTableSkeleton } from "@/common/components/skeletons/expense-table-skeleton/ExpenseTableSkeleton";

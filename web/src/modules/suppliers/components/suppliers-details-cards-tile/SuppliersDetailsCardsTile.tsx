@@ -1,8 +1,6 @@
 import { SupplierDetailsCardSkeleton } from "@/common/components/skeletons/supplier-details-skeleton/SupplierDetailsCardSkeleton";
 import { SupplierDetailsCard } from "../supplier-details-card/SupplierDetailsCard";
 import { Supplier } from "@/common/api/interfaces/supplier/supplier-api-interfaces";
-import { NotFoundItems } from "@/common/components/not-found-items/NotFoundItems";
-import { Skeleton } from "@/common/components/ui/skeleton";
 import { NotFoundBox } from "@/common/components/not-found-box/NotFoundBox";
 
 interface SuppliersDetailsCardsTileProps {

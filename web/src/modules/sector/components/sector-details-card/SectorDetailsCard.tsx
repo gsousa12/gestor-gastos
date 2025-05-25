@@ -1,4 +1,4 @@
-import { Calendar, Info, Layers2, Plus } from "lucide-react";
+import { Info, Layers2, Plus } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -6,7 +6,6 @@ import {
   CardTitle,
 } from "@/common/components/ui/card";
 import { Sector } from "../sectors-details-cards-tile/SectorsDetailsCardsTile";
-import { formatDateAndHoursToPTBR } from "@/common/utils/functions";
 
 interface SectorDetailsCardProps {
   sector: Sector;

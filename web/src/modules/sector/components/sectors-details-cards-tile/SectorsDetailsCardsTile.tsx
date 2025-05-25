@@ -1,4 +1,3 @@
-import { NotFoundItems } from "@/common/components/not-found-items/NotFoundItems";
 import { SectorDetailsCard } from "../sector-details-card/SectorDetailsCard";
 import { NotFoundBox } from "@/common/components/not-found-box/NotFoundBox";
 
