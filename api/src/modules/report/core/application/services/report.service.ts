@@ -18,6 +18,10 @@ export class ReportService implements IReportService {
   async createReport(report: ReportEntity): Promise<Buffer> {
     const data = await this.reportRepository.getDataForReport(report.reportType, report.month, report.year);
 
+    if (!data || data.length === 0) {
+      throw new BadRequestException('Nenhum dado encontrado para o relatório solicitado.');
+    }
+
     const strategy = this.resolveStrategy(report.reportType);
 
     const documentDefinition = strategy.buildDocumentDefinition(data, report);

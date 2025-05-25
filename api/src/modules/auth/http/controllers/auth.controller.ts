@@ -3,7 +3,6 @@ import { LoginRequestDto } from '@modules/auth/core/application/dtos/request/log
 import { AuthService } from '@modules/auth/core/application/services/auth.service';
 import { Body, Controller, Get, HttpCode, HttpStatus, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { Request } from 'express';
 import { Response } from 'express';
 
 @Controller('auth')

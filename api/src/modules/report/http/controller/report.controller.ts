@@ -29,7 +29,7 @@ export class ReportController {
 
       res.end(pdfBuffer);
     } catch (error) {
-      res.status(500).json(error);
+      throw error;
     }
   }
 }
