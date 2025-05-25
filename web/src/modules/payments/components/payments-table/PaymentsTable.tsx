@@ -1,5 +1,6 @@
 import { Payment } from "@/common/api/interfaces/payment/payment-api-interfaces";
 import { StatusBadge } from "@/common/components/badges/status-badge/StatusBadge";
+import { NotFoundBox } from "@/common/components/not-found-box/NotFoundBox";
 import { NotFoundItems } from "@/common/components/not-found-items/NotFoundItems";
 import { PaymentTableSkeleton } from "@/common/components/skeletons/payment-table-skeleton/PaymentTableSkeleton";
 
@@ -80,10 +81,14 @@ export const PaymentsTable = ({ data, isPendending }: PaymentsTableProps) => {
           ) : data.length === 0 && !isPendending ? (
             <TableRow>
               <TableCell colSpan={5} className="text-gray-400 py-8">
-                <NotFoundItems
-                  title="Pagamento não encontrada"
+                <NotFoundBox
+                  title="Pagamento não encontrado"
                   description="Nenhum pagamento foi encontrado. Tente aplicar outro filtro."
                 />
+                {/* <NotFoundItems
+                  title="Pagamento não encontrada"
+                  description="Nenhum pagamento foi encontrado. Tente aplicar outro filtro."
+                /> */}
               </TableCell>
             </TableRow>
           ) : (

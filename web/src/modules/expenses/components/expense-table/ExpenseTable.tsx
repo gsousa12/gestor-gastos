@@ -31,6 +31,7 @@ import { NotFoundItems } from "@components/not-found-items/NotFoundItems";
 import { Expense } from "@common/api/interfaces/expense/expense-api-interfaces";
 import { StatusBadge } from "@/common/components/badges/status-badge/StatusBadge";
 import { ExpenseTableSkeleton } from "@/common/components/skeletons/expense-table-skeleton/ExpenseTableSkeleton";
+import { NotFoundBox } from "@/common/components/not-found-box/NotFoundBox";
 
 interface ExpenseTableProps {
   data: Expense[];
@@ -99,7 +100,7 @@ export const ExpenseTable = ({
           ) : data.length === 0 && !isPending ? (
             <TableRow>
               <TableCell colSpan={6} className="text-center text-gray-300 py-8">
-                <NotFoundItems
+                <NotFoundBox
                   title="Despesa não encontrada"
                   description="Nenhuma despesa foi encontrada. Tente aplicar outro filtro."
                 />

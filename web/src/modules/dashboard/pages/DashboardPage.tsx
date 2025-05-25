@@ -6,12 +6,16 @@ import { LastExpenseTable } from "../components/last-expenses-table/LastExpenseT
 import { getCurrentMonth, getMonthName } from "@common/utils/functions";
 import { SupplierDebitsPieChart } from "../components/supplier-debits-pie-chart/SupplierDebitsPieChart";
 import { dashboardPageController } from "./dashboard-page-controller";
+import { RefreshButton } from "@/common/components/refreshButton/RefreshButton";
 
 export const DashboardPage = () => {
-  const { dashboardData } = dashboardPageController();
+  const { dashboardData, refetchDashboardData } = dashboardPageController();
   return (
     <ContentWrapper>
-      <ContentTitle label="Dashboard" />
+      <div className="flex flex-row justify-between items-center mb-4">
+        <ContentTitle label="Dashboard" />
+        <RefreshButton onClick={refetchDashboardData} />
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 mt-4">
         <InformationCard
           icon={<Truck className="w-9 h-9" />}

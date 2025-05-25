@@ -9,6 +9,7 @@ import { ExpenseFilterPopUp } from "../../components/expense-filter-popup/Expens
 import { getCurrentMonth, getCurrentYear } from "@common/utils/functions";
 import { DeleteConfirmationPopup } from "@components/popups/deletion-confirmation-popup/DeleteConfirmationPopup";
 import { ContentTitle } from "@components/content-title/ContentTitle";
+import { RefreshButton } from "@/common/components/refreshButton/RefreshButton";
 
 export const ExpensesPage = () => {
   const {
@@ -27,6 +28,7 @@ export const ExpensesPage = () => {
     handleOpenCreateExpense,
     handleCloseDeletePopup,
     setOpenCreateExpensePopup,
+    refetchExpenseList,
   } = useExpensesController();
 
   return (
@@ -52,6 +54,7 @@ export const ExpensesPage = () => {
             }
             year={filters.year !== "" ? filters.year : getCurrentYear()}
           />
+          <RefreshButton onClick={refetchExpenseList} />
         </div>
       </div>
 

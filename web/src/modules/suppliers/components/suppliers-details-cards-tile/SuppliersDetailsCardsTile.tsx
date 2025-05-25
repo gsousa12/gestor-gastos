@@ -1,6 +1,9 @@
 import { SupplierDetailsCardSkeleton } from "@/common/components/skeletons/supplier-details-skeleton/SupplierDetailsCardSkeleton";
 import { SupplierDetailsCard } from "../supplier-details-card/SupplierDetailsCard";
 import { Supplier } from "@/common/api/interfaces/supplier/supplier-api-interfaces";
+import { NotFoundItems } from "@/common/components/not-found-items/NotFoundItems";
+import { Skeleton } from "@/common/components/ui/skeleton";
+import { NotFoundBox } from "@/common/components/not-found-box/NotFoundBox";
 
 interface SuppliersDetailsCardsTileProps {
   supplierListData: Supplier[];
@@ -22,10 +25,19 @@ export const SuppliersDetailsCardsTile = ({
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-      {supplierListData.map((supplier) => (
-        <SupplierDetailsCard key={supplier.id} supplier={supplier} />
-      ))}
+    <div>
+      {supplierListData.length <= 0 ? (
+        <NotFoundBox
+          title="Nenhum Fornecedor encontrado"
+          description="Nenhum Fornecedor encontrado. Tente criar o primeiro"
+        />
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          {supplierListData.map((supplier) => (
+            <SupplierDetailsCard key={supplier.id} supplier={supplier} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

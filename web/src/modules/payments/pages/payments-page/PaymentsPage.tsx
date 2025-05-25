@@ -7,6 +7,7 @@ import { usePaymentsPageController } from "./payments-page-controller";
 import { ContentTitle } from "@common/components/content-title/ContentTitle";
 import { PaymentsFilterPopup } from "../../components/payments-filter-popup/PaymentsFilterPopup";
 import { Pagination } from "@common/components/pagination/Pagination";
+import { RefreshButton } from "@/common/components/refreshButton/RefreshButton";
 
 export const PaymentsPage = () => {
   const {
@@ -18,6 +19,7 @@ export const PaymentsPage = () => {
     pagination,
     handlePageChange,
     isPending,
+    refreshPaymentsList,
   } = usePaymentsPageController();
 
   return (
@@ -40,6 +42,7 @@ export const PaymentsPage = () => {
             year={filters.year !== "" ? filters.year : getCurrentYear()}
           />
           {/* <CreateButton label="Registrar Pagamento" openPopup={() => {}} /> */}
+          <RefreshButton onClick={refreshPaymentsList} />
         </div>
       </div>
 

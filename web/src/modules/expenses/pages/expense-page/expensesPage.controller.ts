@@ -106,5 +106,6 @@ export const useExpensesController = () => {
     handleOpenCreateExpense,
     handleCloseDeletePopup,
     setOpenCreateExpensePopup,
+    refetchExpenseList,
   };
 };

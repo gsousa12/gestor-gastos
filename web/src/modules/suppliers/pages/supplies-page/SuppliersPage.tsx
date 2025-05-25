@@ -3,13 +3,18 @@ import { ContentWrapper } from "@/common/components/wrappers/content-wrapper/Con
 import { SuppliersDetailsCardsTile } from "../../components/suppliers-details-cards-tile/SuppliersDetailsCardsTile";
 import { Pagination } from "@/common/components/pagination/Pagination";
 import { useSuppliersPageController } from "./suppliers-page-controller";
+import { RefreshButton } from "@/common/components/refreshButton/RefreshButton";
 
 export const SuppliersPage = () => {
-  const { supplierListData, isPending } = useSuppliersPageController();
+  const { supplierListData, isPending, refreshSupplierList } =
+    useSuppliersPageController();
 
   return (
     <ContentWrapper>
-      <ContentTitle label="Fornecedores" />
+      <div className="flex flex-row justify-between items-center mb-4">
+        <ContentTitle label="Fornecedores" />
+        <RefreshButton onClick={refreshSupplierList} />
+      </div>
       <div className="mt-4">
         <SuppliersDetailsCardsTile
           supplierListData={supplierListData}

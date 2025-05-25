@@ -19,7 +19,11 @@ export const dashboardPageController = () => {
     month: getCurrentMonth(),
   });
 
-  const { data, isPending } = getDashboardDataQuery({
+  const {
+    data,
+    isPending,
+    refetch: refetchDashboardData,
+  } = getDashboardDataQuery({
     month: filters.month === "" ? getCurrentMonth() : filters.month,
   });
 
@@ -27,9 +31,16 @@ export const dashboardPageController = () => {
     setFilter(newFilters);
   };
 
+  const refreshData = () => {
+    getDashboardDataQuery({
+      month: filters.month === "" ? getCurrentMonth() : filters.month,
+    });
+  };
+
   return {
     dashboardData: data?.data ?? getDashboardDataEmpty,
     isPending,
     applyFilters,
+    refetchDashboardData,
   };
 };

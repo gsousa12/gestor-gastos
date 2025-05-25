@@ -1,7 +1,11 @@
 import { getSupplierListQuery } from "@/common/api/queries/supplier/getSupplierListQuery";
 
 export const useSuppliersPageController = () => {
-  const { data: supplierListData, isFetching } = getSupplierListQuery({
+  const {
+    data: supplierListData,
+    isFetching,
+    refetch: refreshSupplierList,
+  } = getSupplierListQuery({
     page: 1,
     name: "",
     has_debits: "",
@@ -10,5 +14,6 @@ export const useSuppliersPageController = () => {
   return {
     supplierListData: supplierListData?.data ?? [],
     isPending: isFetching,
+    refreshSupplierList,
   };
 };

@@ -7,6 +7,7 @@ import { PaymentsPage } from "@/modules/payments/pages/payments-page/PaymentsPag
 import { NotFoundPage } from "../not-found-page/NotFoundPage";
 import { SuppliersPage } from "@/modules/suppliers/pages/supplies-page/SuppliersPage";
 import { SupplierDetailsPage } from "@/modules/suppliers/pages/supplier-details-page/SupplierDetailsPage";
+import { SectorPage } from "@/modules/sector/pages/sector-page/SectorPage";
 
 export const AppRoutes = () => {
   return (
@@ -21,6 +22,7 @@ export const AppRoutes = () => {
           <Route path="/payments" element={<PaymentsPage />} />
           <Route path="/suppliers" element={<SuppliersPage />} />
           <Route path="/suppliers/details" element={<SupplierDetailsPage />} />
+          <Route path="/sectors" element={<SectorPage />} />
         </Route>
       </Routes>
     </main>

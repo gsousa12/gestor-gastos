@@ -34,7 +34,11 @@ export const usePaymentsPageController = () => {
     setPage(newPage);
   };
 
-  const { data: paymentListData, isFetching } = getPaymentListQuery({
+  const {
+    data: paymentListData,
+    isFetching,
+    refetch: refreshPaymentsList,
+  } = getPaymentListQuery({
     page: page,
     supplierName: filters.supplierName,
     month: filters.month === "" ? undefined : filters.month,
@@ -50,5 +54,6 @@ export const usePaymentsPageController = () => {
     clearFilters,
     handlePageChange,
     isPending: isFetching,
+    refreshPaymentsList,
   };
 };

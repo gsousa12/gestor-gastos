@@ -1,6 +1,12 @@
 import { FileChartColumn } from "lucide-react";
 import { useCreateReport } from "../../api/mutations/report/createReportMutation";
 import { useMobileDetect } from "../../hooks/useMobileDetect";
+import { useEffect } from "react";
+import { showToast } from "../toast/Toast";
+import {
+  getErrorMessage,
+  getErrorMessageFromAxiosBlob,
+} from "@/common/utils/functions";
 
 export interface GenerateReportButtonProps {
   type: string;
@@ -19,11 +25,26 @@ export const GenerateReportButton = ({
     month: month,
     year: year,
   };
-  const { mutate, isPending } = useCreateReport();
+
+  // TODO: Criar uma controller e passar a logica do componente para lá
+  const { mutate: CreateReportMutation, isPending, error } = useCreateReport();
 
   const handleGenerateReport = () => {
-    mutate(request);
+    CreateReportMutation(request);
   };
+
+  useEffect(() => {
+    if (error) {
+      (async () => {
+        const errorMessage = await getErrorMessageFromAxiosBlob(error);
+        showToast({
+          title: "Erro ao gerar relatório",
+          description: errorMessage,
+          type: "error",
+        });
+      })();
+    }
+  }, [error]);
 
   return (
     <button
