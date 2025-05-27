@@ -48,7 +48,7 @@ export class SectorController {
   @UseGuards(AuthGuard('jwt'))
   @Get('/:id')
   @HttpCode(HttpStatus.OK)
-  async getSectorById(@Request() req, @Param('id') id: number) {
+  async getSectorById(@Param('id') id: number) {
     const sectorId = Number(id);
 
     const sector = await this.sectorService.getSectorById(sectorId);

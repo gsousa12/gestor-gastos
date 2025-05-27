@@ -106,4 +106,14 @@ export class SectorRepository implements ISectorRepository {
 
     return createdSubSector;
   }
+
+  async getSubSectorListBySectorId(sectorId: number): Promise<SubSector[]> {
+    const subSectorList = await this.prisma.subSector.findMany({
+      where: {
+        sectorId: sectorId,
+      },
+    });
+
+    return subSectorList;
+  }
 }
