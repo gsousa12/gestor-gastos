@@ -74,8 +74,8 @@ export class ExpenseController {
     const expenseId = Number(id);
 
     const expense = await this.expenseService.getExpenseById(expenseId);
-    const response = this.expenseMapper.toMapperGetExpenseByIdResponse(expense);
-    return createApiResponse('Despesa encontrado com sucesso', response);
+    // const response = this.expenseMapper.toMapperGetExpenseByIdResponse(expense);
+    return createApiResponse('Despesa encontrado com sucesso', expense);
   }
 
   @UseGuards(AuthGuard('jwt'))

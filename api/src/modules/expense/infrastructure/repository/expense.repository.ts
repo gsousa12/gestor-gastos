@@ -109,9 +109,34 @@ export class ExpenseRepository implements IExpenseRepository {
     };
   }
 
-  async getExpenseById(expenseId: number): Promise<Expense | null> {
+  // TODO: TIPAR RESPONSE(ANY)
+  async getExpenseById(expenseId: number): Promise<any | null> {
     const expense = await this.prisma.expense.findUnique({
       where: { id: expenseId },
+      include: {
+        supplier: {
+          select: {
+            name: true,
+            companyName: true,
+            recurringDebit: true,
+          },
+        },
+        secretary: {
+          select: {
+            name: true,
+          },
+        },
+        user: {
+          select: {
+            name: true,
+          },
+        },
+        subsector: {
+          select: {
+            name: true,
+          },
+        },
+      },
     });
     return expense;
   }
