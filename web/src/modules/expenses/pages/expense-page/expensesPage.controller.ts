@@ -24,11 +24,16 @@ export const useExpensesController = () => {
   });
 
   const [page, setPage] = useState(1);
+  const [selectedExpenseId, setSelectedExpenseId] = useState<number | null>(
+    null
+  );
   const [openCreateExpensePopup, setOpenCreateExpensePopup] = useState(false);
   const [openDeletePopup, setOpenDeletePopup] = useState(false);
   const [selectedIdToDelete, setSelectedIdToDelete] = useState<number | null>(
     null
   );
+  const [openRegisterExpensePaymentPopup, setOpenRegisterExpensePaymentPopup] =
+    useState(false);
 
   const applyFilters = (newFilters: ExpenseFilterValues) => {
     setFilters(newFilters);
@@ -53,6 +58,11 @@ export const useExpensesController = () => {
     setOpenDeletePopup(true);
   };
 
+  const onOpenPayExpensePopup = (id: number) => {
+    setSelectedExpenseId(id);
+    setOpenRegisterExpensePaymentPopup(true);
+  };
+
   const handleConfirmDelete = async () => {
     if (selectedIdToDelete !== null) {
       await deleteExpenseByIdMutate({ id: selectedIdToDelete });
@@ -74,6 +84,10 @@ export const useExpensesController = () => {
   const handleCloseDeletePopup = () => {
     setOpenDeletePopup(false);
   };
+
+  const handleCloseRegisterExpensePaymentPopup = () => [
+    setOpenRegisterExpensePaymentPopup(false),
+  ];
 
   const {
     data: expenseListData,
@@ -107,5 +121,9 @@ export const useExpensesController = () => {
     handleCloseDeletePopup,
     setOpenCreateExpensePopup,
     refetchExpenseList,
+    onOpenPayExpensePopup,
+    openRegisterExpensePaymentPopup,
+    handleCloseRegisterExpensePaymentPopup,
+    selectedExpenseId,
   };
 };

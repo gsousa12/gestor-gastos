@@ -33,6 +33,7 @@ import { NotFoundBox } from "@/common/components/not-found-box/NotFoundBox";
 interface ExpenseTableProps {
   data: Expense[];
   onDeleteExpenseById: (id: number) => void;
+  onOpenPayExpensePopup: (id: number) => void;
   isPending: boolean;
 }
 
@@ -40,6 +41,7 @@ export const ExpenseTable = ({
   data,
   onDeleteExpenseById,
   isPending,
+  onOpenPayExpensePopup,
 }: ExpenseTableProps) => {
   return (
     <div className="rounded-lg border border-gray-100 overflow-x-auto shadow-sm bg-white">
@@ -111,7 +113,10 @@ export const ExpenseTable = ({
                   {expense.supplierName}
                 </TableCell>
                 {/* Descrição */}
-                <TableCell className="text-gray-700 font-medium">
+                <TableCell
+                  className="text-gray-700 font-medium truncate max-w-[130px] "
+                  title={expense.description ?? "-"}
+                >
                   {expense.description ?? "-"}
                 </TableCell>
                 {/* Sub-Setor */}
@@ -162,9 +167,7 @@ export const ExpenseTable = ({
                         : "Registrar pagamento"
                     }
                     disabled={expense.status === ExpenseStatus.PAID}
-                    onClick={() => {
-                      alert("Pagar despesa");
-                    }}
+                    onClick={() => onOpenPayExpensePopup(expense.id)}
                   >
                     <DollarSign className="w-4 h-4 inline mr-1" />
                     Pagar

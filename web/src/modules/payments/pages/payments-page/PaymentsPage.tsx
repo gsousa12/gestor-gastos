@@ -40,7 +40,6 @@ export const PaymentsPage = () => {
             }
             year={filters.year !== "" ? filters.year : getCurrentYear()}
           />
-          {/* <CreateButton label="Registrar Pagamento" openPopup={() => {}} /> */}
           <RefreshButton onClick={refreshPaymentsList} />
         </div>
       </div>
