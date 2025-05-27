@@ -1,30 +1,30 @@
 import { ContentTitle } from "@/common/components/content-title/ContentTitle";
-import { ContentWrapper } from "@/common/components/wrappers/content-wrapper/ContentWrapper";
-import { SuppliersDetailsCardsTile } from "../../components/suppliers-details-cards-tile/SuppliersDetailsCardsTile";
 import { Pagination } from "@/common/components/pagination/Pagination";
-import { useSuppliersPageController } from "./suppliers-page-controller";
 import { RefreshButton } from "@/common/components/refreshButton/RefreshButton";
+import { ContentWrapper } from "@/common/components/wrappers/content-wrapper/ContentWrapper";
+import { SecretariatsDetailsCardsTile } from "../../components/secretariats-details-cards-tile/SecretariatsDetailsCardsTile";
+import { useSecretaryPageController } from "./secretary-page-controller";
 
-export const SuppliersPage = () => {
+export const SecretaryPage = () => {
   const {
-    supplierListData,
+    secretariatsListData,
     pagination,
     isPending,
-    refreshSupplierList,
+    refetchSecretariatsList,
     page,
     handlePageChange,
-  } = useSuppliersPageController();
-
+  } = useSecretaryPageController();
   return (
     <ContentWrapper>
       <div className="flex flex-row justify-between items-center mb-4">
-        <ContentTitle label="Fornecedores" />
-        <RefreshButton onClick={refreshSupplierList} />
+        <ContentTitle label="Secretarias" />
+        <RefreshButton onClick={refetchSecretariatsList} />
       </div>
+
       <div className="mt-4">
-        <SuppliersDetailsCardsTile
-          supplierListData={supplierListData}
+        <SecretariatsDetailsCardsTile
           isPending={isPending}
+          secretariatsListData={secretariatsListData}
         />
         <Pagination
           currentPage={page}

@@ -8,6 +8,7 @@ import { NotFoundPage } from "../not-found-page/NotFoundPage";
 import { SuppliersPage } from "@/modules/suppliers/pages/supplies-page/SuppliersPage";
 import { SupplierDetailsPage } from "@/modules/suppliers/pages/supplier-details-page/SupplierDetailsPage";
 import { SectorPage } from "@/modules/sector/pages/sector-page/SectorPage";
+import { SecretaryPage } from "@/modules/secretary/pages/secretary-page/SecretaryPage";
 
 export const AppRoutes = () => {
   return (
@@ -23,6 +24,7 @@ export const AppRoutes = () => {
           <Route path="/suppliers" element={<SuppliersPage />} />
           <Route path="/suppliers/details" element={<SupplierDetailsPage />} />
           <Route path="/sectors" element={<SectorPage />} />
+          <Route path="/secretariats" element={<SecretaryPage />} />
         </Route>
       </Routes>
     </main>

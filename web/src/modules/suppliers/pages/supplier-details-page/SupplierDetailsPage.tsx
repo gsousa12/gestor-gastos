@@ -37,9 +37,11 @@ import { TimelineItem } from "../../components/supplier-timeline-item/SupplierTi
 import { SupplierPaymentHistoryChart } from "../../components/supplier-payment-history-chart/SupplierPaymentHistoryChart";
 import { useMobileDetect } from "@/common/hooks/useMobileDetect";
 import { cn } from "@/common/lib/utils";
+import { RefreshButton } from "@/common/components/refreshButton/RefreshButton";
 
 export const SupplierDetailsPage = () => {
-  const { supplierDetailsData, isSuccess } = useSupplierDetailsPageController();
+  const { supplierDetailsData, isSuccess, refretchSupplierDetails } =
+    useSupplierDetailsPageController();
   const isMobile = useMobileDetect();
 
   if (!isSuccess || !supplierDetailsData) return null;
@@ -58,7 +60,10 @@ export const SupplierDetailsPage = () => {
 
   return (
     <ContentWrapper>
-      <ContentTitle label="Detalhes do Fornecedor" />
+      <div className="flex flex-row justify-between items-center mb-4">
+        <ContentTitle label="Fornecedores" />
+        <RefreshButton onClick={refretchSupplierDetails} />
+      </div>
 
       <Card className="border-gray-200 shadow-sm mt-4">
         <CardHeader className="pb-2">

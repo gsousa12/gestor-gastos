@@ -7,10 +7,24 @@ import { SectorsDetailsCardsTile } from "../../components/sectors-details-cards-
 import { useSectorPageController } from "./sector-page-controller";
 import { RefreshButton } from "@/common/components/refreshButton/RefreshButton";
 import { Pagination } from "@/common/components/pagination/Pagination";
+import { SectorDetailPopup } from "../../components/sector-detail-popup/SectorDetailPopup";
 
 export const SectorPage = () => {
-  const { sectorListData, pagination, refetchSectorList, isPending } =
-    useSectorPageController();
+  const {
+    sectorListData,
+    pagination,
+    refetchSectorList,
+    isPending,
+    page,
+    handlePageChange,
+    openSectorDetailPopup,
+    handleOpenSubSectorList,
+    handleCloseSectorDetailPopup,
+    sectorDetails,
+    subSectorListData,
+    isMobile,
+  } = useSectorPageController();
+
   return (
     <ContentWrapper>
       <div className="flex flex-row justify-between items-center mb-4">
@@ -28,12 +42,22 @@ export const SectorPage = () => {
       <SectorsDetailsCardsTile
         sectorListData={sectorListData}
         isPending={isPending}
+        onOpenSubSectorList={handleOpenSubSectorList}
       />
       <Pagination
-        currentPage={1}
+        currentPage={page}
         totalPages={pagination?.totalPages ?? 1}
         totalItems={pagination?.totalItems ?? 0}
-        onPageChange={() => {}}
+        onPageChange={handlePageChange}
+      />
+      <SectorDetailPopup
+        open={openSectorDetailPopup}
+        onOpenChange={(open) => {
+          if (!open) handleCloseSectorDetailPopup();
+        }}
+        sectorDetails={sectorDetails}
+        subSectorListData={subSectorListData}
+        isMobile={isMobile}
       />
     </ContentWrapper>
   );
