@@ -4,6 +4,8 @@ import { SuppliersDetailsCardsTile } from "../../components/suppliers-details-ca
 import { Pagination } from "@/common/components/pagination/Pagination";
 import { useSuppliersPageController } from "./suppliers-page-controller";
 import { RefreshButton } from "@/common/components/refreshButton/RefreshButton";
+import { CreateButton } from "@/common/components/create-button/CreateButton";
+import { CreateSupplierPopup } from "../../components/create-supplier-popup/CreateSupplierPopup";
 
 export const SuppliersPage = () => {
   const {
@@ -13,18 +15,33 @@ export const SuppliersPage = () => {
     refreshSupplierList,
     page,
     handlePageChange,
+    handleOpenCreateSupplierPopup,
+    openCreateSupplierPopup,
+    handleCloseCreateSupplierPopUp,
   } = useSuppliersPageController();
 
   return (
     <ContentWrapper>
       <div className="flex flex-row justify-between items-center mb-4">
         <ContentTitle label="Fornecedores" />
-        <RefreshButton onClick={refreshSupplierList} />
+        <div className="flex flex-row gap-1 items-center">
+          <CreateButton
+            label="Cadastrar Fornecedor"
+            openPopup={handleOpenCreateSupplierPopup}
+          />
+          <RefreshButton onClick={refreshSupplierList} />
+        </div>
       </div>
       <div className="mt-4">
         <SuppliersDetailsCardsTile
           supplierListData={supplierListData}
           isPending={isPending}
+        />
+
+        <CreateSupplierPopup
+          open={openCreateSupplierPopup}
+          handleCloseCreateSupplierPopUp={handleCloseCreateSupplierPopUp}
+          refreshSupplierList={refreshSupplierList}
         />
         <Pagination
           currentPage={page}

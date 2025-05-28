@@ -234,7 +234,9 @@ export const CreateExpensePopupContent = ({
           type="submit"
           className={cn(
             "mt-4 px-6 py-3 bg-gradient-to-r from-sky-500 to-sky-400 text-white font-semibold rounded-lg shadow-md hover:from-sky-600 hover:to-sky-500 transition-all text-base flex items-center justify-center gap-2",
-            !!errors.description?.message
+            !!errors.description?.message ||
+              !!errors.amount?.message ||
+              isPending
               ? "cursor-not-allowed opacity-50"
               : "cursor-pointer"
           )}

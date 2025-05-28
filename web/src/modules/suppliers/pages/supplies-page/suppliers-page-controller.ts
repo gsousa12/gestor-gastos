@@ -7,12 +7,22 @@ export const useSuppliersPageController = () => {
     setPage(newPage);
   };
 
+  const [openCreateSupplierPopup, setOpenCreateSupplierPopup] =
+    useState<boolean>(false);
+
+  const handleOpenCreateSupplierPopup = () => {
+    setOpenCreateSupplierPopup(true);
+  };
+  const handleCloseCreateSupplierPopUp = () => {
+    setOpenCreateSupplierPopup(false);
+  };
+
   const {
     data: supplierListData,
     isFetching,
     refetch: refreshSupplierList,
   } = getSupplierListQuery({
-    page: 1,
+    page: page,
     name: "",
     has_debits: "",
   });
@@ -24,5 +34,8 @@ export const useSuppliersPageController = () => {
     refreshSupplierList,
     page,
     handlePageChange,
+    handleOpenCreateSupplierPopup,
+    openCreateSupplierPopup,
+    handleCloseCreateSupplierPopUp,
   };
 };

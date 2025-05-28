@@ -227,7 +227,7 @@ export const RegisterExpensePaymentContent = ({
           <span className="text-red-500 text-xs">{errors.amount.message}</span>
         )}
 
-        <PaymentDiffMessage diff={diff} />
+        <PaymentDiffMessage diff={diff} expenseAmount={expenseCents} />
 
         <Button
           type="submit"
@@ -268,7 +268,13 @@ function DetailRow({
   );
 }
 
-function PaymentDiffMessage({ diff }: { diff: number }) {
+function PaymentDiffMessage({
+  diff,
+  expenseAmount,
+}: {
+  diff: number;
+  expenseAmount: number;
+}) {
   if (diff === 0) return null;
   const abs = Math.abs(diff);
   const color = diff < 0 ? "text-yellow-600" : "text-green-600";
@@ -282,8 +288,8 @@ function PaymentDiffMessage({ diff }: { diff: number }) {
         )}`;
   return (
     <div className={`text-xs font-medium ${color} flex items-center gap-1`}>
-      <DollarSign className="w-4 h-4" />
-      {text}
+      {abs !== expenseAmount ? <DollarSign className="w-4 h-4" /> : <></>}
+      {abs !== expenseAmount ? text : ""}
     </div>
   );
 }

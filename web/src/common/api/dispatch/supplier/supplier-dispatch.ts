@@ -2,6 +2,7 @@ import { api } from "../../axios";
 import { ApiResponse } from "../../interfaces/api-response";
 import { getApiResponse } from "../../interfaces/get-api-response";
 import {
+  CreateSupplierRequest,
   GetSupplierByIdRequest,
   GetSupplierListRequest,
   Supplier,
@@ -31,4 +32,11 @@ export const getSupplierByIdDispatch = async (
   }
   const response = await api.get(`/supplier/${id}`);
   return getApiResponse<any>(response.data, {} as SupplierDetailsResponse);
+};
+
+export const createSupplierDispatch = async (
+  request: CreateSupplierRequest
+): Promise<ApiResponse<null>> => {
+  const response = await api.post("/supplier/", request);
+  return getApiResponse<null>(response.data, null);
 };
