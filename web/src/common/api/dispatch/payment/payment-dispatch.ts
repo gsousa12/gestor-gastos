@@ -2,6 +2,7 @@ import { api } from "../../axios";
 import { ApiResponse } from "../../interfaces/api-response";
 import { getApiResponse } from "../../interfaces/get-api-response";
 import {
+  CancelPaymentByIdRequest,
   CreatePaymentRequest,
   GetPaymentListRequest,
   Payment,
@@ -26,5 +27,13 @@ export const createPaymentDispatch = async (
   request: CreatePaymentRequest
 ): Promise<ApiResponse<null>> => {
   const response = await api.post("/payment/", request);
+  return getApiResponse<null>(response.data, null);
+};
+
+export const cancelPaymentByIdDispatch = async (
+  request: CancelPaymentByIdRequest
+): Promise<ApiResponse<null>> => {
+  const { id } = request;
+  const response = await api.post(`/payment/cancel/${id}`);
   return getApiResponse<null>(response.data, null);
 };

@@ -6,13 +6,8 @@ import {
   createExpenseSchema,
 } from "../../schemas/create-expense-schema";
 import { ComboBox } from "@components/combobox/Combobox";
-import {
-  formatAmount,
-  getCurrentMonth,
-  getCurrentYear,
-} from "@common/utils/functions";
+import { getCurrentMonth, getCurrentYear } from "@common/utils/functions";
 import { cn } from "@common/lib/utils";
-import { useEffect } from "react";
 import { showToast } from "@components/toast/Toast";
 import { CreateExpensePopupSkeleton } from "@components/skeletons/create-expense-skeleton/CreateExpenseSkeleton";
 import { useAuthStore } from "@common/store/authStore";
@@ -25,6 +20,7 @@ import {
   Layers2,
   Truck,
 } from "lucide-react";
+import { useEffect } from "react";
 
 interface CreateExpensePopupContentProps {
   onRefetchExpenseList: () => void;
@@ -70,7 +66,7 @@ export const CreateExpensePopupContent = ({
       });
       onRefetchExpenseList();
     }
-  }, [createExpenseIsSuccess]);
+  }, [createExpenseIsSuccess, createExpenseMutate]);
 
   if (isPending) {
     return (
@@ -84,11 +80,9 @@ export const CreateExpensePopupContent = ({
     return <>{/* FIXME: Criar componente de error */}</>;
   }
 
-  const onSubmit = (data: CreateExpenseFormValues) => {
-    console.log(data);
-
+  const onSubmit = async (data: CreateExpenseFormValues) => {
     const amountCents = Number(data.amount.replace(/\D/g, ""));
-    createExpenseMutate({
+    await createExpenseMutate({
       month: data.month,
       year: data.year,
       description: data.description,
@@ -130,7 +124,8 @@ export const CreateExpensePopupContent = ({
                 type="text"
                 inputMode="numeric"
                 placeholder="R$ 0,00"
-                className="w-full px-4 py-2 border border-sky-100 rounded-lg text-sm focus:ring-2 focus:ring-sky-300 outline-none bg-sky-50 transition"
+                className="w-full px-4 py-2 border border-sky-100 rounded-lg text-sm focus:ring-2 
+                focus:ring-sky-300 outline-none bg-sky-50 transition"
                 {...register("amount", {
                   onChange: (e) => {
                     let value = e.target.value.replace(/\D/g, "");
@@ -159,7 +154,8 @@ export const CreateExpensePopupContent = ({
             </label>
             <input
               {...register("description")}
-              className="w-full px-4 py-2 border border-sky-100 rounded-lg text-sm focus:ring-2 focus:ring-sky-300 outline-none bg-sky-50 transition"
+              className="w-full px-4 py-2 border border-sky-100 rounded-lg text-sm focus:ring-2
+               focus:ring-sky-300 outline-none bg-sky-50 transition"
               placeholder="Descrição da despesa"
             />
             {errors.description && (
@@ -182,7 +178,8 @@ export const CreateExpensePopupContent = ({
               min={1}
               max={12}
               {...register("month", { valueAsNumber: true })}
-              className="w-full px-4 py-2 border border-sky-100 rounded-lg text-sm focus:ring-2 focus:ring-sky-300 outline-none bg-sky-50 transition"
+              className="w-full px-4 py-2 border border-sky-100 rounded-lg 
+              text-sm focus:ring-2 focus:ring-sky-300 outline-none bg-sky-50 transition"
               placeholder="Mês"
             />
             {errors.month && (
@@ -199,7 +196,8 @@ export const CreateExpensePopupContent = ({
             <input
               type="number"
               {...register("year")}
-              className="w-full px-4 py-2 border border-sky-100 rounded-lg text-sm focus:ring-2 focus:ring-sky-300 outline-none bg-sky-50 transition"
+              className="w-full px-4 py-2 border border-sky-100 rounded-lg text-sm focus:ring-2
+               focus:ring-sky-300 outline-none bg-sky-50 transition"
               placeholder="Ano"
               maxLength={4}
             />

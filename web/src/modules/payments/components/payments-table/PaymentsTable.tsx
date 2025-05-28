@@ -32,11 +32,16 @@ import {
 interface PaymentsTableProps {
   data: Payment[];
   isPendending: boolean;
+  onCancelPaymentById: (id: number) => void;
 }
 
 // TODO: ANALISAR O FATO DE QUANDO EXCLUI UMA DESPESA, TODOS OS PAGAMENTOS ATRELADOS A ELA SAO EXCLUIDOS
 
-export const PaymentsTable = ({ data, isPendending }: PaymentsTableProps) => {
+export const PaymentsTable = ({
+  data,
+  isPendending,
+  onCancelPaymentById,
+}: PaymentsTableProps) => {
   return (
     <div className="rounded-lg border border-gray-100 overflow-x-auto shadow-sm bg-white">
       <Table>
@@ -198,9 +203,7 @@ export const PaymentsTable = ({ data, isPendending }: PaymentsTableProps) => {
                         : "Cancelar pagamento"
                     }
                     disabled={payment.status === PaymentStatus.CANCELED}
-                    onClick={() => {
-                      alert("cancelar pagamento");
-                    }}
+                    onClick={() => onCancelPaymentById(payment.id)}
                   >
                     <CircleX
                       className={`w-4 h-4   ${

@@ -271,7 +271,7 @@ function DetailRow({
 function PaymentDiffMessage({ diff }: { diff: number }) {
   if (diff === 0) return null;
   const abs = Math.abs(diff);
-  const color = diff < 0 ? "text-red-600" : "text-green-600";
+  const color = diff < 0 ? "text-yellow-600" : "text-green-600";
   const text =
     diff < 0
       ? `Com esse pagamento o débito com o fornecedor aumenta em R$ ${convertCentsToReal(

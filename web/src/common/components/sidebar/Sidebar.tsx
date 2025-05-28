@@ -36,8 +36,8 @@ export const Sidebar = () => {
               <span className="text-lg font-bold text-gray-800 tracking-tight">
                 Gestão de Gastos
               </span>
-              <span className="text-xs text-gray-400 font-semibold ml-auto">
-                v1.0
+              <span className="text-[9px] text-gray-400 font-semibold ml-auto">
+                v1.0.0
               </span>
             </>
           )}

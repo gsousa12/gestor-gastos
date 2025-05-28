@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getCurrentMonth, getCurrentYear } from "@common/utils/functions";
 import { getPaymentListQuery } from "@common/api/queries/payments/getPaymentListQuery";
+import { showToast } from "@/common/components/toast/Toast";
+import { cancelPaymentByIdMutation } from "@/common/api/mutations/payment/cancelPaymentByIdMutation";
 
 export type PaymentsFilterValues = {
   supplierName: string;
@@ -15,6 +17,10 @@ export const usePaymentsPageController = () => {
     year: getCurrentYear(),
   });
   const [page, setPage] = useState(1);
+  const [openDeletePopup, setOpenDeletePopup] = useState(false);
+  const [selectedPaymentIdToCancel, setSelectedPaymentIdToCancel] = useState<
+    number | null
+  >(null);
 
   const applyFilters = (newFilters: PaymentsFilterValues) => {
     setFilters(newFilters);
@@ -34,6 +40,15 @@ export const usePaymentsPageController = () => {
     setPage(newPage);
   };
 
+  const handleCloseDeletePopup = () => {
+    setOpenDeletePopup(false);
+  };
+
+  const onCancelPaymentById = (paymentId: number) => {
+    setSelectedPaymentIdToCancel(paymentId);
+    setOpenDeletePopup(true);
+  };
+
   const {
     data: paymentListData,
     isFetching,
@@ -45,6 +60,29 @@ export const usePaymentsPageController = () => {
     year: filters.year === "" ? getCurrentYear() : filters.year,
   });
 
+  const {
+    mutateAsync: cancelPaymentById,
+    isSuccess: cancelPaymentByIdIsSucess,
+  } = cancelPaymentByIdMutation();
+
+  const handleCancelPayment = async () => {
+    if (selectedPaymentIdToCancel === null) return;
+    await cancelPaymentById({ id: selectedPaymentIdToCancel });
+  };
+
+  useEffect(() => {
+    if (cancelPaymentByIdIsSucess) {
+      setOpenDeletePopup(false);
+      setSelectedPaymentIdToCancel(null);
+      refreshPaymentsList();
+      showToast({
+        title: "Pagamento Cancelado!",
+        description: `Pagamento cancelado com sucesso.`,
+        type: "success",
+      });
+    }
+  }, [cancelPaymentByIdIsSucess, cancelPaymentById]);
+
   return {
     paymentListData: paymentListData?.data ?? [],
     pagination: paymentListData?.pagination,
@@ -55,5 +93,9 @@ export const usePaymentsPageController = () => {
     handlePageChange,
     isPending: isFetching,
     refreshPaymentsList,
+    onCancelPaymentById,
+    openDeletePopup,
+    handleCloseDeletePopup,
+    handleCancelPayment,
   };
 };

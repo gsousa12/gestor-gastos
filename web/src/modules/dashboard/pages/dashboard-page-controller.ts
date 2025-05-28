@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { getCurrentMonth } from "@common/utils/functions";
 import { getDashboardDataQuery } from "@common/api/queries/dashboard/getDashboardDataQuery";
+import { useNavigate } from "react-router-dom";
 
 export const getDashboardDataEmpty = {
   activeSuppliers: 0,
@@ -15,6 +16,7 @@ export type DashboardFilterValues = {
 };
 
 export const dashboardPageController = () => {
+  const navigate = useNavigate();
   const [filters, setFilter] = useState<DashboardFilterValues>({
     month: getCurrentMonth(),
   });
@@ -31,16 +33,17 @@ export const dashboardPageController = () => {
     setFilter(newFilters);
   };
 
-  const refreshData = () => {
-    getDashboardDataQuery({
-      month: filters.month === "" ? getCurrentMonth() : filters.month,
-    });
-  };
+  // const refreshData = () => {
+  //   getDashboardDataQuery({
+  //     month: filters.month === "" ? getCurrentMonth() : filters.month,
+  //   });
+  // };
 
   return {
     dashboardData: data?.data ?? getDashboardDataEmpty,
     isPending,
     applyFilters,
     refetchDashboardData,
+    navigate,
   };
 };

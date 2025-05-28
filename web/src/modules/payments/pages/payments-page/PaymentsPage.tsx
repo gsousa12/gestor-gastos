@@ -7,6 +7,7 @@ import { ContentTitle } from "@common/components/content-title/ContentTitle";
 import { PaymentsFilterPopup } from "../../components/payments-filter-popup/PaymentsFilterPopup";
 import { Pagination } from "@common/components/pagination/Pagination";
 import { RefreshButton } from "@/common/components/refreshButton/RefreshButton";
+import { DeleteConfirmationPopup } from "@/common/components/popups/deletion-confirmation-popup/DeleteConfirmationPopup";
 
 export const PaymentsPage = () => {
   const {
@@ -17,8 +18,12 @@ export const PaymentsPage = () => {
     page,
     pagination,
     handlePageChange,
+    handleCloseDeletePopup,
     isPending,
     refreshPaymentsList,
+    onCancelPaymentById,
+    openDeletePopup,
+    handleCancelPayment,
   } = usePaymentsPageController();
 
   return (
@@ -44,7 +49,19 @@ export const PaymentsPage = () => {
         </div>
       </div>
 
-      <PaymentsTable data={paymentListData} isPendending={isPending} />
+      <PaymentsTable
+        data={paymentListData}
+        isPendending={isPending}
+        onCancelPaymentById={onCancelPaymentById}
+      />
+
+      <DeleteConfirmationPopup
+        open={openDeletePopup}
+        title="Cancelar Pagamento"
+        description="Tem certeza que deseja cancelar esse pagamento? Essa ação não poderá ser desfeita."
+        onCancel={handleCloseDeletePopup}
+        onConfirm={handleCancelPayment}
+      />
       <Pagination
         currentPage={page}
         totalPages={pagination?.totalPages ?? 1}

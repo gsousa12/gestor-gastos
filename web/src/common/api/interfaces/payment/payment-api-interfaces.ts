@@ -11,6 +11,10 @@ export interface CreatePaymentRequest {
   expenseId: number;
 }
 
+export interface CancelPaymentByIdRequest {
+  id: number;
+}
+
 // Responses
 
 // Others
