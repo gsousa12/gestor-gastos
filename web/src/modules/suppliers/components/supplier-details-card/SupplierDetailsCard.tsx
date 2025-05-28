@@ -1,7 +1,15 @@
 import { Supplier } from "@/common/api/interfaces/supplier/supplier-api-interfaces";
 import { cn } from "@/common/lib/utils";
 import { convertCentsToReal, formatTaxId } from "@/common/utils/functions";
-import { Eye, Truck, Mail, Phone, BadgeDollarSign, IdCard } from "lucide-react";
+import {
+  Eye,
+  Truck,
+  Mail,
+  Phone,
+  BadgeDollarSign,
+  IdCard,
+  Trash,
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 interface SupplierDetailsCardProps {
@@ -25,15 +33,23 @@ export const SupplierDetailsCard = ({ supplier }: SupplierDetailsCardProps) => {
       {/* Botão de detalhes */}
       <button
         onClick={handleViewDetails}
-        className="absolute top-3 right-3 text-sky-400 hover:text-sky-600 hover:cursor-pointer transition"
+        className="absolute top-3 right-10 text-sky-400 hover:text-sky-600 hover:cursor-pointer transition"
         title="Ver detalhes"
         aria-label="Ver detalhes do fornecedor"
       >
         <Eye size={20} />
       </button>
+      <button
+        onClick={() => {}}
+        className="absolute top-3 right-3 text-red-400 hover:text-red-600 hover:cursor-pointer transition"
+        title="Ver detalhes"
+        aria-label="Ver detalhes do fornecedor"
+      >
+        <Trash size={18} />
+      </button>
 
       {/* Nome e empresa */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 mt-2">
         <div className="flex-shrink-0 bg-sky-100 rounded-full p-1.5">
           <Truck className="w-4 h-4 text-sky-600" />
         </div>

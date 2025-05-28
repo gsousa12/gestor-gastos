@@ -88,7 +88,10 @@ export const Sidebar = () => {
             label={"Fornecedores"}
             routerLink={"/suppliers"}
             isMobile={isMobile}
-            active={location.pathname === "/suppliers"}
+            active={
+              location.pathname === "/suppliers" ||
+              location.pathname === "/suppliers/details"
+            }
           />
           <SidebarItem
             key={"Sectors"}

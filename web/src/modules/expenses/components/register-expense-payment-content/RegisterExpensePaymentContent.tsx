@@ -39,7 +39,6 @@ const paymentSchema = z.object({
     .string()
     .min(1, "Informe o valor do pagamento")
     .refine((val) => {
-      // Remove máscara e verifica se é maior que zero
       const num = Number(val.replace(/\D/g, ""));
       return num > 0;
     }, "O valor deve ser maior que zero"),
