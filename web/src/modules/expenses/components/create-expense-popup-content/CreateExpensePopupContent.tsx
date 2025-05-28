@@ -25,11 +25,21 @@ import {
   Layers2,
   Truck,
 } from "lucide-react";
-export const CreateExpensePopupContent = () => {
+
+interface CreateExpensePopupContentProps {
+  onRefetchExpenseList: () => void;
+}
+
+export const CreateExpensePopupContent = ({
+  onRefetchExpenseList,
+}: CreateExpensePopupContentProps) => {
   const userId = useAuthStore((state) => state.user?.userId);
   const { createExpenseFormData, isPending } =
     useCreateExpensePopupContentController();
-  const { mutate: createExpenseMutate, isSuccess } = createExpenseMutation();
+  const {
+    mutateAsync: createExpenseMutate,
+    isSuccess: createExpenseIsSuccess,
+  } = createExpenseMutation();
   const {
     register,
     handleSubmit,
@@ -42,7 +52,7 @@ export const CreateExpensePopupContent = () => {
       description: "",
       month: getCurrentMonth(),
       year: getCurrentYear(),
-      amount: 100,
+      amount: "",
       supplierId: undefined,
       secretaryId: undefined,
       userId: userId,
@@ -51,15 +61,16 @@ export const CreateExpensePopupContent = () => {
   });
 
   useEffect(() => {
-    if (isSuccess) {
+    if (createExpenseIsSuccess) {
       setValue("description", "");
       showToast({
         title: "Despesa criada com sucesso!",
         description: "Sua despesa foi cadastrada.",
         type: "success",
       });
+      onRefetchExpenseList();
     }
-  }, [isSuccess]);
+  }, [createExpenseIsSuccess]);
 
   if (isPending) {
     return (
@@ -74,8 +85,19 @@ export const CreateExpensePopupContent = () => {
   }
 
   const onSubmit = (data: CreateExpenseFormValues) => {
-    data.amount = formatAmount(data.amount);
-    createExpenseMutate(data);
+    console.log(data);
+
+    const amountCents = Number(data.amount.replace(/\D/g, ""));
+    createExpenseMutate({
+      month: data.month,
+      year: data.year,
+      description: data.description,
+      amount: amountCents,
+      supplierId: data.supplierId,
+      secretaryId: data.secretaryId,
+      userId: data.userId,
+      subsectorId: data.subsectorId,
+    });
   };
 
   return (
@@ -105,12 +127,23 @@ export const CreateExpensePopupContent = () => {
             </label>
             <div className="relative">
               <input
-                type="number"
-                min={1}
-                step={0.01}
-                {...register("amount", { valueAsNumber: true })}
+                type="text"
+                inputMode="numeric"
+                placeholder="R$ 0,00"
                 className="w-full px-4 py-2 border border-sky-100 rounded-lg text-sm focus:ring-2 focus:ring-sky-300 outline-none bg-sky-50 transition"
-                placeholder="Valor"
+                {...register("amount", {
+                  onChange: (e) => {
+                    let value = e.target.value.replace(/\D/g, "");
+                    value = (Number(value) / 100).toLocaleString("pt-BR", {
+                      style: "currency",
+                      currency: "BRL",
+                    });
+                    e.target.value = value;
+                    // Atualiza o valor no RHF
+                    setValue("amount", value, { shouldValidate: true });
+                  },
+                })}
+                value={watch("amount")}
               />
             </div>
             {errors.amount && (

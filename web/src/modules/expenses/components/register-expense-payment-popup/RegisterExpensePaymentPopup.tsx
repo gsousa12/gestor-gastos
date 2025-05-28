@@ -5,22 +5,23 @@ import {
   DialogTitle,
 } from "@/common/components/ui/dialog";
 import { X } from "lucide-react";
-import { useRegisterExpensePaymentController } from "./register-expense-payment-controller";
+import { RegisterExpensePaymentContent } from "../register-expense-payment-content/RegisterExpensePaymentContent";
 
 interface RegisterExpensePaymentPopupProps {
   selectedId: number | null;
   open: boolean;
-  onCancel: () => void;
+  onClosePopup: () => void;
+  refreshExpenseTable: () => void;
 }
 
 export const RegisterExpensePaymentPopup = ({
   selectedId,
   open,
-  onCancel,
+  onClosePopup,
+  refreshExpenseTable,
 }: RegisterExpensePaymentPopupProps) => {
-  const { registerPaymentData } = useRegisterExpensePaymentController();
   return (
-    <Dialog open={open} onOpenChange={onCancel}>
+    <Dialog open={open} onOpenChange={onClosePopup}>
       <DialogContent>
         <div className="flex items-center justify-between w-full">
           <DialogTitle>Registrar Pagamento</DialogTitle>
@@ -33,7 +34,11 @@ export const RegisterExpensePaymentPopup = ({
             </button>
           </DialogClose>
         </div>
-        {selectedId}
+        <RegisterExpensePaymentContent
+          selectedId={selectedId}
+          refreshExpenseTable={refreshExpenseTable}
+          onClosePopup={onClosePopup}
+        />
       </DialogContent>
     </Dialog>
   );

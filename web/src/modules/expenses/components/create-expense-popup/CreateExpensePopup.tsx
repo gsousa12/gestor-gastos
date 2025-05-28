@@ -10,11 +10,13 @@ import { CreateExpensePopupContent } from "../create-expense-popup-content/Creat
 interface CreateExpensePopupProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onRefetchExpenseList: () => void;
 }
 
 export const CreateExpensePopup = ({
   open,
   onOpenChange,
+  onRefetchExpenseList,
 }: CreateExpensePopupProps) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -30,7 +32,9 @@ export const CreateExpensePopup = ({
             </button>
           </DialogClose>
         </div>
-        <CreateExpensePopupContent />
+        <CreateExpensePopupContent
+          onRefetchExpenseList={onRefetchExpenseList}
+        />
       </DialogContent>
     </Dialog>
   );

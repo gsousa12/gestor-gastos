@@ -6,6 +6,7 @@ import {
   CreateExpenseRequest,
   DeleteExpenseByIdRequest,
   Expense,
+  GetExpenseDetailsRequest,
   GetExpenseListRequest,
 } from "../../interfaces/expense/expense-api-interfaces";
 import { getApiResponse } from "../../interfaces/get-api-response";
@@ -49,4 +50,15 @@ export const deleteExpenseByIdDispatch = async (
   const { id } = request;
   const response = await api.delete(`/expense/${id}`);
   return getApiResponse<[]>(response.data, []);
+};
+
+export const getExpenseDetailsDispatch = async (
+  request: GetExpenseDetailsRequest
+): Promise<ApiResponse<any>> => {
+  const { id } = request;
+  const response = await api.get(`/expense/${id}`);
+  return getApiResponse<GetExpenseDetailsRequest>(
+    response.data,
+    {} as GetExpenseDetailsRequest
+  );
 };

@@ -172,7 +172,7 @@ export const ExpenseTable = ({
                     <DollarSign className="w-4 h-4 inline mr-1" />
                     Pagar
                   </button>
-                  <button
+                  {/* <button
                     className="p-1 rounded hover:bg-yellow-50 transition"
                     title={
                       expense.status === ExpenseStatus.PAID
@@ -191,7 +191,7 @@ export const ExpenseTable = ({
                           : "text-gray-800 hover:text-yellow-600 hover:cursor-pointer"
                       }`}
                     />
-                  </button>
+                  </button> */}
                   <button
                     className="p-1 rounded hover:bg-red-50 transition"
                     title={

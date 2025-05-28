@@ -6,6 +6,11 @@ export interface GetPaymentListRequest {
   year?: string;
 }
 
+export interface CreatePaymentRequest {
+  amount: number;
+  expenseId: number;
+}
+
 // Responses
 
 // Others

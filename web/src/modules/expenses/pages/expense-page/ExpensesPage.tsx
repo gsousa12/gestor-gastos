@@ -66,6 +66,7 @@ export const ExpensesPage = () => {
       <CreateExpensePopup
         open={openCreateExpensePopup}
         onOpenChange={setOpenCreateExpensePopup}
+        onRefetchExpenseList={refetchExpenseList}
       />
       <DeleteConfirmationPopup
         open={openDeletePopup}
@@ -78,7 +79,8 @@ export const ExpensesPage = () => {
       <RegisterExpensePaymentPopup
         selectedId={selectedExpenseId}
         open={openRegisterExpensePaymentPopup}
-        onCancel={handleCloseRegisterExpensePaymentPopup}
+        onClosePopup={handleCloseRegisterExpensePaymentPopup}
+        refreshExpenseTable={refetchExpenseList}
       />
 
       <ExpenseTable
