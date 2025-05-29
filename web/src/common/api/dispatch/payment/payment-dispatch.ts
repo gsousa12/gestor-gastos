@@ -4,9 +4,11 @@ import { getApiResponse } from "../../interfaces/get-api-response";
 import {
   CancelPaymentByIdRequest,
   CreatePaymentRequest,
+  GetPaymentDetailsRequest,
   GetPaymentListRequest,
   Payment,
 } from "../../interfaces/payment/payment-api-interfaces";
+import { PaymentDetailsResponse } from "../../queries/expenses/getPaymentDetailsQuery";
 
 export const getPaymentListDispatch = async (
   request: GetPaymentListRequest
@@ -36,4 +38,15 @@ export const cancelPaymentByIdDispatch = async (
   const { id } = request;
   const response = await api.post(`/payment/cancel/${id}`);
   return getApiResponse<null>(response.data, null);
+};
+
+export const getPaymentDetailsDispatch = async (
+  request: GetPaymentDetailsRequest
+): Promise<ApiResponse<PaymentDetailsResponse>> => {
+  const { id } = request;
+  const response = await api.get(`/payment/${id}`);
+  return getApiResponse<PaymentDetailsResponse>(
+    response.data,
+    {} as PaymentDetailsResponse
+  );
 };
