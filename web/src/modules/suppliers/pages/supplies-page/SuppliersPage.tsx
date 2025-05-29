@@ -6,6 +6,7 @@ import { useSuppliersPageController } from "./suppliers-page-controller";
 import { RefreshButton } from "@/common/components/refreshButton/RefreshButton";
 import { CreateButton } from "@/common/components/create-button/CreateButton";
 import { CreateSupplierPopup } from "../../components/create-supplier-popup/CreateSupplierPopup";
+import { DeleteConfirmationPopup } from "@/common/components/popups/deletion-confirmation-popup/DeleteConfirmationPopup";
 
 export const SuppliersPage = () => {
   const {
@@ -18,6 +19,10 @@ export const SuppliersPage = () => {
     handleOpenCreateSupplierPopup,
     openCreateSupplierPopup,
     handleCloseCreateSupplierPopUp,
+    onSoftDeleteSupplier,
+    openDeletePopup,
+    setOpenDeletePopup,
+    handleSoftDeleteSupplier,
   } = useSuppliersPageController();
 
   return (
@@ -36,12 +41,20 @@ export const SuppliersPage = () => {
         <SuppliersDetailsCardsTile
           supplierListData={supplierListData}
           isPending={isPending}
+          onSoftDeleteSupplier={onSoftDeleteSupplier}
         />
 
         <CreateSupplierPopup
           open={openCreateSupplierPopup}
           handleCloseCreateSupplierPopUp={handleCloseCreateSupplierPopUp}
           refreshSupplierList={refreshSupplierList}
+        />
+        <DeleteConfirmationPopup
+          open={openDeletePopup}
+          title="Excluir Fornecedor"
+          description="Tem certeza que deseja excluir essa fornecedor? Essa ação irá desativar o fornecedor do sistema."
+          onCancel={() => setOpenDeletePopup(false)}
+          onConfirm={handleSoftDeleteSupplier}
         />
         <Pagination
           currentPage={page}

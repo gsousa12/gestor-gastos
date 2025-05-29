@@ -9,6 +9,8 @@ import { Input } from "@/common/components/ui/input";
 import { Button } from "@/common/components/ui/button";
 import { useCreateSupplierController } from "./create-supplier-controller";
 import { create } from "domain";
+import { showToast } from "@/common/components/toast/Toast";
+import { getErrorMessage } from "@/common/utils/functions";
 
 // Mensagens customizadas
 const validationMessages = {
@@ -83,7 +85,7 @@ export const CreateSupplierPopupContent = ({
     handleSubmit,
     formState: { errors, isSubmitting },
     setValue,
-    watch,
+    reset,
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -101,25 +103,42 @@ export const CreateSupplierPopupContent = ({
     setTaxIdValue(formatted);
     setValue("taxId", formatted, { shouldValidate: true });
   };
-  const { reset } = useForm();
-  useEffect(() => {
-    if (createSupplierIsSuccess) {
+
+  // useEffect(() => {
+  //   if (createSupplierIsSuccess) {
+  //     reset();
+  //     setTaxIdValue("");
+  //     refreshSupplierList();
+  //   }
+  // }, [createSupplierIsSuccess, createSupplierMutate]);
+
+  const onSubmit = async (data: FormValues) => {
+    try {
+      await createSupplierMutate({
+        name: data.name,
+        companyName: data.companyName ? data.companyName.trim() : null,
+        taxId: data.taxId ? data.taxId.replace(/\D/g, "") : null,
+        contactEmail: data.contactEmail ? data.contactEmail.trim() : null,
+        contactPhone: data.contactPhone
+          ? data.contactPhone.replace(/\D/g, "")
+          : null,
+      });
       reset();
       setTaxIdValue("");
       refreshSupplierList();
+      showToast({
+        title: "Fornecedor cadastrado!",
+        description: "Fornecedor cadastrado com sucesso.",
+        type: "success",
+      });
+    } catch (error) {
+      showToast({
+        title: "Erro ao cadastrar fornecedor!",
+        description: getErrorMessage(error),
+        type: "error",
+      });
+      setValue("name", "");
     }
-  }, [createSupplierIsSuccess, createSupplierMutate]);
-
-  const onSubmit = async (data: FormValues) => {
-    await createSupplierMutate({
-      name: data.name,
-      companyName: data.companyName ? data.companyName.trim() : null,
-      taxId: data.taxId ? data.taxId.replace(/\D/g, "") : null,
-      contactEmail: data.contactEmail ? data.contactEmail.trim() : null,
-      contactPhone: data.contactPhone
-        ? data.contactPhone.replace(/\D/g, "")
-        : null,
-    });
   };
 
   return (

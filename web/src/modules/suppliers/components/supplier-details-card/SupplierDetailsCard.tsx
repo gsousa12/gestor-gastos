@@ -14,9 +14,13 @@ import { useNavigate } from "react-router-dom";
 
 interface SupplierDetailsCardProps {
   supplier: Supplier;
+  onSoftDeleteSupplier: (supplierId: number) => void;
 }
 
-export const SupplierDetailsCard = ({ supplier }: SupplierDetailsCardProps) => {
+export const SupplierDetailsCard = ({
+  supplier,
+  onSoftDeleteSupplier,
+}: SupplierDetailsCardProps) => {
   const navigate = useNavigate();
 
   const handleViewDetails = () => {
@@ -40,7 +44,7 @@ export const SupplierDetailsCard = ({ supplier }: SupplierDetailsCardProps) => {
         <Eye size={20} />
       </button>
       <button
-        onClick={() => {}}
+        onClick={() => onSoftDeleteSupplier(supplier.id)}
         className="absolute top-3 right-3 text-red-400 hover:text-red-600 hover:cursor-pointer transition"
         title="Ver detalhes"
         aria-label="Ver detalhes do fornecedor"

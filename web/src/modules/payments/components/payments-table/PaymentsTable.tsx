@@ -33,6 +33,7 @@ interface PaymentsTableProps {
   data: Payment[];
   isPendending: boolean;
   onCancelPaymentById: (id: number) => void;
+  handleOpenPaymentDetails: (id: number) => void;
 }
 
 // TODO: ANALISAR O FATO DE QUANDO EXCLUI UMA DESPESA, TODOS OS PAGAMENTOS ATRELADOS A ELA SAO EXCLUIDOS
@@ -41,6 +42,7 @@ export const PaymentsTable = ({
   data,
   isPendending,
   onCancelPaymentById,
+  handleOpenPaymentDetails,
 }: PaymentsTableProps) => {
   return (
     <div className="rounded-lg border border-gray-100 overflow-x-auto shadow-sm bg-white">
@@ -90,10 +92,6 @@ export const PaymentsTable = ({
                   title="Pagamento não encontrado"
                   description="Nenhum pagamento foi encontrado. Tente aplicar outro filtro."
                 />
-                {/* <NotFoundItems
-                  title="Pagamento não encontrada"
-                  description="Nenhum pagamento foi encontrado. Tente aplicar outro filtro."
-                /> */}
               </TableCell>
             </TableRow>
           ) : (
@@ -183,17 +181,9 @@ export const PaymentsTable = ({
                   <button
                     className="p-1 rounded hover:bg-sky-50 transition"
                     title="Detalhes do pagamento"
-                    onClick={() => {
-                      alert("Detalhes do pagamento");
-                    }}
+                    onClick={() => handleOpenPaymentDetails(payment.id)}
                   >
-                    <ReceiptText
-                      className={`w-4 h-4   ${
-                        payment.status === PaymentStatus.CANCELED
-                          ? "text-gray-400 cursor-not-allowed "
-                          : "text-gray-800 hover:text-lime-600 hover:cursor-pointer"
-                      }`}
-                    />
+                    <ReceiptText className="w-4 h-4 text-gray-800 hover:text-lime-600 hover:cursor-pointer " />
                   </button>
                   <button
                     className="p-1 rounded hover:bg-sky-50 transition"

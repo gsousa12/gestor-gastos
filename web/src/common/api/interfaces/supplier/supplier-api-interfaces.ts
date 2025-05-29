@@ -66,3 +66,7 @@ export interface CreateSupplierRequest {
   contactEmail: string | null;
   contactPhone: string | null;
 }
+
+export interface SoftDeleteSupplierByIdRequest {
+  id: number;
+}

@@ -18,7 +18,11 @@ export const usePaymentsPageController = () => {
   });
   const [page, setPage] = useState(1);
   const [openDeletePopup, setOpenDeletePopup] = useState(false);
+  const [openPaymentDetailsPopup, setOpenPaymentDetailsPopup] = useState(false);
   const [selectedPaymentIdToCancel, setSelectedPaymentIdToCancel] = useState<
+    number | null
+  >(null);
+  const [selectedPaymentIdToDetail, setSelectedPaymentIdToDetail] = useState<
     number | null
   >(null);
 
@@ -70,6 +74,15 @@ export const usePaymentsPageController = () => {
     await cancelPaymentById({ id: selectedPaymentIdToCancel });
   };
 
+  const handleOpenPaymentDetails = (paymentId: number) => {
+    setSelectedPaymentIdToDetail(paymentId);
+    setOpenPaymentDetailsPopup(true);
+  };
+
+  const handleClosePaymentDetailsPopup = () => {
+    setOpenPaymentDetailsPopup(false);
+  };
+
   useEffect(() => {
     if (cancelPaymentByIdIsSucess) {
       setOpenDeletePopup(false);
@@ -97,5 +110,9 @@ export const usePaymentsPageController = () => {
     openDeletePopup,
     handleCloseDeletePopup,
     handleCancelPayment,
+    handleOpenPaymentDetails,
+    selectedPaymentIdToDetail,
+    handleClosePaymentDetailsPopup,
+    openPaymentDetailsPopup,
   };
 };
