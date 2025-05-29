@@ -148,6 +148,7 @@ export class ExpenseRepository implements IExpenseRepository {
   }> {
     const supplierList = await this.prisma.supplier.findMany({
       select: { id: true, name: true },
+      where: { deletedAt: null },
     });
     const subSectorList = await this.prisma.subSector.findMany({
       select: { id: true, name: true },

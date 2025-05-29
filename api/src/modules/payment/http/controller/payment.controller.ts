@@ -65,7 +65,7 @@ export class PaymentController {
     const paymentId = Number(id);
 
     const payment = await this.paymentService.getPaymentById(paymentId);
-    const response = await this.paymentMapper.toMapperGetPaymentByIdResponse(payment);
-    return createApiResponse('Pagamento encontrado com sucesso', response);
+    // const response = await this.paymentMapper.toMapperGetPaymentByIdResponse(payment);
+    return createApiResponse('Pagamento encontrado com sucesso', payment);
   }
 }

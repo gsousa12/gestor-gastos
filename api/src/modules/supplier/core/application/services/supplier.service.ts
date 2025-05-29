@@ -16,6 +16,10 @@ export class SupplierService implements ISupplierService {
   ) {}
 
   async createSupplier(supplier: SupplierEntity): Promise<Supplier> {
+    const existSupplier = await this.supplierRepository.getSupplierByName(supplier.name);
+    if (existSupplier) {
+      throw new BadRequestException('Já existe um fornecedor cadastrado com esse nome.');
+    }
     const createdSupplier = await this.supplierRepository.createSupplier(supplier);
     return createdSupplier;
   }
@@ -80,5 +84,15 @@ export class SupplierService implements ISupplierService {
       recentExpenses,
       paymentHistory: payments,
     };
+  }
+
+  async softDeleteSupplierById(supplierId: number): Promise<void> {
+    const supplier = await this.supplierRepository.getSupplierById(supplierId);
+
+    if (!supplier) {
+      throw new NotFoundException('Fornecedor não encontrado.');
+    }
+
+    await this.supplierRepository.softDeleteSupplierById(supplierId);
   }
 }

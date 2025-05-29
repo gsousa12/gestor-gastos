@@ -42,7 +42,7 @@ export class PaymentService implements IPaymentService {
   }
 
   async cancelPaymentById(paymentId: number): Promise<Payment> {
-    const payment = await this.paymentRepository.getPaymentById(paymentId);
+    const payment = await this.paymentRepository.getPaymentToCancelById(paymentId);
     if (!payment) {
       throw new NotFoundException('Pagamento não encontrado');
     }
