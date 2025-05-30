@@ -58,7 +58,6 @@ export const CreateExpensePopupContent = ({
     },
   });
 
-  // Função para garantir que o valor do ComboBox seja validado e mostre erro
   const validateComboBox = async (field: keyof CreateExpenseFormValues) => {
     await trigger(field);
   };
@@ -128,6 +127,48 @@ export const CreateExpensePopupContent = ({
             errors.supplierId?.message === "Selecione um fornecedor válido."
               ? "Selecione um valor válido."
               : errors.supplierId?.message || " "}
+          </div>
+        </div>
+
+        {/* Subsetor */}
+        <div>
+          <ComboBox
+            label="Subsetor"
+            options={createExpenseFormData.subSectorList}
+            value={watch("subsectorId")}
+            onChange={(id) => {
+              setValue("subsectorId", id, { shouldValidate: true });
+              validateComboBox("subsectorId");
+            }}
+            placeholder="Selecione o subsetor"
+            icon={<Layers2 className="h-4 w-4" />}
+          />
+          <div className="min-h-[18px] text-xs text-red-500">
+            {errors.subsectorId?.message === "Required" ||
+            errors.subsectorId?.message === "Selecione um subsetor válido."
+              ? "Selecione um valor válido."
+              : errors.subsectorId?.message || " "}
+          </div>
+        </div>
+
+        {/* Secretaria */}
+        <div>
+          <ComboBox
+            label="Secretaria"
+            options={createExpenseFormData.secretaryList}
+            value={watch("secretaryId")}
+            onChange={(id) => {
+              setValue("secretaryId", id, { shouldValidate: true });
+              validateComboBox("secretaryId");
+            }}
+            placeholder="Selecione a secretaria"
+            icon={<Building className="h-4 w-4" />}
+          />
+          <div className="min-h-[18px] text-xs text-red-500">
+            {errors.secretaryId?.message === "Required" ||
+            errors.secretaryId?.message === "Selecione uma secretaria válida."
+              ? "Selecione um valor válido."
+              : errors.secretaryId?.message || " "}
           </div>
         </div>
 
@@ -215,48 +256,6 @@ export const CreateExpensePopupContent = ({
             />
             <div className="min-h-[18px] text-xs text-red-500">
               {errors.year?.message || " "}
-            </div>
-          </div>
-        </div>
-
-        {/* Subsetor + Secretaria */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <ComboBox
-              label="Subsetor"
-              options={createExpenseFormData.subSectorList}
-              value={watch("subsectorId")}
-              onChange={(id) => {
-                setValue("subsectorId", id, { shouldValidate: true });
-                validateComboBox("subsectorId");
-              }}
-              placeholder="Selecione o subsetor"
-              icon={<Layers2 className="h-4 w-4" />}
-            />
-            <div className="min-h-[18px] text-xs text-red-500">
-              {errors.subsectorId?.message === "Required" ||
-              errors.subsectorId?.message === "Selecione um subsetor válido."
-                ? "Selecione um valor válido."
-                : errors.subsectorId?.message || " "}
-            </div>
-          </div>
-          <div>
-            <ComboBox
-              label="Secretaria"
-              options={createExpenseFormData.secretaryList}
-              value={watch("secretaryId")}
-              onChange={(id) => {
-                setValue("secretaryId", id, { shouldValidate: true });
-                validateComboBox("secretaryId");
-              }}
-              placeholder="Selecione a secretaria"
-              icon={<Building className="h-4 w-4" />}
-            />
-            <div className="min-h-[18px] text-xs text-red-500">
-              {errors.secretaryId?.message === "Required" ||
-              errors.secretaryId?.message === "Selecione uma secretaria válida."
-                ? "Selecione um valor válido."
-                : errors.secretaryId?.message || " "}
             </div>
           </div>
         </div>
