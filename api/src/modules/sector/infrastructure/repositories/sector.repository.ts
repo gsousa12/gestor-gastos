@@ -123,4 +123,23 @@ export class SectorRepository implements ISectorRepository {
 
     return subSectorList;
   }
+
+  async getSubsectorById(subsectorId: number): Promise<SubSector | null> {
+    return await this.prisma.subSector.findUnique({
+      where: {
+        id: subsectorId,
+      },
+    });
+  }
+
+  async softDeleteSubsectorById(subsectorId: number): Promise<void> {
+    await this.prisma.subSector.update({
+      where: {
+        id: subsectorId,
+      },
+      data: {
+        deletedAt: new Date(),
+      },
+    });
+  }
 }
