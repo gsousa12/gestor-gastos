@@ -232,7 +232,7 @@ export const CreateSupplierPopupContent = ({
 
       <Button
         type="submit"
-        className="bg-sky-500 hover:bg-sky-600 text-white font-semibold flex items-center gap-2 mt-2"
+        className="bg-sky-500 hover:bg-sky-600 hover:cursor-pointer text-white font-semibold flex items-center gap-2 mt-2"
         disabled={isSubmitting}
       >
         <Plus className="w-4 h-4" />

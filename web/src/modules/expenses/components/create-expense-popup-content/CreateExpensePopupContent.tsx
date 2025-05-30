@@ -6,7 +6,11 @@ import {
   createExpenseSchema,
 } from "../../schemas/create-expense-schema";
 import { ComboBox } from "@components/combobox/Combobox";
-import { getCurrentMonth, getCurrentYear } from "@common/utils/functions";
+import {
+  getCurrentMonth,
+  getCurrentYear,
+  getErrorMessage,
+} from "@common/utils/functions";
 import { cn } from "@common/lib/utils";
 import { showToast } from "@components/toast/Toast";
 import { CreateExpensePopupSkeleton } from "@components/skeletons/create-expense-skeleton/CreateExpenseSkeleton";
@@ -20,7 +24,6 @@ import {
   Layers2,
   Truck,
 } from "lucide-react";
-import { useEffect } from "react";
 
 interface CreateExpensePopupContentProps {
   onRefetchExpenseList: () => void;
@@ -32,10 +35,7 @@ export const CreateExpensePopupContent = ({
   const userId = useAuthStore((state) => state.user?.userId);
   const { createExpenseFormData, isPending } =
     useCreateExpensePopupContentController();
-  const {
-    mutateAsync: createExpenseMutate,
-    isSuccess: createExpenseIsSuccess,
-  } = createExpenseMutation();
+  const { mutateAsync: createExpenseMutate } = createExpenseMutation();
   const {
     register,
     handleSubmit,
@@ -56,18 +56,6 @@ export const CreateExpensePopupContent = ({
     },
   });
 
-  useEffect(() => {
-    if (createExpenseIsSuccess) {
-      setValue("description", "");
-      showToast({
-        title: "Despesa criada com sucesso!",
-        description: "Sua despesa foi cadastrada.",
-        type: "success",
-      });
-      onRefetchExpenseList();
-    }
-  }, [createExpenseIsSuccess, createExpenseMutate]);
-
   if (isPending) {
     return (
       <div className="flex justify-center items-center">
@@ -81,17 +69,32 @@ export const CreateExpensePopupContent = ({
   }
 
   const onSubmit = async (data: CreateExpenseFormValues) => {
-    const amountCents = Number(data.amount.replace(/\D/g, ""));
-    await createExpenseMutate({
-      month: data.month,
-      year: data.year,
-      description: data.description,
-      amount: amountCents,
-      supplierId: data.supplierId,
-      secretaryId: data.secretaryId,
-      userId: data.userId,
-      subsectorId: data.subsectorId,
-    });
+    try {
+      const amountCents = Number(data.amount.replace(/\D/g, ""));
+      await createExpenseMutate({
+        month: data.month,
+        year: data.year,
+        description: data.description ?? null,
+        amount: amountCents,
+        supplierId: data.supplierId,
+        secretaryId: data.secretaryId,
+        userId: data.userId,
+        subsectorId: data.subsectorId,
+      });
+      setValue("description", "");
+      showToast({
+        title: "Despesa criada com sucesso!",
+        description: "Sua despesa foi cadastrada.",
+        type: "success",
+      });
+      onRefetchExpenseList();
+    } catch (error) {
+      showToast({
+        title: "Erro ao criar despesa",
+        description: getErrorMessage(error),
+        type: "error",
+      });
+    }
   };
 
   return (

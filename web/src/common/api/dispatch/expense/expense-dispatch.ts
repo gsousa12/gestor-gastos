@@ -40,8 +40,12 @@ export const getCreateExpenseFormDataDispatch = async (): Promise<
 export const createExpenseDispatch = async (
   request: CreateExpenseRequest
 ): Promise<ApiResponse<Expense>> => {
-  const response = await api.post("/expense/", request);
-  return getApiResponse<Expense>(response.data, {} as Expense);
+  try {
+    const response = await api.post("/expense/", request);
+    return getApiResponse<Expense>(response.data, {} as Expense);
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const deleteExpenseByIdDispatch = async (

@@ -4,6 +4,7 @@ import { CreateExpenseRequestDto } from '@modules/expense/core/application/dtos/
 import { ExpenseMapper } from '@modules/expense/core/application/mappers/expense.mapper';
 import { ExpenseService } from '@modules/expense/core/application/services/expense.service';
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
