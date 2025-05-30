@@ -19,6 +19,13 @@ export class SectorRepository implements ISectorRepository {
       },
     });
 
+    // await this.prisma.subSector.create({
+    //   data: {
+    //     name: createdSector.name,
+    //     sectorId: createdSector.id,
+    //   },
+    // });
+
     return createdSector;
   }
 
@@ -105,5 +112,35 @@ export class SectorRepository implements ISectorRepository {
     });
 
     return createdSubSector;
+  }
+
+  async getSubSectorListBySectorId(sectorId: number): Promise<SubSector[]> {
+    const subSectorList = await this.prisma.subSector.findMany({
+      where: {
+        sectorId: sectorId,
+        deletedAt: null,
+      },
+    });
+
+    return subSectorList;
+  }
+
+  async getSubsectorById(subsectorId: number): Promise<SubSector | null> {
+    return await this.prisma.subSector.findUnique({
+      where: {
+        id: subsectorId,
+      },
+    });
+  }
+
+  async softDeleteSubsectorById(subsectorId: number): Promise<void> {
+    await this.prisma.subSector.update({
+      where: {
+        id: subsectorId,
+      },
+      data: {
+        deletedAt: new Date(),
+      },
+    });
   }
 }

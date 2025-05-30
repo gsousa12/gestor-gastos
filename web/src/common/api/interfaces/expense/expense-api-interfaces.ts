@@ -6,6 +6,10 @@ export interface GetExpenseListRequest {
   year?: string;
 }
 
+export interface GetExpenseDetailsRequest {
+  id: number;
+}
+
 export interface CreateExpenseRequest {
   description: string | null;
   month: number;
@@ -14,6 +18,7 @@ export interface CreateExpenseRequest {
   supplierId: number;
   secretaryId: number;
   userId: number;
+  subsectorId: number;
 }
 
 export interface DeleteExpenseByIdRequest {

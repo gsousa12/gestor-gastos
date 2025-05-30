@@ -6,11 +6,13 @@ import { NotFoundBox } from "@/common/components/not-found-box/NotFoundBox";
 interface SuppliersDetailsCardsTileProps {
   supplierListData: Supplier[];
   isPending: boolean;
+  onSoftDeleteSupplier: (supplierId: number) => void;
 }
 
 export const SuppliersDetailsCardsTile = ({
   supplierListData,
   isPending,
+  onSoftDeleteSupplier,
 }: SuppliersDetailsCardsTileProps) => {
   if (isPending) {
     return (
@@ -32,7 +34,11 @@ export const SuppliersDetailsCardsTile = ({
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
           {supplierListData.map((supplier) => (
-            <SupplierDetailsCard key={supplier.id} supplier={supplier} />
+            <SupplierDetailsCard
+              key={supplier.id}
+              supplier={supplier}
+              onSoftDeleteSupplier={onSoftDeleteSupplier}
+            />
           ))}
         </div>
       )}

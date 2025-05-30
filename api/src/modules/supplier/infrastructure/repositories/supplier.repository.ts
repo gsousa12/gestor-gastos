@@ -82,6 +82,12 @@ export class SupplierRepository implements ISupplierRepository {
     return supplier;
   }
 
+  async getSupplierByName(name: string): Promise<Supplier | null> {
+    return await this.prisma.supplier.findFirst({
+      where: { name, deletedAt: null },
+    });
+  }
+
   async getRecentExpensesBySupplierId(supplierId: number, limit = 5) {
     return this.prisma.expense.findMany({
       where: { supplierId },
@@ -129,6 +135,18 @@ export class SupplierRepository implements ISupplierRepository {
       _sum: { amount: true },
       orderBy: [{ year: 'desc' }, { month: 'desc' }],
       take: monthsBack,
+    });
+  }
+
+  async softDeleteSupplierById(supplierId: number): Promise<void> {
+    await this.prisma.supplier.update({
+      data: {
+        deletedAt: new Date(),
+      },
+      where: {
+        id: supplierId,
+        deletedAt: null,
+      },
     });
   }
 }

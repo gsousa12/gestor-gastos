@@ -58,3 +58,15 @@ export interface SupplierDetailsResponse {
   recentExpenses: Expense[];
   paymentHistory: Payment[];
 }
+
+export interface CreateSupplierRequest {
+  name: string;
+  companyName: string | null;
+  taxId: string | null;
+  contactEmail: string | null;
+  contactPhone: string | null;
+}
+
+export interface SoftDeleteSupplierByIdRequest {
+  id: number;
+}

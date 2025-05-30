@@ -4,6 +4,7 @@ import { CreateExpenseRequestDto } from '@modules/expense/core/application/dtos/
 import { ExpenseMapper } from '@modules/expense/core/application/mappers/expense.mapper';
 import { ExpenseService } from '@modules/expense/core/application/services/expense.service';
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -74,8 +75,8 @@ export class ExpenseController {
     const expenseId = Number(id);
 
     const expense = await this.expenseService.getExpenseById(expenseId);
-    const response = this.expenseMapper.toMapperGetExpenseByIdResponse(expense);
-    return createApiResponse('Despesa encontrado com sucesso', response);
+    // const response = this.expenseMapper.toMapperGetExpenseByIdResponse(expense);
+    return createApiResponse('Despesa encontrado com sucesso', expense);
   }
 
   @UseGuards(AuthGuard('jwt'))

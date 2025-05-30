@@ -10,7 +10,13 @@ export const useSupplierDetailsPageController = () => {
 
   const supplierId = location?.state?.supplierId;
 
-  const { data, isError, isFetching, isSuccess } = getSupplierByIdQuery({
+  const {
+    data,
+    isError,
+    isFetching,
+    isSuccess,
+    refetch: refretchSupplierDetails,
+  } = getSupplierByIdQuery({
     id: supplierId,
   });
 
@@ -30,5 +36,6 @@ export const useSupplierDetailsPageController = () => {
     isError,
     isFetching,
     isSuccess,
+    refretchSupplierDetails,
   };
 };

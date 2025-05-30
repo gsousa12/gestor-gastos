@@ -38,7 +38,7 @@ export class SectorController {
   @Get('/')
   @HttpCode(HttpStatus.OK)
   async getSectorList(@Query('page') page: number = 1, @Query('name') name: string | undefined) {
-    const limit = config.PAGINATION.LIST_PAGE_LIMIT;
+    const limit = 12;
 
     const { sectorList, meta } = await this.sectorService.getSectorList(page, limit, name);
     const response = await this.sectorMapper.toMapperGetSectorListResponse(sectorList);
@@ -48,7 +48,7 @@ export class SectorController {
   @UseGuards(AuthGuard('jwt'))
   @Get('/:id')
   @HttpCode(HttpStatus.OK)
-  async getSectorById(@Request() req, @Param('id') id: number) {
+  async getSectorById(@Param('id') id: number) {
     const sectorId = Number(id);
 
     const sector = await this.sectorService.getSectorById(sectorId);

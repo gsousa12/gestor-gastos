@@ -11,23 +11,29 @@ export type Sector = {
 interface SuppliersDetailsCardsTileProps {
   sectorListData: Sector[];
   isPending: boolean;
+  onOpenSubSectorList: (sectorId: number) => void;
 }
 
 export const SectorsDetailsCardsTile = ({
   sectorListData,
   isPending,
+  onOpenSubSectorList,
 }: SuppliersDetailsCardsTileProps) => {
   return (
     <div>
       {sectorListData.length <= 0 && !isPending ? (
         <NotFoundBox
           title="Nenhum Setor Encontrado"
-          description="Nenhumo setor foi encontrada. Crie o primeiro."
+          description="Nenhum setor foi encontrado. Crie o primeiro."
         />
       ) : (
         <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
           {sectorListData.map((sector) => (
-            <SectorDetailsCard key={sector.id} sector={sector} />
+            <SectorDetailsCard
+              key={sector.id}
+              sector={sector}
+              onOpenSubSectorList={onOpenSubSectorList}
+            />
           ))}
         </div>
       )}

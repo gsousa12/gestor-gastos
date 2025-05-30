@@ -1,5 +1,9 @@
 import { useState } from "react";
-import { getCurrentMonth, getCurrentYear } from "@common/utils/functions";
+import {
+  getCurrentMonth,
+  getCurrentYear,
+  getErrorMessage,
+} from "@common/utils/functions";
 import { getExpenseListQuery } from "@common/api/queries/expenses/getExpenseListQuery";
 import { deleteExpenseByIdMutation } from "@common/api/mutations/expense/deleteExpenseByIdMutation";
 import { showToast } from "@components/toast/Toast";
@@ -24,11 +28,16 @@ export const useExpensesController = () => {
   });
 
   const [page, setPage] = useState(1);
+  const [selectedExpenseId, setSelectedExpenseId] = useState<number | null>(
+    null
+  );
   const [openCreateExpensePopup, setOpenCreateExpensePopup] = useState(false);
   const [openDeletePopup, setOpenDeletePopup] = useState(false);
   const [selectedIdToDelete, setSelectedIdToDelete] = useState<number | null>(
     null
   );
+  const [openRegisterExpensePaymentPopup, setOpenRegisterExpensePaymentPopup] =
+    useState(false);
 
   const applyFilters = (newFilters: ExpenseFilterValues) => {
     setFilters(newFilters);
@@ -53,17 +62,33 @@ export const useExpensesController = () => {
     setOpenDeletePopup(true);
   };
 
+  const onOpenPayExpensePopup = (id: number) => {
+    setSelectedExpenseId(id);
+    setOpenRegisterExpensePaymentPopup(true);
+  };
+
   const handleConfirmDelete = async () => {
     if (selectedIdToDelete !== null) {
-      await deleteExpenseByIdMutate({ id: selectedIdToDelete });
-      setOpenDeletePopup(false);
-      setSelectedIdToDelete(null);
-      refetchExpenseList();
-      showToast({
-        title: "Despesa Deletada!",
-        description: `Despesa deletada com sucesso.`,
-        type: "success",
-      });
+      try {
+        await deleteExpenseByIdMutate({ id: selectedIdToDelete });
+        setOpenDeletePopup(false);
+        setSelectedIdToDelete(null);
+        refetchExpenseList();
+        showToast({
+          title: "Despesa Deletada!",
+          description: `Despesa deletada com sucesso.`,
+          type: "success",
+        });
+      } catch (error) {
+        setOpenDeletePopup(false);
+        setSelectedIdToDelete(null);
+        refetchExpenseList();
+        showToast({
+          title: "Erro ao deletar despesa!",
+          description: getErrorMessage(error),
+          type: "error",
+        });
+      }
     }
   };
 
@@ -74,6 +99,10 @@ export const useExpensesController = () => {
   const handleCloseDeletePopup = () => {
     setOpenDeletePopup(false);
   };
+
+  const handleCloseRegisterExpensePaymentPopup = () => [
+    setOpenRegisterExpensePaymentPopup(false),
+  ];
 
   const {
     data: expenseListData,
@@ -107,5 +136,9 @@ export const useExpensesController = () => {
     handleCloseDeletePopup,
     setOpenCreateExpensePopup,
     refetchExpenseList,
+    onOpenPayExpensePopup,
+    openRegisterExpensePaymentPopup,
+    handleCloseRegisterExpensePaymentPopup,
+    selectedExpenseId,
   };
 };

@@ -9,11 +9,15 @@ import { Sector } from "../sectors-details-cards-tile/SectorsDetailsCardsTile";
 
 interface SectorDetailsCardProps {
   sector: Sector;
+  onOpenSubSectorList: (sectorId: number) => void;
 }
 
-export const SectorDetailsCard = ({ sector }: SectorDetailsCardProps) => {
-  const handleDetailsClick = () => {
-    alert(`Detalhes do setor: ${sector.name}`);
+export const SectorDetailsCard = ({
+  sector,
+  onOpenSubSectorList,
+}: SectorDetailsCardProps) => {
+  const handleOpenSubSectorList = () => {
+    onOpenSubSectorList(sector.id);
   };
 
   return (
@@ -27,7 +31,7 @@ export const SectorDetailsCard = ({ sector }: SectorDetailsCardProps) => {
           <span className="truncate">{sector.name}</span>
         </CardTitle>
         <button
-          onClick={handleDetailsClick}
+          onClick={handleOpenSubSectorList}
           className="p-1 rounded hover:bg-sky-50 transition-colors"
           aria-label="Ver detalhes"
         >
@@ -40,13 +44,6 @@ export const SectorDetailsCard = ({ sector }: SectorDetailsCardProps) => {
         </button>
       </CardHeader>
       <CardContent className="text-sm text-gray-700 flex flex-col gap-2 px-0">
-        {/* <div className="flex items-center gap-2">
-          <Calendar className="w-4 h-4 text-sky-400" />
-          <span className="text-gray-500">Criado em:</span>
-          <span className="truncate">
-            {formatDateAndHoursToPTBR(sector.createdAt)}
-          </span>
-        </div> */}
         <div className="flex items-center gap-2">
           <Info className="w-4 h-4 text-sky-400" />
           <span className="text-gray-500">Descrição:</span>

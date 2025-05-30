@@ -120,9 +120,41 @@ export class PaymentRepository implements IPaymentRepository {
     });
   }
 
-  async getPaymentById(paymentId: number): Promise<Payment | null> {
+  async getPaymentToCancelById(paymentId: number): Promise<Payment | null> {
     return await this.prisma.payment.findUnique({
       where: { id: paymentId },
+    });
+  }
+
+  async getPaymentById(paymentId: number): Promise<any> {
+    return await this.prisma.payment.findUnique({
+      where: { id: paymentId },
+      select: {
+        month: true,
+        year: true,
+        status: true,
+        amount: true,
+        recurringDebitDeducted: true,
+        recurringDebitDeductedType: true,
+        createdAt: true,
+        cancelledAt: true,
+        supplierId: true,
+        expenseId: true,
+        expense: {
+          select: {
+            description: true,
+            amount: true,
+            status: true,
+          },
+        },
+        supplier: {
+          select: {
+            name: true,
+            companyName: true,
+            recurringDebit: true,
+          },
+        },
+      },
     });
   }
 
@@ -132,7 +164,7 @@ export class PaymentRepository implements IPaymentRepository {
       data: {
         status: PaymentStatus.CANCELED,
         updatedAt: new Date(),
-        cacelledAt: new Date(),
+        cancelledAt: new Date(),
       },
       include: {
         supplier: true,

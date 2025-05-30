@@ -53,4 +53,13 @@ export class SectorMapper {
     response.sectorId = createdSubSector.sectorId;
     return response;
   }
+
+  toMapperGetSubSectorListBySectorIdResponse(subSectorList: SubSector[]): SubSectorEntity[] {
+    return subSectorList.map((subSector) => {
+      const response = new SubSectorEntity();
+      response.id = subSector.id;
+      response.name = subSector.name;
+      return response;
+    });
+  }
 }

@@ -10,6 +10,7 @@ import { getCurrentMonth, getCurrentYear } from "@common/utils/functions";
 import { DeleteConfirmationPopup } from "@components/popups/deletion-confirmation-popup/DeleteConfirmationPopup";
 import { ContentTitle } from "@components/content-title/ContentTitle";
 import { RefreshButton } from "@/common/components/refreshButton/RefreshButton";
+import { RegisterExpensePaymentPopup } from "../../components/register-expense-payment-popup/RegisterExpensePaymentPopup";
 
 export const ExpensesPage = () => {
   const {
@@ -29,6 +30,10 @@ export const ExpensesPage = () => {
     handleCloseDeletePopup,
     setOpenCreateExpensePopup,
     refetchExpenseList,
+    onOpenPayExpensePopup,
+    openRegisterExpensePaymentPopup,
+    handleCloseRegisterExpensePaymentPopup,
+    selectedExpenseId,
   } = useExpensesController();
 
   return (
@@ -46,6 +51,7 @@ export const ExpensesPage = () => {
             onClear={clearFilters}
           />
           <GenerateReportButton
+            disabled={true}
             type="expense"
             month={
               typeof filters.month === "number"
@@ -61,6 +67,7 @@ export const ExpensesPage = () => {
       <CreateExpensePopup
         open={openCreateExpensePopup}
         onOpenChange={setOpenCreateExpensePopup}
+        onRefetchExpenseList={refetchExpenseList}
       />
       <DeleteConfirmationPopup
         open={openDeletePopup}
@@ -70,10 +77,18 @@ export const ExpensesPage = () => {
         onConfirm={handleConfirmDelete}
       />
 
+      <RegisterExpensePaymentPopup
+        selectedId={selectedExpenseId}
+        open={openRegisterExpensePaymentPopup}
+        onClosePopup={handleCloseRegisterExpensePaymentPopup}
+        refreshExpenseTable={refetchExpenseList}
+      />
+
       <ExpenseTable
         data={expenseListData}
         onDeleteExpenseById={onDeleteExpenseById}
         isPending={isPending}
+        onOpenPayExpensePopup={onOpenPayExpensePopup}
       />
 
       <Pagination

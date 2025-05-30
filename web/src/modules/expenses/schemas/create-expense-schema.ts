@@ -16,11 +16,13 @@ export const createExpenseSchema = z.object({
     .string({ required_error: "O ano é obrigatório." })
     .length(4, { message: "O ano deve ter 4 dígitos." }),
   amount: z
-    .number({
-      required_error: "O valor é obrigatório.",
-      invalid_type_error: "O valor deve ser um número.",
-    })
-    .min(1, { message: "O valor deve ser no mínimo 1." }),
+    .string()
+    .min(1, "Informe o valor do pagamento")
+    .refine((val) => {
+      const num = Number(val.replace(/\D/g, ""));
+      return num > 0;
+    }, "O valor deve ser maior que zero"),
+
   supplierId: z.number({
     required_error: "O fornecedor é obrigatório.",
     invalid_type_error: "Selecione um fornecedor válido.",

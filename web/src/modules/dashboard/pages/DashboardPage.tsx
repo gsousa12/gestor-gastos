@@ -9,7 +9,8 @@ import { dashboardPageController } from "./dashboard-page-controller";
 import { RefreshButton } from "@/common/components/refreshButton/RefreshButton";
 
 export const DashboardPage = () => {
-  const { dashboardData, refetchDashboardData } = dashboardPageController();
+  const { dashboardData, refetchDashboardData, navigate } =
+    dashboardPageController();
   return (
     <ContentWrapper>
       <div className="flex flex-row justify-between items-center mb-4">
@@ -22,7 +23,7 @@ export const DashboardPage = () => {
           description="Fornecedores cadastrados"
           value={dashboardData.activeSuppliers}
           valueType="quantity"
-          onRedirect={() => {}}
+          onRedirect={() => navigate("/suppliers")}
         />
         <InformationCard
           icon={<Receipt className="w-9 h-9" />}
@@ -31,7 +32,7 @@ export const DashboardPage = () => {
           )})`}
           value={dashboardData.expensesMonthSomatory}
           valueType="money"
-          onRedirect={() => {}}
+          onRedirect={() => navigate("/expenses")}
         />
         <InformationCard
           icon={<ArrowRightCircle className="w-9 h-9" />}
@@ -40,7 +41,7 @@ export const DashboardPage = () => {
           )})`}
           value={dashboardData.paymentsMonthSomatory}
           valueType="money"
-          onRedirect={() => {}}
+          onRedirect={() => navigate("/payments")}
         />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-2 mt-4">

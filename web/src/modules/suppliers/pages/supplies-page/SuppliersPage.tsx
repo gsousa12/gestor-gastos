@@ -4,27 +4,63 @@ import { SuppliersDetailsCardsTile } from "../../components/suppliers-details-ca
 import { Pagination } from "@/common/components/pagination/Pagination";
 import { useSuppliersPageController } from "./suppliers-page-controller";
 import { RefreshButton } from "@/common/components/refreshButton/RefreshButton";
+import { CreateButton } from "@/common/components/create-button/CreateButton";
+import { CreateSupplierPopup } from "../../components/create-supplier-popup/CreateSupplierPopup";
+import { DeleteConfirmationPopup } from "@/common/components/popups/deletion-confirmation-popup/DeleteConfirmationPopup";
 
 export const SuppliersPage = () => {
-  const { supplierListData, isPending, refreshSupplierList } =
-    useSuppliersPageController();
+  const {
+    supplierListData,
+    pagination,
+    isPending,
+    refreshSupplierList,
+    page,
+    handlePageChange,
+    handleOpenCreateSupplierPopup,
+    openCreateSupplierPopup,
+    handleCloseCreateSupplierPopUp,
+    onSoftDeleteSupplier,
+    openDeletePopup,
+    setOpenDeletePopup,
+    handleSoftDeleteSupplier,
+  } = useSuppliersPageController();
 
   return (
     <ContentWrapper>
       <div className="flex flex-row justify-between items-center mb-4">
         <ContentTitle label="Fornecedores" />
-        <RefreshButton onClick={refreshSupplierList} />
+        <div className="flex flex-row gap-1 items-center">
+          <CreateButton
+            label="Cadastrar Fornecedor"
+            openPopup={handleOpenCreateSupplierPopup}
+          />
+          <RefreshButton onClick={refreshSupplierList} />
+        </div>
       </div>
       <div className="mt-4">
         <SuppliersDetailsCardsTile
           supplierListData={supplierListData}
           isPending={isPending}
+          onSoftDeleteSupplier={onSoftDeleteSupplier}
+        />
+
+        <CreateSupplierPopup
+          open={openCreateSupplierPopup}
+          handleCloseCreateSupplierPopUp={handleCloseCreateSupplierPopUp}
+          refreshSupplierList={refreshSupplierList}
+        />
+        <DeleteConfirmationPopup
+          open={openDeletePopup}
+          title="Excluir Fornecedor"
+          description="Tem certeza que deseja excluir essa fornecedor? Essa ação irá desativar o fornecedor do sistema."
+          onCancel={() => setOpenDeletePopup(false)}
+          onConfirm={handleSoftDeleteSupplier}
         />
         <Pagination
-          currentPage={1}
-          totalPages={1}
-          totalItems={0}
-          onPageChange={() => {}}
+          currentPage={page}
+          totalPages={pagination?.totalPages ?? 1}
+          totalItems={pagination?.totalItems ?? 0}
+          onPageChange={handlePageChange}
         />
       </div>
     </ContentWrapper>

@@ -6,6 +6,17 @@ export interface GetPaymentListRequest {
   year?: string;
 }
 
+export interface CreatePaymentRequest {
+  amount: number;
+  expenseId: number;
+}
+
+export interface CancelPaymentByIdRequest {
+  id: number;
+}
+export interface GetPaymentDetailsRequest {
+  id: number;
+}
 // Responses
 
 // Others
@@ -20,7 +31,7 @@ export interface Payment {
   recurringDebitDeductedType: string | null;
   createdAt: string;
   updatedAt: string | null;
-  canceledAt: string | null;
+  cancelledAt: string | null;
   supplierId: number;
   supplierName: string;
   // sectorId: number;

@@ -104,7 +104,7 @@ model Payment {
   recurringDebitDeductedType String? @map("recurring_debit_deducted_type")
   createdAt       DateTime     @map("created_at")
   updatedAt       DateTime?    @map("updated_at")
-  cacelledAt      DateTime?    @map("cancelled_at")
+  cancelledAt      DateTime?    @map("cancelled_at")
 
   supplierId      Int          @map("supplier_id")
   supplier        Supplier     @relation(fields: [supplierId], references: [id], onDelete: Cascade)

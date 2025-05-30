@@ -1,8 +1,7 @@
 import { SECTOR_REPOSITORY } from '@common/tokens/repositories.tokens';
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { ISectorService } from '../interfaces/sector-service.interface';
 import { SectorRepository } from '@modules/sector/infrastructure/repositories/sector.repository';
-import { SectorHelper } from '../helpers/sector.helper';
 import { Sector, SubSector } from '@prisma/client';
 import { SectorEntity } from '../../domain/entities/sector.entity';
 import { PaginationMeta } from '@common/structures/types';
@@ -55,5 +54,20 @@ export class SectorService implements ISectorService {
     }
     const createdSubSector = await this.sectorRepository.createSubSector(subsector);
     return createdSubSector;
+  }
+
+  async getSubSectorListBySectorId(sectorId: number): Promise<SubSector[]> {
+    const subSectorList = await this.sectorRepository.getSubSectorListBySectorId(sectorId);
+    return !subSectorList || subSectorList.length === 0 ? [] : subSectorList;
+  }
+
+  async softDeleteSubSectorById(subsectorId: number): Promise<void> {
+    const subsector = await this.sectorRepository.getSubsectorById(subsectorId);
+
+    if (!subsector) {
+      throw new NotFoundException('Sub-Setor não encontrado.');
+    }
+
+    await this.sectorRepository.softDeleteSubsectorById(subsectorId);
   }
 }

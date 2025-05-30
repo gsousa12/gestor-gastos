@@ -27,7 +27,7 @@ export const TimelineItem = ({
       </div>
       <div>
         <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-100">
-          <span className="mr-2 capitalize">{title}</span>
+          <span className="mr-2">{title}</span>
           {status && (
             <div className="inline-block capitalize">
               <StatusBadge text={status}>{status}</StatusBadge>

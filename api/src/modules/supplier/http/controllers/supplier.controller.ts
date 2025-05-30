@@ -6,6 +6,7 @@ import { SupplierService } from '@modules/supplier/core/application/services/sup
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
@@ -62,5 +63,15 @@ export class SupplierController {
     const supplierId = Number(id);
     const details = await this.supplierService.getSupplierDetails(supplierId);
     return createApiResponse('Fornecedor encontrado com sucesso', details);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Delete('soft-delete/:id')
+  @HttpCode(HttpStatus.OK)
+  async softDeleteSupplierById(@Param('id') id: number) {
+    const supplierId = Number(id);
+
+    await this.supplierService.softDeleteSupplierById(supplierId);
+    return null;
   }
 }

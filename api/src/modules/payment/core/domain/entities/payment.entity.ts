@@ -8,7 +8,7 @@ export class PaymentEntity {
   recurringDebitDeductedType: string | null;
   createdAt: Date;
   updatedAt: Date | null;
-  canceledAt: Date | null;
+  cancelledAt: Date | null;
   supplierId: number;
   supplierName: string;
   sectorId: number;

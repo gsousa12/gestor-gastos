@@ -44,7 +44,7 @@ export class PaymentMapper {
       recurringDebitDeductedType: payment.recurringDebitDeductedType,
       createdAt: payment.createdAt,
       updatedAt: payment.updatedAt,
-      canceledAt: payment.canceledAt ?? null,
+      cancelledAt: payment.cancelledAt ?? null,
       supplierId: payment.expenseId,
       supplierName: payment.supplier?.name || null,
       expenseId: payment.expenseId,

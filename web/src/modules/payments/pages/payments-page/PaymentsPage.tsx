@@ -7,6 +7,8 @@ import { ContentTitle } from "@common/components/content-title/ContentTitle";
 import { PaymentsFilterPopup } from "../../components/payments-filter-popup/PaymentsFilterPopup";
 import { Pagination } from "@common/components/pagination/Pagination";
 import { RefreshButton } from "@/common/components/refreshButton/RefreshButton";
+import { DeleteConfirmationPopup } from "@/common/components/popups/deletion-confirmation-popup/DeleteConfirmationPopup";
+import { PaymentDetailsPopup } from "../../components/payment-details-popup/PaymentDetailsPopup";
 
 export const PaymentsPage = () => {
   const {
@@ -17,8 +19,16 @@ export const PaymentsPage = () => {
     page,
     pagination,
     handlePageChange,
+    handleCloseDeletePopup,
     isPending,
     refreshPaymentsList,
+    onCancelPaymentById,
+    openDeletePopup,
+    handleCancelPayment,
+    handleOpenPaymentDetails,
+    selectedPaymentIdToDetail,
+    handleClosePaymentDetailsPopup,
+    openPaymentDetailsPopup,
   } = usePaymentsPageController();
 
   return (
@@ -32,6 +42,7 @@ export const PaymentsPage = () => {
             onClear={clearFilters}
           />
           <GenerateReportButton
+            disabled={true}
             type="payment"
             month={
               typeof filters.month === "number"
@@ -40,12 +51,30 @@ export const PaymentsPage = () => {
             }
             year={filters.year !== "" ? filters.year : getCurrentYear()}
           />
-          {/* <CreateButton label="Registrar Pagamento" openPopup={() => {}} /> */}
           <RefreshButton onClick={refreshPaymentsList} />
         </div>
       </div>
 
-      <PaymentsTable data={paymentListData} isPendending={isPending} />
+      <PaymentsTable
+        data={paymentListData}
+        isPendending={isPending}
+        onCancelPaymentById={onCancelPaymentById}
+        handleOpenPaymentDetails={handleOpenPaymentDetails}
+      />
+
+      <DeleteConfirmationPopup
+        open={openDeletePopup}
+        title="Cancelar Pagamento"
+        description="Tem certeza que deseja cancelar esse pagamento? Essa ação não poderá ser desfeita."
+        onCancel={handleCloseDeletePopup}
+        onConfirm={handleCancelPayment}
+      />
+
+      <PaymentDetailsPopup
+        paymentId={selectedPaymentIdToDetail}
+        open={openPaymentDetailsPopup}
+        onClosePopup={handleClosePaymentDetailsPopup}
+      />
       <Pagination
         currentPage={page}
         totalPages={pagination?.totalPages ?? 1}
