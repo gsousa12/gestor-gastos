@@ -3,6 +3,7 @@ import { ApiResponse } from "../../interfaces/api-response";
 import { GetSecretariatsListRequest } from "../../queries/secretary/getSecretariatsListQuery";
 import { api } from "../../axios";
 import { getApiResponse } from "../../interfaces/get-api-response";
+import { CreateSecretaryRequest } from "../../mutations/secretary/createSecretaryMutation";
 
 export const getSecretariatsListDispatch = async (
   request: GetSecretariatsListRequest
@@ -16,4 +17,11 @@ export const getSecretariatsListDispatch = async (
   });
 
   return getApiResponse<Secretary[]>(response.data, []);
+};
+
+export const createSecretaryDispatch = async (
+  request: CreateSecretaryRequest
+): Promise<ApiResponse<null>> => {
+  const response = await api.post("/secretary/", request);
+  return getApiResponse<null>(response.data, null);
 };

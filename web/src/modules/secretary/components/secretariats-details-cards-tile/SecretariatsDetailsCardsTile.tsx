@@ -20,7 +20,7 @@ export const SecretariatsDetailsCardsTile = ({
 }: SecretariatsDetailsCardsTileProps) => {
   return (
     <div>
-      {secretariatsListData.length <= 0 ? (
+      {secretariatsListData.length <= 0 && !isPending ? (
         <NotFoundBox
           title="Nenhuma Secretaria encontrada"
           description="Nenhuma secretaria encontrada. Tente criar a primeira"

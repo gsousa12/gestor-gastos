@@ -24,12 +24,15 @@ export const SecretaryDetailsCard = ({
     border-gray-200 shadow-sm shadow-gray-300 rounded-md group min-h-[70px] flex flex-col gap-3 w-full"
     >
       <CardHeader className="pb-2 flex flex-row items-center justify-between px-0">
-        <CardTitle className="text-sky-600 text-base flex items-center gap-2">
+        <CardTitle
+          className="text-sky-600 text-base flex items-center gap-2 truncate"
+          title={secretary.name}
+        >
           <Building className="w-4 h-4 text-sky-500" />
-          <span className="truncate">{secretary.name}</span>
+          <span>{secretary.name}</span>
         </CardTitle>
         {/* <button
-          onClick={handleDetailsClick}
+          onClick={() => {}}
           className="p-1 rounded hover:bg-sky-50 transition-colors"
           aria-label="Ver detalhes"
         >

@@ -1,21 +1,26 @@
 import { getSectorByIdQuery } from "@/common/api/queries/sector/getSectorByIdQuery";
 import { Sector } from "../sectors-details-cards-tile/SectorsDetailsCardsTile";
-import {
-  getSubSectorListBySectorIdQuery,
-  GetSubSectorListBySectorIdResponse,
-} from "@/common/api/queries/sector/getSubSectorListBySectorIdQuery";
+import { getSubSectorListBySectorIdQuery } from "@/common/api/queries/sector/getSubSectorListBySectorIdQuery";
 
 export const useSectorDetailsController = (selectedSectorId: number | null) => {
-  const { data: SectorDetailsData } = getSectorByIdQuery({
-    id: selectedSectorId!,
-  });
+  const { data: sectorDetailsData } = getSectorByIdQuery(
+    { id: selectedSectorId! },
+    { enabled: selectedSectorId !== null }
+  );
 
-  const { data: subSectorListData } = getSubSectorListBySectorIdQuery({
-    id: selectedSectorId!,
-  });
+  const { data: subSectorListData, refetch: refetchSubSectorListData } =
+    getSubSectorListBySectorIdQuery(
+      { id: selectedSectorId! },
+      { enabled: selectedSectorId !== null }
+    );
+
+  const handleRefetchSubSectorListData = () => {
+    refetchSubSectorListData();
+  };
 
   return {
-    SectorDetailsData: SectorDetailsData?.data ?? ({} as Sector),
+    sectorDetailsData: sectorDetailsData?.data ?? ({} as Sector),
     subSectorListData: subSectorListData?.data ?? [],
+    handleRefetchSubSectorListData,
   };
 };

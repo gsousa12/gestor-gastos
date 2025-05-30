@@ -3,6 +3,8 @@ import { useState } from "react";
 
 export const useSecretaryPageController = () => {
   const [page, setPage] = useState(1);
+  const [openCreatSecretaryPopup, setOpenCreatSecretaryPopup] =
+    useState<boolean>(false);
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
@@ -23,5 +25,7 @@ export const useSecretaryPageController = () => {
     refetchSecretariatsList,
     page,
     handlePageChange,
+    openCreatSecretaryPopup,
+    setOpenCreatSecretaryPopup,
   };
 };

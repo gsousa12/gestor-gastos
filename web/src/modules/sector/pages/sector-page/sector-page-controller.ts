@@ -7,7 +7,8 @@ export const useSectorPageController = () => {
   const [page, setPage] = useState(1);
   const [openSectorDetailPopup, setOpenSectorDetailPopup] = useState(false);
   const [selectedSectorId, setSelectedSectorId] = useState<number | null>(null);
-
+  const [openCreateSectorPopup, setOpenCreateSectorPopup] =
+    useState<boolean>(false);
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
   };
@@ -43,5 +44,7 @@ export const useSectorPageController = () => {
     handleCloseSectorDetailPopup,
     selectedSectorId,
     setSelectedSectorId,
+    openCreateSectorPopup,
+    setOpenCreateSectorPopup,
   };
 };

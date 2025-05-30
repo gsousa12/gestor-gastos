@@ -14,10 +14,12 @@ export interface SubSector {
 export type GetSubSectorListBySectorIdResponse = Pick<SubSector, "id" | "name">;
 
 export const getSubSectorListBySectorIdQuery = (
-  request: GetSubSectorListBySectorIdRequest
+  request: GetSubSectorListBySectorIdRequest,
+  options?: { enabled?: boolean }
 ) => {
   return useQuery<ApiResponse<GetSubSectorListBySectorIdResponse[]>>({
     queryKey: ["subSectorList", request],
     queryFn: () => getSubSectorListBySectorIdDispatch(request),
+    enabled: options?.enabled,
   });
 };

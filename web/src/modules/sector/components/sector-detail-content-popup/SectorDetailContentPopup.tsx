@@ -12,19 +12,22 @@ export const SectorDetailContentPopup = ({
 }: SectorDetailContentPopupProps) => {
   const isMobile = useMobileDetect();
 
-  const { SectorDetailsData, subSectorListData } =
-    useSectorDetailsController(selectedSectorId);
+  const {
+    sectorDetailsData,
+    subSectorListData,
+    handleRefetchSubSectorListData,
+  } = useSectorDetailsController(selectedSectorId);
 
-  console.log("SectorDetailsData", SectorDetailsData);
-  console.log("subSectorListData", subSectorListData);
   return (
     <div
-      className={`flex flex-col gap-6 px-2 ${
-        isMobile ? "text-base" : "text-sm"
-      }`}
+      className={`flex flex-col gap-6  ${isMobile ? "text-base" : "text-sm"}`}
     >
-      <SectorDetailsInfo sectorDetails={SectorDetailsData} />
-      <SubSectorList subSectorListData={subSectorListData} />
+      <SectorDetailsInfo sectorDetails={sectorDetailsData} />
+      <SubSectorList
+        subSectorListData={subSectorListData}
+        selectedSectorId={selectedSectorId}
+        handleRefetchSubSectorListData={handleRefetchSubSectorListData}
+      />
     </div>
   );
 };

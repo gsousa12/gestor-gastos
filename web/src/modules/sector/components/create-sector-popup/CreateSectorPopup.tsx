@@ -1,26 +1,25 @@
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogTitle,
-  DialogClose,
 } from "@/common/components/ui/dialog";
 import { X } from "lucide-react";
-import { SectorDetailContentPopup } from "../sector-detail-content-popup/SectorDetailContentPopup";
-import { useMobileDetect } from "@/common/hooks/useMobileDetect";
+import { CreateSectorPopupContent } from "../create-sector-popup-content/CreateSectorPopupContent";
 
-interface SectorDetailPopupProps {
+interface CreateSectorPopupProps {
   open: boolean;
-  onOpenChange: (open: boolean) => void;
-  selectedSectorId: number | null;
+  onCloseCreateSectorPopup: () => void;
+  handleRefetchSectorListData: () => void;
 }
 
-export const SectorDetailPopup = ({
+export const CreateSectorPopup = ({
   open,
-  onOpenChange,
-  selectedSectorId,
-}: SectorDetailPopupProps) => {
+  onCloseCreateSectorPopup,
+  handleRefetchSectorListData,
+}: CreateSectorPopupProps) => {
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={onCloseCreateSectorPopup}>
       <DialogContent aria-describedby={undefined}>
         <div className="flex items-center justify-between w-full">
           <DialogTitle>Cadastrar Despesa</DialogTitle>
@@ -33,7 +32,9 @@ export const SectorDetailPopup = ({
             </button>
           </DialogClose>
         </div>
-        <SectorDetailContentPopup selectedSectorId={selectedSectorId} />
+        <CreateSectorPopupContent
+          handleRefetchSectorListData={handleRefetchSectorListData}
+        />
       </DialogContent>
     </Dialog>
   );

@@ -7,9 +7,13 @@ export interface GetSectorByIdRequest {
   id: number;
 }
 
-export const getSectorByIdQuery = (request: GetSectorByIdRequest) => {
+export const getSectorByIdQuery = (
+  request: GetSectorByIdRequest,
+  options?: { enabled?: boolean }
+) => {
   return useQuery<ApiResponse<Sector>>({
     queryKey: ["sectorDetails", request],
     queryFn: () => getSectorByIdDispatch(request),
+    enabled: options?.enabled,
   });
 };
