@@ -2,7 +2,18 @@ import { createApiResponse } from '@common/utils/api-response';
 import { CreateSubSectorRequestDto } from '@modules/sector/core/application/dto/request/create-subsector.request.dto';
 import { SectorMapper } from '@modules/sector/core/application/mappers/sector.mapper';
 import { SectorService } from '@modules/sector/core/application/services/sector.service';
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
 @Controller('sub-sector')

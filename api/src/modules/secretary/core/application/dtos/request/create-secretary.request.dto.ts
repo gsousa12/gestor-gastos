@@ -3,6 +3,6 @@ import { IsString, Length } from 'class-validator';
 
 export class CreateSecretaryRequestDto {
   @IsString({ message: validationMessages.isString })
-  @Length(3, 40, { message: validationMessages.Length })
+  @Length(3, 50, { message: validationMessages.Length })
   name: string;
 }

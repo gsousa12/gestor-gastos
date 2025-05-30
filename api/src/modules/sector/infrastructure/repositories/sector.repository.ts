@@ -118,6 +118,7 @@ export class SectorRepository implements ISectorRepository {
     const subSectorList = await this.prisma.subSector.findMany({
       where: {
         sectorId: sectorId,
+        deletedAt: null,
       },
     });
 

@@ -26,7 +26,7 @@ export class SecretaryController {
   @Get('/')
   @HttpCode(HttpStatus.OK)
   async getSecretaryList(@Query('page') page: number = 1) {
-    const limit = config.PAGINATION.LIST_PAGE_LIMIT;
+    const limit = 12;
 
     const { secretaryList, meta } = await this.secretaryService.getSecretaryList(page, limit);
     const response = this.secretaryMapper.toMapperGetSecretaryListResponse(secretaryList);

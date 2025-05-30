@@ -8,6 +8,6 @@ export class CreateSectorRequestDto {
 
   @IsOptional()
   @IsString({ message: validationMessages.isString })
-  @Length(3, 50, { message: validationMessages.Length })
+  @Length(3, 30, { message: validationMessages.Length })
   description: string | null;
 }
