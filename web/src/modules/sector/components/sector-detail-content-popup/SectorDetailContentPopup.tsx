@@ -1,24 +1,29 @@
+import { useMobileDetect } from "@/common/hooks/useMobileDetect";
 import { SectorDetailsInfo } from "../sector-details-info/SectorDetailsInfo";
 import { SubSectorList } from "../sub-sector-list/SubSectorList";
+import { useSectorDetailsController } from "./sector-detail-content-popup-controller";
 
 interface SectorDetailContentPopupProps {
-  sectorDetails: any;
-  subSectorListData: any[];
-  isMobile: boolean;
+  selectedSectorId: number | null;
 }
 
 export const SectorDetailContentPopup = ({
-  sectorDetails,
-  subSectorListData,
-  isMobile,
+  selectedSectorId,
 }: SectorDetailContentPopupProps) => {
+  const isMobile = useMobileDetect();
+
+  const { SectorDetailsData, subSectorListData } =
+    useSectorDetailsController(selectedSectorId);
+
+  console.log("SectorDetailsData", SectorDetailsData);
+  console.log("subSectorListData", subSectorListData);
   return (
     <div
-      className={`flex flex-col gap-6 px-2 py-2 ${
+      className={`flex flex-col gap-6 px-2 ${
         isMobile ? "text-base" : "text-sm"
       }`}
     >
-      <SectorDetailsInfo sectorDetails={sectorDetails} />
+      <SectorDetailsInfo sectorDetails={SectorDetailsData} />
       <SubSectorList subSectorListData={subSectorListData} />
     </div>
   );

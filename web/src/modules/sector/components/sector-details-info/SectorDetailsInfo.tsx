@@ -1,3 +1,4 @@
+import { formatDateAndHoursToPTBR } from "@/common/utils/functions";
 import { Calendar, Info } from "lucide-react";
 
 interface SectorDetailsInfoProps {
@@ -27,7 +28,9 @@ export const SectorDetailsInfo = ({
       </div>
       <div className="flex items-center gap-2 text-gray-500">
         <Calendar className="w-4 h-4 text-sky-400" />
-        <span>Criado em: {sectorDetails.createdAt}</span>
+        <span>
+          Criado em: {formatDateAndHoursToPTBR(sectorDetails.createdAt)}
+        </span>
       </div>
     </div>
   );

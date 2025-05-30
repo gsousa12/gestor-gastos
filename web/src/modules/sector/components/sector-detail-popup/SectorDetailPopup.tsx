@@ -6,29 +6,27 @@ import {
 } from "@/common/components/ui/dialog";
 import { X } from "lucide-react";
 import { SectorDetailContentPopup } from "../sector-detail-content-popup/SectorDetailContentPopup";
+import { useMobileDetect } from "@/common/hooks/useMobileDetect";
 
 interface SectorDetailPopupProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  sectorDetails: any;
-  subSectorListData: any[];
-  isMobile: boolean;
+  selectedSectorId: number | null;
 }
 
 export const SectorDetailPopup = ({
   open,
   onOpenChange,
-  sectorDetails,
-  subSectorListData,
-  isMobile,
+  selectedSectorId,
 }: SectorDetailPopupProps) => {
+  const isMobile = useMobileDetect();
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         className={`p-0 ${isMobile ? "w-full max-w-full" : "max-w-lg"}`}
         aria-describedby={undefined}
       >
-        <div className="flex items-center justify-between w-full px-6 pt-4 pb-2 border-b border-gray-100">
+        <div className="flex items-center justify-between w-full px-6 pt-4 border-b border-gray-100">
           <DialogTitle className="text-sky-700 text-lg">
             Detalhes do Setor
           </DialogTitle>
@@ -41,11 +39,7 @@ export const SectorDetailPopup = ({
             </button>
           </DialogClose>
         </div>
-        <SectorDetailContentPopup
-          sectorDetails={sectorDetails}
-          subSectorListData={subSectorListData}
-          isMobile={isMobile}
-        />
+        <SectorDetailContentPopup selectedSectorId={selectedSectorId} />
       </DialogContent>
     </Dialog>
   );

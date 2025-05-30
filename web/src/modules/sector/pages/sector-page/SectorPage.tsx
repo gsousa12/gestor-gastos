@@ -20,9 +20,8 @@ export const SectorPage = () => {
     openSectorDetailPopup,
     handleOpenSubSectorList,
     handleCloseSectorDetailPopup,
-    sectorDetails,
-    subSectorListData,
-    isMobile,
+    selectedSectorId,
+    // setSelectedSectorId,
   } = useSectorPageController();
 
   return (
@@ -31,11 +30,11 @@ export const SectorPage = () => {
         <ContentTitle label="Setores" />
         <div className="flex flex-row gap-1 items-center">
           <CreateButton label="Cadastrar Setor" openPopup={() => {}} />
-          <GenerateReportButton
+          {/* <GenerateReportButton
             type="sectors"
             month={getCurrentMonth()}
             year={getCurrentYear()}
-          />
+          /> */}
           <RefreshButton onClick={refetchSectorList} />
         </div>
       </div>
@@ -53,11 +52,11 @@ export const SectorPage = () => {
       <SectorDetailPopup
         open={openSectorDetailPopup}
         onOpenChange={(open) => {
-          if (!open) handleCloseSectorDetailPopup();
+          if (!open) {
+            handleCloseSectorDetailPopup();
+          }
         }}
-        sectorDetails={sectorDetails}
-        subSectorListData={subSectorListData}
-        isMobile={isMobile}
+        selectedSectorId={selectedSectorId}
       />
     </ContentWrapper>
   );

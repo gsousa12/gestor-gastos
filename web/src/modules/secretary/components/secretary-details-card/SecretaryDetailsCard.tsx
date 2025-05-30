@@ -14,9 +14,9 @@ interface SecretaryDetailsCardProps {
 export const SecretaryDetailsCard = ({
   secretary,
 }: SecretaryDetailsCardProps) => {
-  const handleDetailsClick = () => {
-    alert(`Detalhes da secretaria: ${secretary.name}`);
-  };
+  // const handleDetailsClick = () => {
+
+  // };
 
   return (
     <Card
@@ -28,13 +28,13 @@ export const SecretaryDetailsCard = ({
           <Building className="w-4 h-4 text-sky-500" />
           <span className="truncate">{secretary.name}</span>
         </CardTitle>
-        <button
+        {/* <button
           onClick={handleDetailsClick}
           className="p-1 rounded hover:bg-sky-50 transition-colors"
           aria-label="Ver detalhes"
         >
           <Eye className="w-5 h-5 text-sky-500 hover:cursor-pointer" />
-        </button>
+        </button> */}
       </CardHeader>
     </Card>
   );
