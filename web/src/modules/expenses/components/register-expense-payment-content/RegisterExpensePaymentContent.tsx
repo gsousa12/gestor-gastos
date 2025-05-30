@@ -33,6 +33,7 @@ import {
 import { Input } from "@/common/components/ui/input";
 import { cn } from "@/common/lib/utils";
 import { useEffect } from "react";
+import { showToast } from "@/common/components/toast/Toast";
 
 const paymentSchema = z.object({
   amount: z
@@ -58,11 +59,8 @@ export const RegisterExpensePaymentContent = ({
   onClosePopup,
 }: RegisterExpensePaymentContentProps) => {
   const isMobile = useMobileDetect();
-  const {
-    expenseDetailsData,
-    createPaymentMutate,
-    createPaymentMutateIsSucess,
-  } = useRegisterExpensePaymentController(selectedId);
+  const { expenseDetailsData, createPaymentMutate } =
+    useRegisterExpensePaymentController(selectedId);
 
   const expenseIdToDispatch = expenseDetailsData?.id;
   // RHF + Zod
@@ -95,21 +93,21 @@ export const RegisterExpensePaymentContent = ({
     register("amount").onChange(e);
   }
 
-  function onSubmit(data: PaymentFormValues) {
-    const amountCents = Number(data.amount.replace(/\D/g, ""));
-
-    createPaymentMutate({
-      expenseId: expenseIdToDispatch,
-      amount: amountCents,
-    });
-  }
-
-  useEffect(() => {
-    if (createPaymentMutateIsSucess && expenseIdToDispatch) {
+  const onSubmit = async (data: PaymentFormValues) => {
+    try {
+      await createPaymentMutate({
+        expenseId: expenseIdToDispatch,
+        amount: Number(data.amount.replace(/\D/g, "")),
+      });
       refreshExpenseTable();
+      showToast({
+        title: "Pagamento registrado com sucesso!",
+        description: `Pagamento de ${data.amount} registrado para a despesa ID ${expenseIdToDispatch}.`,
+        type: "success",
+      });
       onClosePopup();
-    }
-  }, [createPaymentMutate, createPaymentMutateIsSucess, expenseIdToDispatch]);
+    } catch (error) {}
+  };
 
   if (!expenseDetailsData) {
     return (

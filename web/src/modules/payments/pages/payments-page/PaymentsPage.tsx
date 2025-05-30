@@ -42,6 +42,7 @@ export const PaymentsPage = () => {
             onClear={clearFilters}
           />
           <GenerateReportButton
+            disabled={true}
             type="payment"
             month={
               typeof filters.month === "number"

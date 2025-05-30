@@ -3,6 +3,7 @@ import { StatusBadge } from "@/common/components/badges/status-badge/StatusBadge
 import { NotFoundBox } from "@/common/components/not-found-box/NotFoundBox";
 import { NotFoundItems } from "@/common/components/not-found-items/NotFoundItems";
 import { PaymentTableSkeleton } from "@/common/components/skeletons/payment-table-skeleton/PaymentTableSkeleton";
+import { cn } from "@/common/lib/utils";
 
 import { PaymentStatus } from "@/common/utils/enums";
 import {
@@ -183,7 +184,7 @@ export const PaymentsTable = ({
                     title="Detalhes do pagamento"
                     onClick={() => handleOpenPaymentDetails(payment.id)}
                   >
-                    <ReceiptText className="w-4 h-4 text-gray-800 hover:text-lime-600 hover:cursor-pointer " />
+                    <ReceiptText className="w-4 h-4 text-gray-800 hover:text-lime-600 hover:cursor-pointer" />
                   </button>
                   <button
                     className="p-1 rounded hover:bg-sky-50 transition"

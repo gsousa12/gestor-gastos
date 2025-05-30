@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { getCurrentMonth, getCurrentYear } from "@common/utils/functions";
+import {
+  getCurrentMonth,
+  getCurrentYear,
+  getErrorMessage,
+} from "@common/utils/functions";
 import { getPaymentListQuery } from "@common/api/queries/payments/getPaymentListQuery";
 import { showToast } from "@/common/components/toast/Toast";
 import { cancelPaymentByIdMutation } from "@/common/api/mutations/payment/cancelPaymentByIdMutation";
@@ -64,14 +68,30 @@ export const usePaymentsPageController = () => {
     year: filters.year === "" ? getCurrentYear() : filters.year,
   });
 
-  const {
-    mutateAsync: cancelPaymentById,
-    isSuccess: cancelPaymentByIdIsSucess,
-  } = cancelPaymentByIdMutation();
+  const { mutateAsync: cancelPaymentById } = cancelPaymentByIdMutation();
 
   const handleCancelPayment = async () => {
     if (selectedPaymentIdToCancel === null) return;
-    await cancelPaymentById({ id: selectedPaymentIdToCancel });
+    try {
+      await cancelPaymentById({ id: selectedPaymentIdToCancel });
+      setOpenDeletePopup(false);
+      setSelectedPaymentIdToCancel(null);
+      refreshPaymentsList();
+      showToast({
+        title: "Pagamento Cancelado!",
+        description: `Pagamento cancelado com sucesso.`,
+        type: "success",
+      });
+    } catch (error) {
+      setOpenDeletePopup(false);
+      setSelectedPaymentIdToCancel(null);
+      refreshPaymentsList();
+      showToast({
+        title: "Erro ao cancelar pagamento",
+        description: getErrorMessage(error),
+        type: "error",
+      });
+    }
   };
 
   const handleOpenPaymentDetails = (paymentId: number) => {
@@ -82,19 +102,6 @@ export const usePaymentsPageController = () => {
   const handleClosePaymentDetailsPopup = () => {
     setOpenPaymentDetailsPopup(false);
   };
-
-  useEffect(() => {
-    if (cancelPaymentByIdIsSucess) {
-      setOpenDeletePopup(false);
-      setSelectedPaymentIdToCancel(null);
-      refreshPaymentsList();
-      showToast({
-        title: "Pagamento Cancelado!",
-        description: `Pagamento cancelado com sucesso.`,
-        type: "success",
-      });
-    }
-  }, [cancelPaymentByIdIsSucess, cancelPaymentById]);
 
   return {
     paymentListData: paymentListData?.data ?? [],

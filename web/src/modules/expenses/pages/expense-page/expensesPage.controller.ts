@@ -1,5 +1,9 @@
 import { useState } from "react";
-import { getCurrentMonth, getCurrentYear } from "@common/utils/functions";
+import {
+  getCurrentMonth,
+  getCurrentYear,
+  getErrorMessage,
+} from "@common/utils/functions";
 import { getExpenseListQuery } from "@common/api/queries/expenses/getExpenseListQuery";
 import { deleteExpenseByIdMutation } from "@common/api/mutations/expense/deleteExpenseByIdMutation";
 import { showToast } from "@components/toast/Toast";
@@ -65,15 +69,26 @@ export const useExpensesController = () => {
 
   const handleConfirmDelete = async () => {
     if (selectedIdToDelete !== null) {
-      await deleteExpenseByIdMutate({ id: selectedIdToDelete });
-      setOpenDeletePopup(false);
-      setSelectedIdToDelete(null);
-      refetchExpenseList();
-      showToast({
-        title: "Despesa Deletada!",
-        description: `Despesa deletada com sucesso.`,
-        type: "success",
-      });
+      try {
+        await deleteExpenseByIdMutate({ id: selectedIdToDelete });
+        setOpenDeletePopup(false);
+        setSelectedIdToDelete(null);
+        refetchExpenseList();
+        showToast({
+          title: "Despesa Deletada!",
+          description: `Despesa deletada com sucesso.`,
+          type: "success",
+        });
+      } catch (error) {
+        setOpenDeletePopup(false);
+        setSelectedIdToDelete(null);
+        refetchExpenseList();
+        showToast({
+          title: "Erro ao deletar despesa!",
+          description: getErrorMessage(error),
+          type: "error",
+        });
+      }
     }
   };
 

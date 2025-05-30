@@ -54,10 +54,10 @@ export const SubSectorList = ({
   });
 
   const onCreateSubSector = async (data: AddSubSectorForm) => {
+    if (!selectedSectorId) {
+      return;
+    }
     try {
-      if (!selectedSectorId) {
-        return;
-      }
       await createSubSectorMutate({
         name: data.name,
         sectorId: selectedSectorId,

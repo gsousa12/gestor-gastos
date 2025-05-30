@@ -6,8 +6,12 @@ import { getApiResponse } from "../../interfaces/get-api-response";
 export const loginDispatch = async (
   request: LoginRequest
 ): Promise<ApiResponse<{}>> => {
-  const response = await api.post("/auth/login/", request);
-  return getApiResponse<{}>(response.data, {});
+  try {
+    const response = await api.post("/auth/login/", request);
+    return getApiResponse<{}>(response.data, {});
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const logoutDispatch = async (): Promise<ApiResponse<{}>> => {

@@ -13,11 +13,16 @@ export const useLoginPageController = () => {
   const setAuthenticated = useAuthStore((s) => s.setAuthenticated);
   const setUser = useAuthStore((s) => s.setUser);
 
-  const { mutate: loginMutate, isPending, isError, error } = loginMutation();
+  const {
+    mutateAsync: loginMutate,
+    isPending,
+    isError,
+    error,
+  } = loginMutation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    loginMutate(
+    await loginMutate(
       { email, password },
       {
         onSuccess: async () => {

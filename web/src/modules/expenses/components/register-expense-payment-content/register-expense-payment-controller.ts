@@ -1,4 +1,3 @@
-import { createExpenseMutation } from "@/common/api/mutations/expense/createExpenseMutation";
 import { createPaymentMutation } from "@/common/api/mutations/payment/createPaymentMutation";
 import { getExpenseDetailsQuery } from "@/common/api/queries/expenses/getExpenseDetailsQuery";
 
@@ -12,14 +11,10 @@ export const useRegisterExpensePaymentController = (
     }
   );
 
-  const {
-    mutateAsync: createPaymentMutate,
-    isSuccess: createPaymentMutateIsSucess,
-  } = createPaymentMutation();
+  const { mutateAsync: createPaymentMutate } = createPaymentMutation();
 
   return {
     expenseDetailsData: expenseDetails?.data,
     createPaymentMutate,
-    createPaymentMutateIsSucess,
   };
 };

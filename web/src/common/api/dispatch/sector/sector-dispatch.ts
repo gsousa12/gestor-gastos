@@ -49,8 +49,12 @@ export const getSubSectorListBySectorIdDispatch = async (
 export const createSubSectorDispatch = async (
   request: CreateSubSectorRequest
 ): Promise<ApiResponse<null>> => {
-  const response = await api.post("/sub-sector/", request);
-  return getApiResponse<null>(response.data, null);
+  try {
+    const response = await api.post("/sub-sector/", request);
+    return getApiResponse<null>(response.data, null);
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const softDeleteSubSectorByIdDispatch = async (
@@ -68,6 +72,10 @@ export const softDeleteSubSectorByIdDispatch = async (
 export const createSectorDispatch = async (
   request: CreateSectorRequest
 ): Promise<ApiResponse<null>> => {
-  const response = await api.post("/sector/", request);
-  return getApiResponse<null>(response.data, null);
+  try {
+    const response = await api.post("/sector/", request);
+    return getApiResponse<null>(response.data, null);
+  } catch (error) {
+    throw error;
+  }
 };

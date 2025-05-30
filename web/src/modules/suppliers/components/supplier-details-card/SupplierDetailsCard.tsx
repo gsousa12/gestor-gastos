@@ -28,7 +28,6 @@ export const SupplierDetailsCard = ({
       state: { supplierId: supplier.id },
     });
   };
-
   return (
     <div
       className="relative p-6 bg-gradient-to-br from-white via-slate-50 to-sky-50  hover:shadow-lg border 
@@ -37,8 +36,8 @@ export const SupplierDetailsCard = ({
       {/* Botão de detalhes */}
       <button
         onClick={handleViewDetails}
-        className="absolute top-3 right-10 text-sky-400 hover:text-sky-600 hover:cursor-pointer transition"
-        title="Ver detalhes"
+        className="absolute top-3 right-10  transition hover:cursor-pointer text-sky-400 hover:text-sky-600"
+        title="Ver detalhes do fornecedor"
         aria-label="Ver detalhes do fornecedor"
       >
         <Eye size={20} />

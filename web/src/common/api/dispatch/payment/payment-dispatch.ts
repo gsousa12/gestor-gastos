@@ -28,16 +28,24 @@ export const getPaymentListDispatch = async (
 export const createPaymentDispatch = async (
   request: CreatePaymentRequest
 ): Promise<ApiResponse<null>> => {
-  const response = await api.post("/payment/", request);
-  return getApiResponse<null>(response.data, null);
+  try {
+    const response = await api.post("/payment/", request);
+    return getApiResponse<null>(response.data, null);
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const cancelPaymentByIdDispatch = async (
   request: CancelPaymentByIdRequest
 ): Promise<ApiResponse<null>> => {
-  const { id } = request;
-  const response = await api.post(`/payment/cancel/${id}`);
-  return getApiResponse<null>(response.data, null);
+  try {
+    const { id } = request;
+    const response = await api.post(`/payment/cancel/${id}`);
+    return getApiResponse<null>(response.data, null);
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const getPaymentDetailsDispatch = async (

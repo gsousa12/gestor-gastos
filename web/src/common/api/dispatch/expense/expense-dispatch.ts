@@ -51,9 +51,13 @@ export const createExpenseDispatch = async (
 export const deleteExpenseByIdDispatch = async (
   request: DeleteExpenseByIdRequest
 ): Promise<ApiResponse<[]>> => {
-  const { id } = request;
-  const response = await api.delete(`/expense/${id}`);
-  return getApiResponse<[]>(response.data, []);
+  try {
+    const { id } = request;
+    const response = await api.delete(`/expense/${id}`);
+    return getApiResponse<[]>(response.data, []);
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const getExpenseDetailsDispatch = async (
