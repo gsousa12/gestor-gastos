@@ -3,10 +3,7 @@ import { useCreateReport } from "../../api/mutations/report/createReportMutation
 import { useMobileDetect } from "../../hooks/useMobileDetect";
 import { useEffect } from "react";
 import { showToast } from "../toast/Toast";
-import {
-  getErrorMessage,
-  getErrorMessageFromAxiosBlob,
-} from "@/common/utils/functions";
+import { getErrorMessageFromAxiosBlob } from "@/common/utils/functions";
 
 export interface GenerateReportButtonProps {
   disabled: boolean;

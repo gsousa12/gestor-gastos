@@ -1,10 +1,5 @@
-import { Building, Eye } from "lucide-react";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-} from "@/common/components/ui/card";
+import { Building } from "lucide-react";
+import { Card, CardHeader, CardTitle } from "@/common/components/ui/card";
 import { Secretary } from "../secretariats-details-cards-tile/SecretariatsDetailsCardsTile";
 
 interface SecretaryDetailsCardProps {

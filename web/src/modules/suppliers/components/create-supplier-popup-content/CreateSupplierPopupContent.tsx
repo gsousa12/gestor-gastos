@@ -2,13 +2,10 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User, Building2, IdCard, Mail, Phone, Plus } from "lucide-react";
-import { useEffect, useState } from "react";
-import { useMobileDetect } from "@/common/hooks/useMobileDetect";
-import { cn } from "@/common/lib/utils";
+import { useState } from "react";
 import { Input } from "@/common/components/ui/input";
 import { Button } from "@/common/components/ui/button";
 import { useCreateSupplierController } from "./create-supplier-controller";
-import { create } from "domain";
 import { showToast } from "@/common/components/toast/Toast";
 import { getErrorMessage } from "@/common/utils/functions";
 
@@ -76,8 +73,7 @@ interface CreateSupplierPopupContentProps {
 export const CreateSupplierPopupContent = ({
   refreshSupplierList,
 }: CreateSupplierPopupContentProps) => {
-  const { createSupplierMutate, createSupplierIsSuccess } =
-    useCreateSupplierController();
+  const { createSupplierMutate } = useCreateSupplierController();
   const [taxIdValue, setTaxIdValue] = useState("");
 
   const {

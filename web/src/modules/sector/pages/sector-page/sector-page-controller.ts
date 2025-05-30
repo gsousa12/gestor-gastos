@@ -1,6 +1,4 @@
 import { getSectorListQuery } from "@/common/api/queries/sector/getSectorListQuery";
-import { Pagination } from "@/common/components/pagination/Pagination";
-import { useMobileDetect } from "@/common/hooks/useMobileDetect";
 import { useState } from "react";
 
 export const useSectorPageController = () => {

@@ -32,7 +32,6 @@ import {
 } from "@/common/utils/functions";
 import { Input } from "@/common/components/ui/input";
 import { cn } from "@/common/lib/utils";
-import { useEffect } from "react";
 import { showToast } from "@/common/components/toast/Toast";
 
 const paymentSchema = z.object({

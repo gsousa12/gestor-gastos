@@ -2,7 +2,7 @@ import { softDeleteSupplierByIdMutation } from "@/common/api/mutations/supplier/
 import { getSupplierListQuery } from "@/common/api/queries/supplier/getSupplierListQuery";
 import { showToast } from "@/common/components/toast/Toast";
 import { getErrorMessage } from "@/common/utils/functions";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export const useSuppliersPageController = () => {
   const [page, setPage] = useState(1);

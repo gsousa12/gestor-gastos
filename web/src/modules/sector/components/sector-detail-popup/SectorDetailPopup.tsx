@@ -6,7 +6,6 @@ import {
 } from "@/common/components/ui/dialog";
 import { X } from "lucide-react";
 import { SectorDetailContentPopup } from "../sector-detail-content-popup/SectorDetailContentPopup";
-import { useMobileDetect } from "@/common/hooks/useMobileDetect";
 
 interface SectorDetailPopupProps {
   open: boolean;

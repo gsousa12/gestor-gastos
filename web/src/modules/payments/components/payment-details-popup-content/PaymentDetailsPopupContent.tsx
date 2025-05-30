@@ -7,8 +7,6 @@ import {
   User,
   Building2,
   FileText,
-  Mail,
-  Phone,
 } from "lucide-react";
 import { usePaymentDetailsController } from "./payment-details-popup-content-controller";
 import {

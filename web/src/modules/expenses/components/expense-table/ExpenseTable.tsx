@@ -14,7 +14,6 @@ import {
   DollarSign,
   Info,
   Layers,
-  Pencil,
   Trash2,
   Truck,
 } from "lucide-react";

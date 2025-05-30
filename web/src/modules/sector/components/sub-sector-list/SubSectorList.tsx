@@ -47,7 +47,6 @@ export const SubSectorList = ({
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-    setError,
   } = useForm<AddSubSectorForm>({
     resolver: zodResolver(addSubSectorSchema),
     defaultValues: { name: "" },

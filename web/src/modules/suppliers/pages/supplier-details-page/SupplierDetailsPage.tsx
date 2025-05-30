@@ -16,7 +16,6 @@ import {
   Mail,
   Phone,
   TrendingUp,
-  History,
 } from "lucide-react";
 import {
   convertCentsToReal,
@@ -36,7 +35,6 @@ import { StatCard } from "../../components/supplier-stat-card/SupplierStatCard";
 import { TimelineItem } from "../../components/supplier-timeline-item/SupplierTimelineItem";
 import { SupplierPaymentHistoryChart } from "../../components/supplier-payment-history-chart/SupplierPaymentHistoryChart";
 import { useMobileDetect } from "@/common/hooks/useMobileDetect";
-import { cn } from "@/common/lib/utils";
 import { RefreshButton } from "@/common/components/refreshButton/RefreshButton";
 
 export const SupplierDetailsPage = () => {

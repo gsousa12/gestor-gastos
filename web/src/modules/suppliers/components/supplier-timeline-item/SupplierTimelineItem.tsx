@@ -1,5 +1,4 @@
 import { StatusBadge } from "@/common/components/badges/status-badge/StatusBadge";
-import { Badge } from "@/common/components/ui/badge";
 
 interface TimelineItemProps {
   title: string;
@@ -18,7 +17,6 @@ export const TimelineItem = ({
   status,
   icon: Icon,
   date,
-  isMobile,
 }: TimelineItemProps) => (
   <div className="flex items-center justify-between gap-4 rounded-xl bg-white dark:bg-muted px-4 py-3 shadow-sm hover:shadow-md transition">
     <div className="flex items-start gap-3">

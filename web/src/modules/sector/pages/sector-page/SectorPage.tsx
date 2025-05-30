@@ -1,8 +1,6 @@
 import { ContentTitle } from "@/common/components/content-title/ContentTitle";
 import { CreateButton } from "@/common/components/create-button/CreateButton";
-import { GenerateReportButton } from "@/common/components/generate-report-button/GenerateReportButton";
 import { ContentWrapper } from "@/common/components/wrappers/content-wrapper/ContentWrapper";
-import { getCurrentMonth, getCurrentYear } from "@/common/utils/functions";
 import { SectorsDetailsCardsTile } from "../../components/sectors-details-cards-tile/SectorsDetailsCardsTile";
 import { useSectorPageController } from "./sector-page-controller";
 import { RefreshButton } from "@/common/components/refreshButton/RefreshButton";

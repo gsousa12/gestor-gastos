@@ -1,9 +1,7 @@
 import { Payment } from "@/common/api/interfaces/payment/payment-api-interfaces";
 import { StatusBadge } from "@/common/components/badges/status-badge/StatusBadge";
 import { NotFoundBox } from "@/common/components/not-found-box/NotFoundBox";
-import { NotFoundItems } from "@/common/components/not-found-items/NotFoundItems";
 import { PaymentTableSkeleton } from "@/common/components/skeletons/payment-table-skeleton/PaymentTableSkeleton";
-import { cn } from "@/common/lib/utils";
 
 import { PaymentStatus } from "@/common/utils/enums";
 import {
@@ -27,7 +25,6 @@ import {
   Info,
   ReceiptText,
   Truck,
-  User,
 } from "lucide-react";
 
 interface PaymentsTableProps {
