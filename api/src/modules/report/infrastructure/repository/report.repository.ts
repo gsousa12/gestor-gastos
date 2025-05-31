@@ -9,6 +9,7 @@ export class ReportRepository implements IReportRepository {
 
   private readonly reportFetchers: Record<string, (month: number, year: string) => Promise<any[]>> = {
     payment: this.getPayments.bind(this),
+    expense: this.getExpenses.bind(this),
   };
 
   async getDataForReport(type: string, month: number, year: string): Promise<any[]> {
@@ -31,6 +32,24 @@ export class ReportRepository implements IReportRepository {
         expense: true,
         supplier: true,
         sector: true,
+      },
+    });
+  }
+
+  private async getExpenses(month: number, year: string): Promise<any[]> {
+    return this.prisma.expense.findMany({
+      where: {
+        month: month,
+        year: year,
+      },
+      include: {
+        secretary: true,
+        supplier: true,
+        subsector: {
+          include: {
+            sector: true,
+          },
+        },
       },
     });
   }

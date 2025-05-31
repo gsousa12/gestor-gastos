@@ -19,12 +19,12 @@ export class SectorRepository implements ISectorRepository {
       },
     });
 
-    // await this.prisma.subSector.create({
-    //   data: {
-    //     name: createdSector.name,
-    //     sectorId: createdSector.id,
-    //   },
-    // });
+    await this.prisma.subSector.create({
+      data: {
+        name: `${sector.name} - Geral`,
+        sectorId: createdSector.id,
+      },
+    });
 
     return createdSector;
   }

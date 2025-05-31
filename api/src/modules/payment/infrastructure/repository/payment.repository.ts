@@ -215,6 +215,7 @@ export class PaymentRepository implements IPaymentRepository {
         where: whereClause,
         skip,
         take: limit,
+        orderBy: { createdAt: 'desc' },
         include: {
           supplier: {
             select: {

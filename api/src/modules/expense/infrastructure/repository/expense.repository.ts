@@ -78,6 +78,9 @@ export class ExpenseRepository implements IExpenseRepository {
         where: whereClause,
         skip,
         take: limit,
+        orderBy: {
+          createdAt: 'desc',
+        },
         include: {
           subsector: {
             select: {
@@ -152,6 +155,7 @@ export class ExpenseRepository implements IExpenseRepository {
     });
     const subSectorList = await this.prisma.subSector.findMany({
       select: { id: true, name: true },
+      where: { deletedAt: null },
     });
     const secretaryList = await this.prisma.secretary.findMany({
       select: { id: true, name: true },

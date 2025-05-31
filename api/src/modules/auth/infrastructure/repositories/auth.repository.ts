@@ -9,7 +9,7 @@ export class AuthRepository implements IAuthRepository {
 
   async findUserByEmail(email: string): Promise<User | null> {
     const user = this.prisma.user.findUnique({
-      where: { email },
+      where: { email, isActive: true },
     });
     return user;
   }

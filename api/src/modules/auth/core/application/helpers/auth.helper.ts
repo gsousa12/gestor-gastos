@@ -26,8 +26,9 @@ export class AuthHelper {
 
     res.clearCookie('access_token', {
       httpOnly: true,
+      secure: isProductionEnvironment,
       sameSite: isProductionEnvironment ? 'none' : 'lax',
-      maxAge: Number(3600000),
+      path: '/',
     });
   }
 }

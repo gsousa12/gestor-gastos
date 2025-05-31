@@ -23,9 +23,12 @@ export class AuthService implements IAuthService {
       userId: user.id,
       name: user.name,
       email: user.email,
+      role: user.role,
       isActive: user.isActive,
     };
+
     const access_token = this.jwtService.sign(payload);
+
     await this.authHelper.implementsCookies(access_token, res);
   }
 

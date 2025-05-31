@@ -22,6 +22,8 @@ export class ReportService implements IReportService {
       throw new BadRequestException('Nenhum dado encontrado para o relatório solicitado.');
     }
 
+    console.log('Dados obtidos para o relatório:', data);
+
     const strategy = this.resolveStrategy(report.reportType);
 
     const documentDefinition = strategy.buildDocumentDefinition(data, report);
