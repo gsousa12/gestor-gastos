@@ -34,8 +34,6 @@ interface PaymentsTableProps {
   handleOpenPaymentDetails: (id: number) => void;
 }
 
-// TODO: ANALISAR O FATO DE QUANDO EXCLUI UMA DESPESA, TODOS OS PAGAMENTOS ATRELADOS A ELA SAO EXCLUIDOS
-
 export const PaymentsTable = ({
   data,
   isPendending,

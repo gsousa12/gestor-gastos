@@ -26,7 +26,7 @@ const addSubSectorSchema = z.object({
   name: z
     .string({ required_error: "Nome é obrigatório" })
     .min(3, { message: "O nome deve ter entre 3 e 20 caracteres." })
-    .max(20, { message: "O nome deve ter entre 3 e 20 caracteres." }),
+    .max(40, { message: "O nome deve ter entre 3 e 20 caracteres." }),
 });
 
 type AddSubSectorForm = z.infer<typeof addSubSectorSchema>;
@@ -138,7 +138,7 @@ export const SubSectorList = ({
                   errors.name && "border-red-400"
                 )}
                 autoFocus
-                maxLength={20}
+                maxLength={40}
               />
               <div
                 className={cn(

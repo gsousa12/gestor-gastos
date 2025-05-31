@@ -7,6 +7,7 @@ import {
 import { getExpenseListQuery } from "@common/api/queries/expenses/getExpenseListQuery";
 import { deleteExpenseByIdMutation } from "@common/api/mutations/expense/deleteExpenseByIdMutation";
 import { showToast } from "@components/toast/Toast";
+import { useAuthStore } from "@/common/store/auth/authStore";
 
 export const getCreateExpenseFormDataEmpty = {
   supplierList: [],
@@ -21,6 +22,9 @@ export type ExpenseFilterValues = {
 };
 
 export const useExpensesController = () => {
+  const isAuthorizedUserToGenerateReport = useAuthStore((state) =>
+    state.hasPermission("generate_report")
+  );
   const [filters, setFilters] = useState<ExpenseFilterValues>({
     supplierName: "",
     month: getCurrentMonth(),
@@ -140,5 +144,6 @@ export const useExpensesController = () => {
     openRegisterExpensePaymentPopup,
     handleCloseRegisterExpensePaymentPopup,
     selectedExpenseId,
+    isAuthorizedUserToGenerateReport,
   };
 };

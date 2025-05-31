@@ -7,10 +7,10 @@ import { Pagination } from "@components/pagination/Pagination";
 import { useExpensesController } from "./expensesPage.controller";
 import { ExpenseFilterPopUp } from "../../components/expense-filter-popup/ExpenseFilterPopUp";
 import { getCurrentMonth, getCurrentYear } from "@common/utils/functions";
-import { DeleteConfirmationPopup } from "@components/popups/deletion-confirmation-popup/DeleteConfirmationPopup";
 import { ContentTitle } from "@components/content-title/ContentTitle";
 import { RefreshButton } from "@/common/components/refreshButton/RefreshButton";
 import { RegisterExpensePaymentPopup } from "../../components/register-expense-payment-popup/RegisterExpensePaymentPopup";
+import { ConfirmationPopup } from "@/common/components/popups/confirmation-popup/ConfirmationPopup";
 
 export const ExpensesPage = () => {
   const {
@@ -34,6 +34,7 @@ export const ExpensesPage = () => {
     openRegisterExpensePaymentPopup,
     handleCloseRegisterExpensePaymentPopup,
     selectedExpenseId,
+    isAuthorizedUserToGenerateReport,
   } = useExpensesController();
 
   return (
@@ -51,7 +52,7 @@ export const ExpensesPage = () => {
             onClear={clearFilters}
           />
           <GenerateReportButton
-            disabled={true}
+            disabled={!isAuthorizedUserToGenerateReport}
             type="expense"
             month={
               typeof filters.month === "number"
@@ -69,7 +70,7 @@ export const ExpensesPage = () => {
         onOpenChange={setOpenCreateExpensePopup}
         onRefetchExpenseList={refetchExpenseList}
       />
-      <DeleteConfirmationPopup
+      <ConfirmationPopup
         open={openDeletePopup}
         title="Excluir Despesa"
         description="Tem certeza que deseja excluir essa despesa? Essa ação não poderá ser desfeita."

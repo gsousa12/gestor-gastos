@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useAuthBootstrap } from "../../hooks/useAuthBoostrap";
-import { useAuthStore } from "../../store/authStore";
+import { useAuthStore } from "../../store/auth/authStore";
 import { useSessionExpiredPopupStore } from "../popups/session-expired-popup/session-expired-popup-manager";
 import { BoostrapLoader } from "../global-loader/BoostrapLoader";
 import { SessionExpiredPopup } from "../popups/session-expired-popup/SessionExpiredPopup";

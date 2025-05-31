@@ -15,6 +15,10 @@ export const loginDispatch = async (
 };
 
 export const logoutDispatch = async (): Promise<ApiResponse<{}>> => {
-  const response = await api.post("/auth/logout/");
-  return getApiResponse<{}>(response.data, {});
+  try {
+    const response = await api.post("/auth/logout/");
+    return getApiResponse<{}>(response.data, {});
+  } catch (error) {
+    throw error;
+  }
 };

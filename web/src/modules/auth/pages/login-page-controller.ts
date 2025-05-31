@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "@common/store/authStore";
+import { useAuthStore } from "@/common/store/auth/authStore";
 
 import { showToast } from "@common/components/toast/Toast";
 import { loginMutation } from "@common/api/mutations/auth/loginMutation";

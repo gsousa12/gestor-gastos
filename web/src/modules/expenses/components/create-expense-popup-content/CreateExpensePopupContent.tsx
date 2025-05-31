@@ -14,7 +14,7 @@ import {
 import { cn } from "@common/lib/utils";
 import { showToast } from "@components/toast/Toast";
 import { CreateExpensePopupSkeleton } from "@components/skeletons/create-expense-skeleton/CreateExpenseSkeleton";
-import { useAuthStore } from "@common/store/authStore";
+import { useAuthStore } from "@/common/store/auth/authStore";
 import { createExpenseMutation } from "@common/api/mutations/expense/createExpenseMutation";
 import {
   Building,

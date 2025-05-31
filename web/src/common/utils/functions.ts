@@ -168,3 +168,33 @@ export const getErrorMessageFromAxiosBlob = async (
   } catch {}
   return "Ocorreu um erro inesperado. Por favor, tente novamente.";
 };
+
+export const formatCurrentDate = () => {
+  const date = new Date();
+  const dias = [
+    "Domingo",
+    "Segunda-feira",
+    "Terça-feira",
+    "Quarta-feira",
+    "Quinta-feira",
+    "Sexta-feira",
+    "Sábado",
+  ];
+  const meses = [
+    "Janeiro",
+    "Fevereiro",
+    "Março",
+    "Abril",
+    "Maio",
+    "Junho",
+    "Julho",
+    "Agosto",
+    "Setembro",
+    "Outubro",
+    "Novembro",
+    "Dezembro",
+  ];
+  return `${dias[date.getDay()]}, ${date.getDate()} de ${
+    meses[date.getMonth()]
+  } de ${date.getFullYear()}`;
+};

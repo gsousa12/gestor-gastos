@@ -1,4 +1,3 @@
-// SessionExpiredPopupManager.ts
 import { create } from "zustand";
 
 type SessionExpiredPopupStore = {
@@ -15,7 +14,6 @@ export const useSessionExpiredPopupStore = create<SessionExpiredPopupStore>(
   })
 );
 
-// Helper para chamar no interceptor
 export function showSessionExpiredPopup() {
   useSessionExpiredPopupStore.getState().show();
 }

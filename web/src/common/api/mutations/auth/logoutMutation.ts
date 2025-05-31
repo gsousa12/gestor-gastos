@@ -1,8 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
-import { useAuthStore } from "../../../store/authStore";
+import { useAuthStore } from "../../../store/auth/authStore";
 import { logoutDispatch } from "../../dispatch/auth/auth";
 import { ApiResponse } from "../../interfaces/api-response";
+import { showToast } from "@/common/components/toast/Toast";
+import { getErrorMessage } from "@/common/utils/functions";
 
 export const logoutMutation = () => {
   const setAuthenticated = useAuthStore((s) => s.setAuthenticated);
@@ -13,6 +15,12 @@ export const logoutMutation = () => {
       setAuthenticated(false);
       navigate("/login", { replace: true });
     },
-    onError: () => {},
+    onError: (error) => {
+      showToast({
+        title: "Erro ao efetuar logout",
+        description: getErrorMessage(error),
+        type: "error",
+      });
+    },
   });
 };

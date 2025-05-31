@@ -8,7 +8,7 @@ import {
   DialogTitle,
 } from "@ui/dialog";
 
-type DeleteConfirmationPopupProps = {
+type ConfirmationPopupProps = {
   open: boolean;
   title: string;
   description: string;
@@ -16,13 +16,13 @@ type DeleteConfirmationPopupProps = {
   onConfirm: () => void;
 };
 
-export const DeleteConfirmationPopup = ({
+export const ConfirmationPopup = ({
   open,
   title,
   description,
   onCancel,
   onConfirm,
-}: DeleteConfirmationPopupProps) => {
+}: ConfirmationPopupProps) => {
   return (
     <Dialog open={open} onOpenChange={onCancel}>
       <DialogContent className="sm:max-w-[400px]">

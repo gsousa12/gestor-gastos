@@ -26,7 +26,7 @@ export const Sidebar = () => {
       <div className="flex flex-col flex-grow">
         <div
           className={cn(
-            "flex items-center gap-3 py-6 border-b border-gray-100 transition-all duration-300",
+            "flex items-center gap-3 py-6 transition-all duration-300",
             isMobile ? "justify-center" : "justify-between"
           )}
         >
@@ -37,7 +37,7 @@ export const Sidebar = () => {
                 Gestão de Gastos
               </span>
               <span className="text-[9px] text-gray-400 font-semibold ml-auto">
-                v1.0.0
+                v{import.meta.env.VITE_APP_VERSION}
               </span>
             </>
           )}

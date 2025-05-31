@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { Toaster } from "../ui/sonner";
-import { useAuthStore } from "../../store/authStore";
+import { useAuthStore } from "../../store/auth/authStore";
 import { AppRoutes } from "../app-routes/AppRoutes";
 import { GlobalLoader } from "../global-loader/GlobalLoader";
 import { Header } from "../header/Header";

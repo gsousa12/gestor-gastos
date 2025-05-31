@@ -7,6 +7,7 @@ import {
 import { getPaymentListQuery } from "@common/api/queries/payments/getPaymentListQuery";
 import { showToast } from "@/common/components/toast/Toast";
 import { cancelPaymentByIdMutation } from "@/common/api/mutations/payment/cancelPaymentByIdMutation";
+import { useAuthStore } from "@/common/store/auth/authStore";
 
 export type PaymentsFilterValues = {
   supplierName: string;
@@ -15,6 +16,10 @@ export type PaymentsFilterValues = {
 };
 
 export const usePaymentsPageController = () => {
+  const isAuthorizedUser = useAuthStore((state) =>
+    state.hasPermission("generate_report")
+  );
+
   const [filters, setFilters] = useState<PaymentsFilterValues>({
     supplierName: "",
     month: getCurrentMonth(),
@@ -121,5 +126,6 @@ export const usePaymentsPageController = () => {
     selectedPaymentIdToDetail,
     handleClosePaymentDetailsPopup,
     openPaymentDetailsPopup,
+    isAuthorizedUser,
   };
 };

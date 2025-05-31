@@ -6,7 +6,7 @@ import { useSuppliersPageController } from "./suppliers-page-controller";
 import { RefreshButton } from "@/common/components/refreshButton/RefreshButton";
 import { CreateButton } from "@/common/components/create-button/CreateButton";
 import { CreateSupplierPopup } from "../../components/create-supplier-popup/CreateSupplierPopup";
-import { DeleteConfirmationPopup } from "@/common/components/popups/deletion-confirmation-popup/DeleteConfirmationPopup";
+import { ConfirmationPopup } from "@/common/components/popups/confirmation-popup/ConfirmationPopup";
 
 export const SuppliersPage = () => {
   const {
@@ -49,7 +49,7 @@ export const SuppliersPage = () => {
           handleCloseCreateSupplierPopUp={handleCloseCreateSupplierPopUp}
           refreshSupplierList={refreshSupplierList}
         />
-        <DeleteConfirmationPopup
+        <ConfirmationPopup
           open={openDeletePopup}
           title="Excluir Fornecedor"
           description="Tem certeza que deseja excluir essa fornecedor? Essa ação irá desativar o fornecedor do sistema."

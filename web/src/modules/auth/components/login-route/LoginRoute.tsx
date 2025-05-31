@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import { useAuthStore } from "@common/store/authStore";
+import { useAuthStore } from "@/common/store/auth/authStore";
 import { LoginPage } from "../../pages/LoginPage";
 import { useEffect } from "react";
 import { useSessionExpiredPopupStore } from "@components/popups/session-expired-popup/session-expired-popup-manager";

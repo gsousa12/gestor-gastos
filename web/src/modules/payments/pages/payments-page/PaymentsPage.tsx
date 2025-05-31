@@ -7,7 +7,7 @@ import { ContentTitle } from "@common/components/content-title/ContentTitle";
 import { PaymentsFilterPopup } from "../../components/payments-filter-popup/PaymentsFilterPopup";
 import { Pagination } from "@common/components/pagination/Pagination";
 import { RefreshButton } from "@/common/components/refreshButton/RefreshButton";
-import { DeleteConfirmationPopup } from "@/common/components/popups/deletion-confirmation-popup/DeleteConfirmationPopup";
+import { ConfirmationPopup } from "@/common/components/popups/confirmation-popup/ConfirmationPopup";
 import { PaymentDetailsPopup } from "../../components/payment-details-popup/PaymentDetailsPopup";
 
 export const PaymentsPage = () => {
@@ -29,6 +29,7 @@ export const PaymentsPage = () => {
     selectedPaymentIdToDetail,
     handleClosePaymentDetailsPopup,
     openPaymentDetailsPopup,
+    isAuthorizedUser,
   } = usePaymentsPageController();
 
   return (
@@ -42,7 +43,7 @@ export const PaymentsPage = () => {
             onClear={clearFilters}
           />
           <GenerateReportButton
-            disabled={true}
+            disabled={!isAuthorizedUser}
             type="payment"
             month={
               typeof filters.month === "number"
@@ -62,7 +63,7 @@ export const PaymentsPage = () => {
         handleOpenPaymentDetails={handleOpenPaymentDetails}
       />
 
-      <DeleteConfirmationPopup
+      <ConfirmationPopup
         open={openDeletePopup}
         title="Cancelar Pagamento"
         description="Tem certeza que deseja cancelar esse pagamento? Essa ação não poderá ser desfeita."

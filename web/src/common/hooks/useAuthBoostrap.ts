@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useAuthStore } from "../store/authStore";
+import { useAuthStore } from "../store/auth/authStore";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getUserInformation } from "../api/dispatch/user/user-dispatch";
 
