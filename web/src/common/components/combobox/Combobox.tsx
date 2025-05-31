@@ -64,7 +64,7 @@ export const ComboBox = ({
                 <ComboboxOption
                   key={opt.id}
                   value={opt.id}
-                  className={({ active, selected }) =>
+                  className={({ active }) =>
                     `relative cursor-pointer select-none py-2 pl-10 pr-4 ${
                       active ? "bg-sky-100 text-sky-900" : "text-gray-900"
                     }`

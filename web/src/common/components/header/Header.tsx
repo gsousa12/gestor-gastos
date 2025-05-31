@@ -1,16 +1,11 @@
 import { useState, useRef, useEffect } from "react";
 import { ChevronDown, LogOut, Calendar } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import {
-  formatCurrentDate,
-  getErrorMessage,
-  getUserInitials,
-} from "../../utils/functions";
+import { formatCurrentDate, getUserInitials } from "../../utils/functions";
 import { logoutMutation } from "../../api/mutations/auth/logoutMutation";
 import { useAuthStore } from "../../store/auth/authStore";
 import { useMobileDetect } from "@/common/hooks/useMobileDetect";
 import { ConfirmationPopup } from "../popups/confirmation-popup/ConfirmationPopup";
-import { showToast } from "../toast/Toast";
 
 export const Header = () => {
   const [openHeaderMenu, setOpenHeaderMenu] = useState(false);
