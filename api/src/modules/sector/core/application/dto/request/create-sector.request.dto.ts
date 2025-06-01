@@ -3,11 +3,11 @@ import { IsOptional, IsString, Length } from 'class-validator';
 
 export class CreateSectorRequestDto {
   @IsString({ message: validationMessages.isString })
-  @Length(3, 20, { message: validationMessages.Length })
+  @Length(3, 40, { message: validationMessages.Length })
   name: string;
 
   @IsOptional()
   @IsString({ message: validationMessages.isString })
-  @Length(3, 30, { message: validationMessages.Length })
+  @Length(3, 50, { message: validationMessages.Length })
   description: string | null;
 }

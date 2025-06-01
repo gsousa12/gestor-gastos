@@ -1,5 +1,15 @@
 import { validateTaxIdRegex, validationMessages } from '@common/utils/validation-message';
-import { Allow, IsDefined, IsEmail, IsOptional, IsString, Length, Matches } from 'class-validator';
+import {
+  Allow,
+  IsDefined,
+  IsEmail,
+  IsNumber,
+  IsOptional,
+  IsString,
+  Length,
+  Matches,
+  Min,
+} from 'class-validator';
 
 export class CreateSupplierRequestDto {
   @IsString({ message: validationMessages.isString })
@@ -27,4 +37,8 @@ export class CreateSupplierRequestDto {
   @IsOptional()
   @IsString({ message: validationMessages.isString })
   contactPhone: string | null;
+
+  @IsOptional()
+  @IsNumber({}, { message: validationMessages.isNumber })
+  recurringDebit: number;
 }

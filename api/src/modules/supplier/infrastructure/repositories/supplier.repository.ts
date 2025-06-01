@@ -17,7 +17,7 @@ export class SupplierRepository implements ISupplierRepository {
         name: supplier.name,
         companyName: supplier.companyName,
         taxId: supplier.taxId,
-        recurringDebit: 0,
+        recurringDebit: supplier.recurringDebit ?? 0,
         contactEmail: supplier.contactEmail,
         contactPhone: supplier.contactPhone,
         createdAt: new Date(),
