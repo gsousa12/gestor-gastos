@@ -36,17 +36,17 @@ export class PaymentReportStrategy implements IReportStrategy {
           },
         ],
         columnGap: 10,
-        margin: [0, 0, 0, 8],
+        margin: [0, 0, 0, 12],
       },
       {
         text: `Relatório de Pagamentos - ${getMonthName(report.month)} / ${report.year}`,
         style: 'tituloRelatorio',
         alignment: 'center',
-        margin: [0, 0, 0, 4],
+        margin: [0, 0, 0, 8],
       },
       {
-        canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1.2, lineColor: '#2d4154' }],
-        margin: [0, 0, 0, 10],
+        canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1.5, lineColor: '#2d4154' }],
+        margin: [0, 0, 0, 16],
       },
     ];
 
@@ -79,9 +79,9 @@ export class PaymentReportStrategy implements IReportStrategy {
         totalSaldoDevedor += saldoDevedorRestante;
 
         tableBody.push([
-          { text: truncateText(payment.supplier?.name ?? '', 15), style: 'tableContent', alignment: 'right' },
+          { text: truncateText(payment.supplier?.name ?? '', 50), style: 'tableContent', alignment: 'right' }, // aumentei para 30
           {
-            text: truncateText(payment.expense?.description ?? '', 10),
+            text: truncateText(payment.expense?.description ?? '', 50), // aumentei para 25
             style: 'tableContent',
             alignment: 'right',
           },
@@ -128,13 +128,13 @@ export class PaymentReportStrategy implements IReportStrategy {
 
       content.push(
         {
-          text: sectorName,
+          text: `Setor - ${sectorName}`,
           style: 'sectorHeader',
-          margin: [0, 18, 0, 6],
+          margin: [0, 20, 0, 8],
         },
         {
           table: {
-            widths: [110, '*', 110, 110, 110],
+            widths: [150, 180, 120, 120, 120], // aumentei as larguras das colunas
             body: tableBody,
           },
           layout: {
@@ -143,8 +143,8 @@ export class PaymentReportStrategy implements IReportStrategy {
               if (rowIndex === tableBody.length - 1) return '#f1f5f9'; // total
               return rowIndex % 2 === 0 ? '#f9fafb' : null; // zebra
             },
-            hLineWidth: (i: number, node: any) => (i === 0 || i === node.table.body.length ? 1.2 : 0.5),
-            vLineWidth: () => 0.5,
+            hLineWidth: (i: number, node: any) => (i === 0 || i === node.table.body.length ? 1.5 : 0.7),
+            vLineWidth: () => 0.7,
             hLineColor: () => '#cbd5e1',
             vLineColor: () => '#cbd5e1',
           },
@@ -153,8 +153,8 @@ export class PaymentReportStrategy implements IReportStrategy {
         // Linha divisória entre setores, exceto no último
         map.size > 1 && Array.from(map.keys()).pop() !== sectorName
           ? {
-              canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 0.8, lineColor: '#d1d5db' }],
-              margin: [0, 18, 0, 0],
+              canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1, lineColor: '#d1d5db' }],
+              margin: [0, 20, 0, 0],
             }
           : null,
       );
@@ -165,7 +165,7 @@ export class PaymentReportStrategy implements IReportStrategy {
       {
         text: 'Resumo Geral',
         style: 'resumoHeader',
-        margin: [0, 24, 0, 6],
+        margin: [0, 32, 0, 10],
       },
       {
         columns: [
@@ -198,7 +198,7 @@ export class PaymentReportStrategy implements IReportStrategy {
                   { text: convertCentsToReal(resumoTotalSaldo), style: 'resumoValue', alignment: 'right' },
                 ],
               ],
-              widths: [90, 90],
+              widths: [120, 120],
             },
             layout: 'noBorders',
           },
@@ -215,27 +215,27 @@ export class PaymentReportStrategy implements IReportStrategy {
           color: '#2d4154',
         },
         secretaria: {
-          fontSize: 11,
+          fontSize: 13,
           color: '#64748b',
         },
         dataEmissao: {
-          fontSize: 9,
+          fontSize: 11,
           color: '#64748b',
         },
         tituloRelatorio: {
-          fontSize: 16,
-          bold: true,
-          color: '#2563eb',
-          margin: [0, 8, 0, 0],
-        },
-        sectorHeader: {
           fontSize: 13,
           bold: true,
           color: '#2563eb',
-          margin: [0, 12, 0, 4],
+          margin: [0, 10, 0, 0],
+        },
+        sectorHeader: {
+          fontSize: 15,
+          bold: true,
+          color: '#2563eb',
+          margin: [0, 16, 0, 6],
         },
         tableHeader: {
-          fontSize: 11,
+          fontSize: 10,
           bold: true,
           color: '#2d4154',
           fillColor: '#e5e7eb',
@@ -245,33 +245,287 @@ export class PaymentReportStrategy implements IReportStrategy {
           color: '#22223b',
         },
         tableTotalLabel: {
-          fontSize: 11,
+          fontSize: 10,
           bold: true,
           color: '#2d4154',
         },
         tableTotalValue: {
-          fontSize: 11,
+          fontSize: 10,
           bold: true,
         },
         resumoHeader: {
-          fontSize: 13,
+          fontSize: 10,
           bold: true,
           color: '#2d4154',
         },
         resumoLabel: {
-          fontSize: 11,
+          fontSize: 10,
           bold: true,
         },
         resumoValue: {
-          fontSize: 12,
+          fontSize: 10,
           bold: true,
         },
       },
       defaultStyle: {
         // font: 'Roboto',
       },
-      pageMargins: [32, 32, 32, 32],
+      pageMargins: [40, 40, 40, 40],
       pageSize: 'A4',
+      pageOrientation: 'landscape',
+    };
+  }
+}
+
+// ----------------------------------------------------------------------------------//
+
+export class ExpenseReportStrategy implements IReportStrategy {
+  constructor(private readonly reportHelper: ReportHelper) {}
+
+  buildDocumentDefinition(data: any[], report: ReportEntity): TDocumentDefinitions {
+    // 1. Extrair secretarias únicas na ordem de aparição
+    const secretarias: string[] = [];
+    data.forEach((expense) => {
+      const secretariaName = expense.secretary?.name || ' - ';
+      if (!secretarias.includes(secretariaName)) {
+        secretarias.push(secretariaName);
+      }
+    });
+
+    // 2. Agrupar expenses por setor
+    const setoresMap = new Map<string, any[]>();
+    data.forEach((expense) => {
+      const setorName = expense.subsector?.sector?.name || 'Setor não informado';
+      if (!setoresMap.has(setorName)) {
+        setoresMap.set(setorName, []);
+      }
+      setoresMap.get(setorName)!.push(expense);
+    });
+
+    // 3. Cabeçalho institucional (igual ao de pagamentos, mas com fonte maior)
+    const header = [
+      {
+        columns: [
+          {
+            stack: [
+              { text: 'Prefeitura Municipal de Independência - CE', style: 'prefeitura' },
+              { text: 'Equipe de Gestão de Gastos', style: 'secretaria' },
+            ],
+            alignment: 'left',
+          },
+          {
+            text: `Emitido em: ${new Date().toLocaleDateString('pt-BR')}`,
+            alignment: 'right',
+            style: 'dataEmissao',
+          },
+        ],
+        columnGap: 10,
+        margin: [0, 0, 0, 8],
+      },
+      {
+        text: `Relatório de Despesas - ${getMonthName(report.month)} / ${report.year}`,
+        style: 'tituloRelatorio',
+        alignment: 'center',
+        margin: [0, 0, 0, 4],
+      },
+      {
+        canvas: [{ type: 'line', x1: 0, y1: 0, x2: 770, y2: 0, lineWidth: 1.2, lineColor: '#2d4154' }],
+        margin: [0, 0, 0, 10],
+      },
+    ];
+
+    const content: any[] = [...header];
+
+    // Para o bloco de soma total
+    let totalGeral = 0;
+    const totalPorSecretaria: Record<string, number> = {};
+    secretarias.forEach((sec) => (totalPorSecretaria[sec] = 0));
+
+    // 4. Para cada setor, montar o bloco/tabela
+    setoresMap.forEach((expenses, setorName) => {
+      // Mapear suppliers únicos desse setor
+      const suppliersMap = new Map<string, any[]>();
+      expenses.forEach((expense) => {
+        const supplierName = expense.supplier?.name || ' - ';
+        if (!suppliersMap.has(supplierName)) {
+          suppliersMap.set(supplierName, []);
+        }
+        suppliersMap.get(supplierName)!.push(expense);
+      });
+
+      if (suppliersMap.size === 0) return;
+
+      // Cabeçalho da tabela
+      const tableHeader = [
+        { text: 'Fornecedor', style: 'tableHeader', alignment: 'center' },
+        { text: 'Valor Total', style: 'tableHeader', alignment: 'center' },
+        ...secretarias.map((sec) => ({
+          text: sec,
+          style: 'tableHeader',
+          alignment: 'center',
+        })),
+      ];
+
+      const tableBody = [tableHeader];
+
+      // Linhas da tabela
+      suppliersMap.forEach((supplierExpenses, supplierName) => {
+        const totalAmount = supplierExpenses.reduce((sum, exp) => sum + (exp.amount ?? 0), 0);
+        totalGeral += totalAmount;
+
+        const secretariaCells = secretarias.map((secName) => {
+          const soma = supplierExpenses
+            .filter((exp) => (exp.secretary?.name || ' - ') === secName)
+            .reduce((sum, exp) => sum + (exp.amount ?? 0), 0);
+          totalPorSecretaria[secName] += soma;
+          return {
+            text: soma > 0 ? `R$ ${convertCentsToReal(soma)}` : ' - ',
+            style: 'tableContent',
+            alignment: 'right',
+          };
+        });
+
+        tableBody.push([
+          { text: supplierName, style: 'tableContent', alignment: 'left' },
+          { text: `R$ ${convertCentsToReal(totalAmount)}`, style: 'tableContent', alignment: 'right' },
+          ...secretariaCells,
+        ]);
+      });
+
+      // Adiciona bloco do setor ao conteúdo
+      content.push(
+        {
+          text: `Setor - ${setorName}`,
+          style: 'sectorHeader',
+          margin: [0, 10, 0, 3],
+        },
+        {
+          table: {
+            widths: [
+              100, // Fornecedor
+              70, // Valor Total
+              ...secretarias.map(() => 60), // Secretarias (width reduzido)
+            ],
+            body: tableBody,
+          },
+          layout: {
+            fillColor: (rowIndex: number) => {
+              if (rowIndex === 0) return '#e5e7eb'; // header
+              return rowIndex % 2 === 0 ? '#f9fafb' : null; // zebra
+            },
+            hLineWidth: (i: number, node: any) => (i === 0 || i === node.table.body.length ? 1.2 : 0.5),
+            vLineWidth: () => 0.5,
+            hLineColor: () => '#cbd5e1',
+            vLineColor: () => '#cbd5e1',
+          },
+          margin: [0, 0, 0, 0],
+        },
+      );
+    });
+
+    // 5. Bloco de soma total ao final
+    const totalTableHeader = [
+      { text: 'Total Geral', style: 'tableHeader', alignment: 'center' },
+      { text: 'Valor Total', style: 'tableHeader', alignment: 'center' },
+      ...secretarias.map((sec) => ({
+        text: sec,
+        style: 'tableHeader',
+        alignment: 'center',
+      })),
+    ];
+
+    const totalTableBody = [
+      totalTableHeader,
+      [
+        { text: '', style: 'tableContent' },
+        {
+          text: `R$ ${convertCentsToReal(totalGeral)}`,
+          style: 'tableContent',
+          alignment: 'right',
+          bold: true,
+        },
+        ...secretarias.map((sec) => ({
+          text: totalPorSecretaria[sec] > 0 ? `R$ ${convertCentsToReal(totalPorSecretaria[sec])}` : ' - ',
+          style: 'tableContent',
+          alignment: 'right',
+          bold: true,
+        })),
+      ],
+    ];
+
+    content.push(
+      {
+        text: 'Soma Total',
+        style: 'sectorHeader',
+        margin: [0, 16, 0, 3],
+      },
+      {
+        table: {
+          widths: [
+            100, // label
+            70, // Valor Total
+            ...secretarias.map(() => 60), // Secretarias
+          ],
+          body: totalTableBody,
+        },
+        layout: {
+          fillColor: (rowIndex: number) => {
+            if (rowIndex === 0) return '#e5e7eb'; // header
+            return '#f1f5f9'; // total
+          },
+          hLineWidth: (i: number, node: any) => (i === 0 || i === node.table.body.length ? 1.2 : 0.5),
+          vLineWidth: () => 0.5,
+          hLineColor: () => '#cbd5e1',
+          vLineColor: () => '#cbd5e1',
+        },
+        margin: [0, 0, 0, 0],
+      },
+    );
+
+    // 6. Retornar o documentDefinition
+    return {
+      content,
+      styles: {
+        prefeitura: {
+          fontSize: 12,
+          bold: true,
+          color: '#2d4154',
+        },
+        secretaria: {
+          fontSize: 10,
+          color: '#64748b',
+        },
+        dataEmissao: {
+          fontSize: 7,
+          color: '#64748b',
+        },
+        tituloRelatorio: {
+          fontSize: 12,
+          bold: true,
+          color: '#2563eb',
+          margin: [0, 3, 0, 0],
+        },
+        sectorHeader: {
+          fontSize: 12,
+          bold: true,
+          color: '#2563eb',
+          margin: [0, 5, 0, 2],
+        },
+        tableHeader: {
+          fontSize: 9,
+          bold: true,
+          color: '#2d4154',
+          fillColor: '#e5e7eb',
+        },
+        tableContent: {
+          fontSize: 9,
+          color: '#22223b',
+        },
+      },
+      defaultStyle: {},
+      pageMargins: [10, 10, 10, 10],
+      pageSize: 'A4',
+      pageOrientation: 'landscape',
     };
   }
 }

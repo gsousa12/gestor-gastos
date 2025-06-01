@@ -4,7 +4,7 @@ import { REPORT_REPOSITORY } from '@common/tokens/repositories.tokens';
 import { ReportHelper } from '../helpers/report.helper';
 import { ReportRepository } from '@modules/report/infrastructure/repository/report.repository';
 import { ReportEntity } from '../../domain/entities/report.entity';
-import { PaymentReportStrategy } from '../strategies/report.strategy';
+import { ExpenseReportStrategy, PaymentReportStrategy } from '../strategies/report.strategy';
 import { IReportStrategy } from '../interfaces/report-strategy.interface';
 import { getMonthName } from '@common/utils/conversion';
 
@@ -22,7 +22,7 @@ export class ReportService implements IReportService {
       throw new BadRequestException('Nenhum dado encontrado para o relatório solicitado.');
     }
 
-    console.log('Dados obtidos para o relatório:', data);
+    // console.dir(data, { depth: null, colors: true });
 
     const strategy = this.resolveStrategy(report.reportType);
 
@@ -35,6 +35,8 @@ export class ReportService implements IReportService {
     switch (type) {
       case 'payment':
         return new PaymentReportStrategy(this.reportHelper);
+      case 'expense':
+        return new ExpenseReportStrategy(this.reportHelper);
       default:
         throw new BadRequestException(`Tipo de relatório não suportado: ${type}`);
     }

@@ -10,6 +10,7 @@ export class SupplierMapper {
     supplier.taxId = request.taxId;
     supplier.contactEmail = request.contactEmail;
     supplier.contactPhone = request.contactPhone;
+    supplier.recurringDebit = request.recurringDebit;
     return supplier;
   }
 

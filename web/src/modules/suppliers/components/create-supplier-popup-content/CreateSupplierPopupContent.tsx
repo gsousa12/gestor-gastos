@@ -1,7 +1,15 @@
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { User, Building2, IdCard, Mail, Phone, Plus } from "lucide-react";
+import {
+  User,
+  Building2,
+  IdCard,
+  Mail,
+  Phone,
+  Plus,
+  DollarSign,
+} from "lucide-react";
 import { useState } from "react";
 import { Input } from "@/common/components/ui/input";
 import { Button } from "@/common/components/ui/button";
@@ -43,6 +51,10 @@ const schema = z.object({
     .optional()
     .or(z.literal("")),
   contactPhone: z.string().optional().or(z.literal("")),
+  recurringDebit: z.string().refine((val) => {
+    const num = Number(val.replace(/\D/g, ""));
+    return num >= 0;
+  }, "O valor deve ser maior que zero"),
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -90,6 +102,7 @@ export const CreateSupplierPopupContent = ({
       taxId: "",
       contactEmail: "",
       contactPhone: "",
+      recurringDebit: "",
     },
   });
 
@@ -99,14 +112,6 @@ export const CreateSupplierPopupContent = ({
     setTaxIdValue(formatted);
     setValue("taxId", formatted, { shouldValidate: true });
   };
-
-  // useEffect(() => {
-  //   if (createSupplierIsSuccess) {
-  //     reset();
-  //     setTaxIdValue("");
-  //     refreshSupplierList();
-  //   }
-  // }, [createSupplierIsSuccess, createSupplierMutate]);
 
   const onSubmit = async (data: FormValues) => {
     try {
@@ -118,6 +123,10 @@ export const CreateSupplierPopupContent = ({
         contactPhone: data.contactPhone
           ? data.contactPhone.replace(/\D/g, "")
           : null,
+        recurringDebit:
+          Number(data.recurringDebit.replace(/\D/g, "")) < 100
+            ? 0
+            : Number(data.recurringDebit.replace(/\D/g, "")),
       });
       reset();
       setTaxIdValue("");
@@ -154,6 +163,35 @@ export const CreateSupplierPopupContent = ({
         />
         {errors.name && (
           <span className="text-red-500 text-xs">{errors.name.message}</span>
+        )}
+      </div>
+
+      <div>
+        <label className="flex items-center gap-2 text-sky-700 font-medium mb-1">
+          <DollarSign className="w-4 h-4" />
+          Débito Recorrente
+        </label>
+        <Input
+          type="text"
+          inputMode="numeric"
+          {...register("recurringDebit", {
+            onChange: (e) => {
+              let value = e.target.value.replace(/\D/g, "");
+              value = (Number(value) / 100).toLocaleString("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              });
+              e.target.value = value;
+              setValue("recurringDebit", value, { shouldValidate: true });
+            },
+          })}
+          placeholder="Caso o fornecedor já tenho débito em aberto (opcional)"
+          className="border-sky-300 focus:border-sky-500"
+        />
+        {errors.recurringDebit && (
+          <span className="text-red-500 text-xs">
+            {errors.recurringDebit?.message}
+          </span>
         )}
       </div>
 

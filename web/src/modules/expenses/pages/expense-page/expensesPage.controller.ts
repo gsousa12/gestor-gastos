@@ -27,7 +27,7 @@ export const useExpensesController = () => {
   );
   const [filters, setFilters] = useState<ExpenseFilterValues>({
     supplierName: "",
-    month: getCurrentMonth(),
+    month: "",
     year: getCurrentYear(),
   });
 
@@ -51,7 +51,7 @@ export const useExpensesController = () => {
   const clearFilters = () => {
     setFilters({
       supplierName: "",
-      month: getCurrentMonth(),
+      month: "",
       year: getCurrentYear(),
     });
     setPage(1);

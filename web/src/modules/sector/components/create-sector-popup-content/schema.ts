@@ -15,7 +15,7 @@ export const createSectorSchema = z.object({
   name: z
     .string({ required_error: "Nome é obrigatório." })
     .min(3, { message: createSectorValidationMessages.nameLength })
-    .max(20, { message: createSectorValidationMessages.nameLength }),
+    .max(40, { message: createSectorValidationMessages.nameLength }),
   description: z
     .string()
     .min(3, { message: createSectorValidationMessages.descriptionLength })

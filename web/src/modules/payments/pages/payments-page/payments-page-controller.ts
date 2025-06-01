@@ -22,7 +22,7 @@ export const usePaymentsPageController = () => {
 
   const [filters, setFilters] = useState<PaymentsFilterValues>({
     supplierName: "",
-    month: getCurrentMonth(),
+    month: "",
     year: getCurrentYear(),
   });
   const [page, setPage] = useState(1);
@@ -43,7 +43,7 @@ export const usePaymentsPageController = () => {
   const clearFilters = () => {
     setFilters({
       supplierName: "",
-      month: getCurrentMonth(),
+      month: "",
       year: getCurrentYear(),
     });
     setPage(1);

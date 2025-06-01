@@ -2,6 +2,7 @@ import { PrismaService } from '@common/modules/prisma/service/prisma.service';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { IReportRepository } from '../interfaces/report-repository.interface';
 import { PaymentStatus } from '@modules/payment/core/domain/enums/payment.enum';
+import { ExpenseStatus } from '@modules/expense/core/domain/enums/expense.enum';
 
 @Injectable()
 export class ReportRepository implements IReportRepository {

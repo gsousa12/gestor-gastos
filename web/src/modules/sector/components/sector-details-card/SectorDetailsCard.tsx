@@ -26,20 +26,25 @@ export const SectorDetailsCard = ({
       border-gray-200 shadow-sm shadow-gray-300 rounded-md group min-h-[120px] flex flex-col gap-3 w-full"
     >
       <CardHeader className="pb-2 flex flex-row items-center justify-between px-0">
-        <CardTitle className="text-sky-600 text-base flex items-center gap-2">
-          <Layers2 className="w-4 h-4 text-sky-400" />
-          <span className="truncate">{sector.name}</span>
+        <CardTitle className="text-sky-600 text-base flex items-center gap-2 min-w-0">
+          <Layers2 className="w-4 h-4 text-sky-400 flex-shrink-0" />
+          <span
+            className="truncate max-w-[120px] sm:max-w-[180px] md:max-w-[240px] min-w-0 text-[12px]"
+            title={sector.name}
+          >
+            {sector.name}
+          </span>
         </CardTitle>
         <button
           onClick={handleOpenSubSectorList}
-          className="p-1 rounded hover:bg-sky-50 transition-colors"
+          className="p-1 rounded hover:bg-sky-50 transition-colors flex-shrink-0"
           aria-label="Ver detalhes"
         >
           <div className="flex flex-row gap-1 hover:cursor-pointer">
-            <Plus className="w-5 h-5 text-sky-500 " />
-            <span className="text-[11px] text-sky-500 self-center">
+            <Plus className="w-5 h-5 text-sky-500" />
+            {/* <span className="text-[11px] text-sky-500 self-center whitespace-nowrap">
               Sub-setores
-            </span>
+            </span> */}
           </div>
         </button>
       </CardHeader>
