@@ -88,6 +88,7 @@ export const CreateExpensePopupContent = ({
         subsectorId: data.subsectorId,
       });
       setValue("description", "");
+      setValue("amount", "");
       showToast({
         title: "Despesa criada com sucesso!",
         description: "Sua despesa foi cadastrada.",

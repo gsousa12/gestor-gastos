@@ -21,7 +21,7 @@ export const SecretaryPage = () => {
   return (
     <ContentWrapper>
       <div className="flex flex-row justify-between items-center mb-4">
-        <ContentTitle label="Secreatrias" />
+        <ContentTitle label="Secretarias" />
         <div className="flex flex-row gap-1 items-center">
           <CreateButton
             label="Cadastrar Secretaria"

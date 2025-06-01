@@ -65,6 +65,7 @@ export interface CreateSupplierRequest {
   taxId: string | null;
   contactEmail: string | null;
   contactPhone: string | null;
+  recurringDebit: number;
 }
 
 export interface SoftDeleteSupplierByIdRequest {
