@@ -11,22 +11,13 @@ export class SectorRepository implements ISectorRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async createSector(sector: SectorEntity): Promise<Sector> {
-    const createdSector = await this.prisma.sector.create({
+    return await this.prisma.sector.create({
       data: {
         name: sector.name,
         description: sector.description,
         createdAt: new Date(),
       },
     });
-
-    await this.prisma.subSector.create({
-      data: {
-        name: `${sector.name} - Geral`,
-        sectorId: createdSector.id,
-      },
-    });
-
-    return createdSector;
   }
 
   async getSectorByName(name: string): Promise<Sector | null> {

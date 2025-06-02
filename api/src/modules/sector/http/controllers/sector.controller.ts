@@ -1,20 +1,8 @@
-import { config } from '@common/configuration/config';
 import { createApiResponse } from '@common/utils/api-response';
 import { CreateSectorRequestDto } from '@modules/sector/core/application/dto/request/create-sector.request.dto';
 import { SectorMapper } from '@modules/sector/core/application/mappers/sector.mapper';
 import { SectorService } from '@modules/sector/core/application/services/sector.service';
-import {
-  Body,
-  Controller,
-  Get,
-  HttpCode,
-  HttpStatus,
-  Param,
-  Post,
-  Query,
-  Request,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Query, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
 @Controller('sector')
