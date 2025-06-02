@@ -1,9 +1,5 @@
 import { useState } from "react";
-import {
-  getCurrentMonth,
-  getCurrentYear,
-  getErrorMessage,
-} from "@common/utils/functions";
+import { getCurrentYear, getErrorMessage } from "@common/utils/functions";
 import { getExpenseListQuery } from "@common/api/queries/expenses/getExpenseListQuery";
 import { deleteExpenseByIdMutation } from "@common/api/mutations/expense/deleteExpenseByIdMutation";
 import { showToast } from "@components/toast/Toast";

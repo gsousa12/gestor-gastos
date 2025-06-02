@@ -1,13 +1,10 @@
 import { FileChartColumn } from "lucide-react";
-import { useCreateReport } from "../../api/mutations/report/createReportMutation";
 import { useMobileDetect } from "../../hooks/useMobileDetect";
-import { useEffect, useState } from "react";
-import { showToast } from "../toast/Toast";
-import { getErrorMessageFromAxiosBlob } from "@/common/utils/functions";
 import {
   ConfirmReportGenerationPopup,
   reportTypes,
 } from "../popups/confirm-report-generation-popup/ConfirmReportGenerationPopup";
+import { useState } from "react";
 
 export interface GenerateReportButtonProps {
   disabled: boolean;

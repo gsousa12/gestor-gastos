@@ -1,9 +1,5 @@
 import { useState } from "react";
-import {
-  getCurrentMonth,
-  getCurrentYear,
-  getErrorMessage,
-} from "@common/utils/functions";
+import { getCurrentYear, getErrorMessage } from "@common/utils/functions";
 import { getPaymentListQuery } from "@common/api/queries/payments/getPaymentListQuery";
 import { showToast } from "@/common/components/toast/Toast";
 import { cancelPaymentByIdMutation } from "@/common/api/mutations/payment/cancelPaymentByIdMutation";
