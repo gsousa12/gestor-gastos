@@ -22,7 +22,7 @@ export const SectorDetailPopup = ({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent aria-describedby={undefined}>
         <div className="flex items-center justify-between w-full">
-          <DialogTitle>Cadastrar Despesa</DialogTitle>
+          <DialogTitle>Cadastrar Sub-Setor</DialogTitle>
           <DialogClose asChild>
             <button
               className="text-gray-400 hover:text-gray-600 transition-colors"
