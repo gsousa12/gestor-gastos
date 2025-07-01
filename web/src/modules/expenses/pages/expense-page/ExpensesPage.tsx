@@ -51,7 +51,7 @@ export const ExpensesPage = () => {
             onApply={applyFilters}
             onClear={clearFilters}
           />
-          <GenerateReportButton
+          {/* <GenerateReportButton
             disabled={!isAuthorizedUserToGenerateReport}
             type="expense"
             month={
@@ -60,7 +60,7 @@ export const ExpensesPage = () => {
                 : getCurrentMonth()
             }
             year={filters.year !== "" ? filters.year : getCurrentYear()}
-          />
+          /> */}
           <RefreshButton onClick={refetchExpenseList} />
         </div>
       </div>

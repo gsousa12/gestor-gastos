@@ -9,6 +9,7 @@ import {
   Truck,
   Layers2,
   Building,
+  FileChartColumn,
 } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import { useMobileDetect } from "../../hooks/useMobileDetect";
@@ -108,6 +109,17 @@ export const Sidebar = () => {
             routerLink={"/secretariats"}
             isMobile={isMobile}
             active={location.pathname === "/secretariats"}
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          {!isMobile && <SideBarGroupTitle label="Outros" />}
+          <SidebarItem
+            key={"Reports"}
+            icon={<FileChartColumn />}
+            label={"Relatórios"}
+            routerLink={"/reports"}
+            isMobile={isMobile}
+            active={location.pathname === "/reports"}
           />
         </div>
       </div>

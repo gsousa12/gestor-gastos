@@ -42,7 +42,7 @@ export const PaymentsPage = () => {
             onApply={applyFilters}
             onClear={clearFilters}
           />
-          <GenerateReportButton
+          {/* <GenerateReportButton
             disabled={!isAuthorizedUser}
             type="payment"
             month={
@@ -51,7 +51,7 @@ export const PaymentsPage = () => {
                 : getCurrentMonth()
             }
             year={filters.year !== "" ? filters.year : getCurrentYear()}
-          />
+          /> */}
           <RefreshButton onClick={refreshPaymentsList} />
         </div>
       </div>

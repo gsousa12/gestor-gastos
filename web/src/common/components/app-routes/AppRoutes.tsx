@@ -9,6 +9,7 @@ import { SuppliersPage } from "@/modules/suppliers/pages/supplies-page/Suppliers
 import { SupplierDetailsPage } from "@/modules/suppliers/pages/supplier-details-page/SupplierDetailsPage";
 import { SectorPage } from "@/modules/sector/pages/sector-page/SectorPage";
 import { SecretaryPage } from "@/modules/secretary/pages/secretary-page/SecretaryPage";
+import { ReportPage } from "@/modules/report/pages/report-page/ReportPage";
 
 export const AppRoutes = () => {
   return (
@@ -25,6 +26,7 @@ export const AppRoutes = () => {
           <Route path="/suppliers/details" element={<SupplierDetailsPage />} />
           <Route path="/sectors" element={<SectorPage />} />
           <Route path="/secretariats" element={<SecretaryPage />} />
+          <Route path="/reports" element={<ReportPage />} />
         </Route>
       </Routes>
     </main>
