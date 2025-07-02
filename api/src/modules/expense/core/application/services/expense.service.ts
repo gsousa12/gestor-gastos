@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { IExpenseService } from '../interfaces/expense-service.interface';
 import { EXPENSE_REPOSITORY } from '@common/tokens/repositories.tokens';
 import { ExpenseRepository } from '@modules/expense/infrastructure/repository/expense.repository';
@@ -19,7 +19,8 @@ export class ExpenseService implements IExpenseService {
     if (!verifyExistence) {
       throw new NotFoundException(message);
     }
-    const createdExpense = await this.expenseRepository.createExpense(expense);
+
+    const createdExpense = await this.expenseRepository.createExpenseWithItems(expense);
     return createdExpense;
   }
 

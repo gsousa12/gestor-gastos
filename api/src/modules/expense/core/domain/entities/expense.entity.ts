@@ -1,3 +1,11 @@
+export class ExpenseItemEntity {
+  id?: number;
+  name: string;
+  description?: string | null;
+  quantity: number;
+  unitValue: number;
+}
+
 export class ExpenseEntity {
   id: number;
   description: string | null;
@@ -11,4 +19,6 @@ export class ExpenseEntity {
   subsectorId: number;
   createdAt: Date;
   supplierName: string | null;
+
+  items: ExpenseItemEntity[];
 }
