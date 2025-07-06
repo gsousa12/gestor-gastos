@@ -9,6 +9,7 @@ export const getCreateExpenseFormDataEmpty = {
   supplierList: [],
   secretaryList: [],
   subSectorList: [],
+  itemList: [],
 };
 
 export type ExpenseFilterValues = {

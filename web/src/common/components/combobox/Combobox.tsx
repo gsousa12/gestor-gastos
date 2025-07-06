@@ -15,6 +15,8 @@ interface ComboBoxProps {
   onChange: (id: number) => void;
   placeholder?: string;
   icon?: React.ReactNode;
+  allowCustomInput?: boolean;
+  onCustomInput?: (value: string) => void;
 }
 
 export const ComboBox = ({
@@ -24,9 +26,20 @@ export const ComboBox = ({
   onChange,
   placeholder,
   icon,
+  allowCustomInput = false,
+  onCustomInput,
 }: ComboBoxProps) => {
+  // Estado para o texto do input (usado só se allowCustomInput for true)
   const [query, setQuery] = React.useState("");
 
+  // Atualiza o query se o valor mudar externamente (ex: reset do form)
+  React.useEffect(() => {
+    if (!allowCustomInput) return;
+    const selected = options.find((opt) => opt.id === value);
+    setQuery(selected?.name || "");
+  }, [value, options, allowCustomInput]);
+
+  // Filtra as opções pelo texto digitado
   const filteredOptions =
     query === ""
       ? options
@@ -34,20 +47,52 @@ export const ComboBox = ({
           opt.name.toLowerCase().includes(query.toLowerCase())
         );
 
+  // Handler para seleção de opção
+  const handleSelect = (id: number) => {
+    onChange(id);
+    if (allowCustomInput) {
+      const selected = options.find((opt) => opt.id === id);
+      setQuery(selected?.name || "");
+      if (onCustomInput) onCustomInput(selected?.name || "");
+    }
+  };
+
+  // Handler para digitação livre
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    if (allowCustomInput) {
+      setQuery(val);
+      if (onCustomInput) onCustomInput(val);
+    }
+  };
+
   return (
     <div className="w-full">
       <label className="flex items-center text-sm font-semibold text-sky-700 mb-1 gap-1">
         {icon}
         {label}
       </label>
-      <Combobox value={value} onChange={onChange}>
+      <Combobox
+        value={value}
+        onChange={handleSelect}
+        // Se for custom input, não feche ao selecionar (para permitir digitação livre)
+        // Caso contrário, feche normalmente
+        nullable
+      >
         <div className="relative">
           <ComboboxInput
             className="w-full px-4 py-2 border border-sky-100 rounded-lg text-sm bg-sky-50 focus:ring-2 focus:ring-sky-300 outline-none transition"
             displayValue={(id: number) =>
-              options.find((opt) => opt.id === id)?.name || ""
+              allowCustomInput
+                ? query
+                : options.find((opt) => opt.id === id)?.name || ""
             }
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={
+              allowCustomInput
+                ? handleInputChange
+                : (e) => setQuery(e.target.value)
+            }
+            value={allowCustomInput ? query : undefined}
             placeholder={placeholder || "Selecione"}
             autoComplete="off"
           />

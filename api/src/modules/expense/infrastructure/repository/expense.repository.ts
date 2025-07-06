@@ -148,6 +148,7 @@ export class ExpenseRepository implements IExpenseRepository {
     supplierList: { id: number; name: string }[];
     subSectorList: { id: number; name: string }[];
     secretaryList: { id: number; name: string }[];
+    itemList: { id: number; name: string; description: string | null }[];
   }> {
     const supplierList = await this.prisma.supplier.findMany({
       select: { id: true, name: true },
@@ -163,10 +164,15 @@ export class ExpenseRepository implements IExpenseRepository {
       select: { id: true, name: true },
       orderBy: { name: 'asc' },
     });
+    const itemList = await this.prisma.item.findMany({
+      select: { id: true, name: true, description: true },
+      orderBy: { name: 'asc' },
+    });
     return {
       supplierList,
       subSectorList,
       secretaryList,
+      itemList,
     };
   }
 
