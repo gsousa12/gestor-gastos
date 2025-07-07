@@ -30,8 +30,11 @@ export const CreateExpensePopupContent = ({
   onRefetchExpenseList,
 }: CreateExpensePopupContentProps) => {
   const userId = useAuthStore((state) => state.user?.userId);
-  const { createExpenseFormData, isPending } =
-    useCreateExpensePopupContentController();
+  const {
+    createExpenseFormData,
+    isPending,
+    refetchCreateExpenseFormDataQuery,
+  } = useCreateExpensePopupContentController();
   const { mutateAsync: createExpenseMutate } = createExpenseMutation();
 
   const methods = useForm<CreateExpenseFormValues>({
@@ -74,8 +77,6 @@ export const CreateExpensePopupContent = ({
     return <>{/* FIXME: Criar componente de error */}</>;
   }
 
-  console.log("isValid", isValid, errors, watch());
-
   const onSubmit = async (data: CreateExpenseFormValues) => {
     try {
       await createExpenseMutate({
@@ -101,6 +102,7 @@ export const CreateExpensePopupContent = ({
         description: "Sua despesa foi cadastrada.",
         type: "success",
       });
+      refetchCreateExpenseFormDataQuery();
       onRefetchExpenseList();
     } catch (error) {
       showToast({
