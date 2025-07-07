@@ -1,5 +1,3 @@
-// src/components/expense/CreateExpensePopupContent.tsx
-
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@components/ui/tabs"; // shadcn/ui
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -95,7 +93,7 @@ export const CreateExpensePopupContent = ({
         })),
       });
       // Limpa o formulário após sucesso
-      setValue("description", "");
+      //setValue("description", "");
       setValue("items", []);
       showToast({
         title: "Despesa criada com sucesso!",
@@ -251,7 +249,7 @@ export const CreateExpensePopupContent = ({
             {/* Tab 2: Valores */}
             <TabsContent
               value="valores"
-              className="max-h-[600px] overflow-y-auto"
+              className="max-h-[600px] min-h-[398px] overflow-y-auto"
             >
               <ItemFieldsArray
                 itemList={createExpenseFormData?.itemList ?? []}

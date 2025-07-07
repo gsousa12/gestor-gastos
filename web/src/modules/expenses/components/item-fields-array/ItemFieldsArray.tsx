@@ -3,7 +3,7 @@ import { Plus, Trash2 } from "lucide-react";
 import { cn } from "@common/lib/utils";
 import React from "react";
 import { ExpenseItemFormValues } from "../../schemas/create-expense-schema";
-import { ComboBox } from "@/common/components/combobox/Combobox";
+import { ItemNameComboBox } from "../item-list-combobox/ItemListComboBox";
 
 const parseCurrencyToCents = (value: string) => {
   if (!value) return 0;
@@ -58,30 +58,13 @@ export const ItemFieldsArray = ({ itemList }: ItemFieldsArrayProps) => {
     setValue(`items.${idx}.unitValue`, value, { shouldValidate: true });
   };
 
-  // Permite digitação livre: se não encontrar o nome, id = null
-  const handleNameChange = (idx: number, value: string | number) => {
-    // Se veio do ComboBox, value é id (number)
-    if (typeof value === "number") {
-      const selected = itemList.find((opt) => opt.id === value);
-      setValue(`items.${idx}.name`, selected?.name || "", {
-        shouldValidate: true,
-      });
-      setValue(`items.${idx}.id`, selected?.id ?? null, {
-        shouldValidate: true,
-      });
-    } else {
-      // Se veio de digitação livre, value é string
-      setValue(`items.${idx}.name`, value, { shouldValidate: true });
-      setValue(`items.${idx}.id`, null, { shouldValidate: true });
-    }
-  };
-
   return (
     <div>
+      {/* Container da lista de itens */}
       <div
         className={cn(
           "flex flex-col gap-1 pr-1 border rounded border-sky-100 bg-white",
-          "max-h-80 min-h-75 overflow-y-auto" // <-- scroll vertical só na lista de itens
+          "min-h-[150px] max-h-[300px] overflow-y-auto"
         )}
         style={{ minHeight: 0 }}
       >
@@ -104,28 +87,19 @@ export const ItemFieldsArray = ({ itemList }: ItemFieldsArrayProps) => {
           >
             {/* Nome do item */}
             <div className="col-span-5 flex flex-col">
-              <ComboBox
-                label=""
+              <ItemNameComboBox
                 options={itemList}
-                value={
-                  itemList.find((opt) => opt.name === items[idx]?.name)?.id ??
-                  undefined
-                }
-                onChange={(id) => {
-                  const selected = itemList.find((opt) => opt.id === id);
-                  setValue(`items.${idx}.name`, selected?.name || "", {
+                value={{
+                  id: items[idx]?.id ?? null,
+                  name: items[idx]?.name ?? "",
+                }}
+                onChange={(val: any) => {
+                  setValue(`items.${idx}.name`, val.name, {
                     shouldValidate: true,
                   });
-                  setValue(`items.${idx}.id`, selected?.id ?? null, {
-                    shouldValidate: true,
-                  });
+                  setValue(`items.${idx}.id`, val.id, { shouldValidate: true });
                 }}
-                allowCustomInput={true}
-                onCustomInput={(val) => {
-                  setValue(`items.${idx}.name`, val, { shouldValidate: true });
-                  setValue(`items.${idx}.id`, null, { shouldValidate: true });
-                }}
-                placeholder="Selecione ou digite o item"
+                placeholder="Nome do item"
               />
               <div className="text-xs text-red-500 min-h-[18px]">
                 {getItemError("name", idx)}
@@ -177,7 +151,7 @@ export const ItemFieldsArray = ({ itemList }: ItemFieldsArrayProps) => {
           </div>
         ))}
       </div>
-      {/* Botão de adicionar item fora do scroll */}
+      {/* Botão de adicionar item */}
       <button
         type="button"
         className="flex items-center gap-1 text-sky-600 hover:text-sky-800 mt-2 font-semibold hover:cursor-pointer"
