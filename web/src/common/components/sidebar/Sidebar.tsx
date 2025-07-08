@@ -71,7 +71,8 @@ export const Sidebar = () => {
             isMobile={isMobile}
             active={
               location.pathname === "/expenses" ||
-              location.pathname === "/expenses/details"
+              location.pathname === "/expenses/details" ||
+              location.pathname === "/expenses/create"
             }
           />
           <SidebarItem

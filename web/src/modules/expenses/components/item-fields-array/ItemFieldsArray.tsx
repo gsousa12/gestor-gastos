@@ -1,10 +1,11 @@
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { Plus, Trash2 } from "lucide-react";
-import { cn } from "@common/lib/utils";
+import { cn } from "@/common/lib/utils";
 import React from "react";
 import { ExpenseItemFormValues } from "../../schemas/create-expense-schema";
 import { ItemNameComboBox } from "../item-list-combobox/ItemListComboBox";
 
+/* --- helpers ------------------------------------------------------------ */
 const parseCurrencyToCents = (value: string) => {
   if (!value) return 0;
   return Number(value.replace(/\D/g, ""));
@@ -14,19 +15,24 @@ interface ItemFieldsArrayProps {
   itemList: { id: number; name: string }[];
 }
 
+/* ----------------------------------------------------------------------- */
 export const ItemFieldsArray = ({ itemList }: ItemFieldsArrayProps) => {
+  /* react-hook-form */
   const {
     control,
     register,
     setValue,
     formState: { errors },
     watch,
+    trigger,
   } = useFormContext();
+
   const { fields, append, remove } = useFieldArray({
     control,
     name: "items",
   });
 
+  /* erros por campo ------------------------------------------------------ */
   const getItemError = (
     field: "name" | "quantity" | "unitValue",
     idx: number
@@ -37,8 +43,9 @@ export const ItemFieldsArray = ({ itemList }: ItemFieldsArrayProps) => {
     return " ";
   };
 
+  /* total --------------------------------------------------------------- */
   const items: ExpenseItemFormValues[] = watch("items") || [];
-  const total = items.reduce(
+  const totalCents = items.reduce(
     (sum, item) =>
       sum +
       (parseCurrencyToCents(item.unitValue as any) || 0) *
@@ -46,6 +53,7 @@ export const ItemFieldsArray = ({ itemList }: ItemFieldsArrayProps) => {
     0
   );
 
+  /* máscara de valor unitário ------------------------------------------- */
   const handleUnitValueChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     idx: number
@@ -58,17 +66,17 @@ export const ItemFieldsArray = ({ itemList }: ItemFieldsArrayProps) => {
     setValue(`items.${idx}.unitValue`, value, { shouldValidate: true });
   };
 
+  /* render -------------------------------------------------------------- */
   return (
-    <div>
-      {/* Container da lista de itens */}
+    <div className="flex flex-col gap-3">
+      {/* -------------------- LISTAGEM DE ITENS -------------------- */}
       <div
         className={cn(
-          "flex flex-col gap-1 pr-1 border rounded border-sky-100 bg-white",
-          "min-h-[150px] max-h-[300px] overflow-y-auto"
+          "flex flex-col gap-1 pr-1 border rounded border-sky-100 bg-white"
         )}
-        style={{ minHeight: 0 }}
       >
-        <div className="grid grid-cols-12 gap-2 px-1 bg-white sticky top-0 z-10 ml-2 mt-3">
+        {/* Cabeçalho */}
+        <div className="grid grid-cols-12 gap-2 px-1 bg-white sticky top-0 z-10 mt-3 ml-2">
           <div className="col-span-5 text-xs font-semibold text-sky-700 mb-1">
             Nome do item
           </div>
@@ -80,6 +88,8 @@ export const ItemFieldsArray = ({ itemList }: ItemFieldsArrayProps) => {
           </div>
           <div className="col-span-1" />
         </div>
+
+        {/* Linhas */}
         {fields.map((field, idx) => (
           <div
             key={field.id}
@@ -98,13 +108,15 @@ export const ItemFieldsArray = ({ itemList }: ItemFieldsArrayProps) => {
                     shouldValidate: true,
                   });
                   setValue(`items.${idx}.id`, val.id, { shouldValidate: true });
+                  trigger("items"); // <-- força re-validação
                 }}
                 placeholder="Nome do item"
               />
-              <div className="text-xs text-red-500 min-h-[18px]">
+              <span className="text-xs text-red-500 min-h-[18px]">
                 {getItemError("name", idx)}
-              </div>
+              </span>
             </div>
+
             {/* Quantidade */}
             <div className="col-span-3 flex flex-col">
               <input
@@ -114,10 +126,11 @@ export const ItemFieldsArray = ({ itemList }: ItemFieldsArrayProps) => {
                 className="w-full px-3 py-2 border border-sky-300 rounded-lg text-sm focus:ring-2 focus:ring-sky-300 outline-none bg-sky-50 transition"
                 placeholder="Qtd"
               />
-              <div className="text-xs text-red-500 min-h-[18px]">
+              <span className="text-xs text-red-500 min-h-[18px]">
                 {getItemError("quantity", idx)}
-              </div>
+              </span>
             </div>
+
             {/* Valor unitário */}
             <div className="col-span-3 flex flex-col">
               <input
@@ -130,10 +143,11 @@ export const ItemFieldsArray = ({ itemList }: ItemFieldsArrayProps) => {
                 placeholder="R$ 0,00"
                 value={items[idx]?.unitValue || ""}
               />
-              <div className="text-xs text-red-500 min-h-[18px]">
+              <span className="text-xs text-red-500 min-h-[18px]">
                 {getItemError("unitValue", idx)}
-              </div>
+              </span>
             </div>
+
             {/* Remover */}
             <div className="col-span-1 flex items-start justify-center h-full">
               <button
@@ -146,30 +160,38 @@ export const ItemFieldsArray = ({ itemList }: ItemFieldsArrayProps) => {
                 <Trash2 size={18} />
               </button>
             </div>
+
             {/* Campo oculto para id */}
             <input type="hidden" {...register(`items.${idx}.id`)} />
           </div>
         ))}
       </div>
-      {/* Botão de adicionar item */}
+
+      {/* -------------------- ADICIONAR ITEM -------------------- */}
       <button
         type="button"
-        className="flex items-center gap-1 text-sky-600 hover:text-sky-800 mt-2 font-semibold hover:cursor-pointer"
+        className="flex items-center gap-1 text-sky-600 hover:text-sky-800 mt-1 font-semibold hover:cursor-pointer"
         onClick={() =>
           append({ id: null, name: "", quantity: 1, unitValue: "" })
         }
       >
         <Plus size={18} /> Adicionar item
       </button>
-      {/* Valor total */}
-      <div className="mt-4 text-right font-bold text-sky-700">
-        Valor total: R${" "}
-        {(total / 100).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+
+      {/* -------------------- TOTAL -------------------- */}
+      <div className="flex justify-end">
+        <span className="inline-flex items-center rounded-md bg-sky-50 px-4 py-2 text-sky-700 font-bold shadow-sm">
+          Valor total:&nbsp;
+          {(totalCents / 100).toLocaleString("pt-BR", {
+            minimumFractionDigits: 2,
+          })}
+        </span>
       </div>
-      {/* Erro geral de items */}
-      <div className="text-xs text-red-500 min-h-[18px]">
+
+      {/* erro geral de items */}
+      <span className="text-xs text-red-500 min-h-[18px]">
         {typeof errors.items?.message === "string" ? errors.items?.message : ""}
-      </div>
+      </span>
     </div>
   );
 };

@@ -57,18 +57,16 @@ export const createExpenseSchema = z.object({
     invalid_type_error: "Selecione um subsetor válido.",
   }),
   items: z
-    .array(expenseItemSchema, {
-      required_error: "Adicione pelo menos um item.",
-    })
-    .min(1, { message: "Adicione pelo menos um item." })
-    .refine(
-      (items) => {
-        // Impede itens duplicados pelo nome (case-insensitive)
-        const names = items.map((i) => i.name.trim().toLowerCase());
-        return new Set(names).size === names.length;
-      },
-      { message: "Não é permitido itens duplicados pelo nome." }
-    ),
+    .array(expenseItemSchema)
+    .min(1, "Informe ao menos um item")
+    .refine((items) => {
+      // mantém só os nomes preenchidos (trim) e em lower-case
+      const filledNames = items
+        .filter((i) => i.name && i.name.trim() !== "")
+        .map((i) => i.name.trim().toLowerCase());
+
+      return new Set(filledNames).size === filledNames.length;
+    }, "Não é permitido itens duplicados pelo nome"),
 });
 
 export type CreateExpenseFormValues = z.infer<typeof createExpenseSchema>;
