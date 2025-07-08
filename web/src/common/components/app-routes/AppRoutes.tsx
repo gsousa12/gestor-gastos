@@ -9,6 +9,7 @@ import { SuppliersPage } from "@/modules/suppliers/pages/supplies-page/Suppliers
 import { SupplierDetailsPage } from "@/modules/suppliers/pages/supplier-details-page/SupplierDetailsPage";
 import { SectorPage } from "@/modules/sector/pages/sector-page/SectorPage";
 import { SecretaryPage } from "@/modules/secretary/pages/secretary-page/SecretaryPage";
+import { ExpenseDetailsPage } from "@/modules/expenses/pages/expense-details-page/ExpenseDetailsPage";
 
 export const AppRoutes = () => {
   return (
@@ -19,6 +20,7 @@ export const AppRoutes = () => {
           <Route path="/" element={<DashboardPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/expenses" element={<ExpensesPage />} />
+          <Route path="/expenses/details" element={<ExpenseDetailsPage />} />
           <Route path="/login" element={<LoginRoute />} />
           <Route path="/payments" element={<PaymentsPage />} />
           <Route path="/suppliers" element={<SuppliersPage />} />

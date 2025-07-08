@@ -12,6 +12,7 @@ import {
   CircleCheck,
   Clock,
   DollarSign,
+  Eye,
   Info,
   Layers,
   Trash2,
@@ -28,6 +29,7 @@ import { Expense } from "@common/api/interfaces/expense/expense-api-interfaces";
 import { StatusBadge } from "@/common/components/badges/status-badge/StatusBadge";
 import { ExpenseTableSkeleton } from "@/common/components/skeletons/expense-table-skeleton/ExpenseTableSkeleton";
 import { NotFoundBox } from "@/common/components/not-found-box/NotFoundBox";
+import { useNavigate } from "react-router-dom";
 
 interface ExpenseTableProps {
   data: Expense[];
@@ -42,6 +44,12 @@ export const ExpenseTable = ({
   isPending,
   onOpenPayExpensePopup,
 }: ExpenseTableProps) => {
+  const navigate = useNavigate();
+  const onExpenseDetailsClick = (id: number) => {
+    navigate("/expenses/details", {
+      state: { expenseId: id },
+    });
+  };
   return (
     <div className="rounded-lg border border-gray-100 overflow-x-auto shadow-sm bg-white">
       <Table>
@@ -171,26 +179,13 @@ export const ExpenseTable = ({
                     <DollarSign className="w-4 h-4 inline mr-1" />
                     Pagar
                   </button>
-                  {/* <button
-                    className="p-1 rounded hover:bg-yellow-50 transition"
-                    title={
-                      expense.status === ExpenseStatus.PAID
-                        ? "Despesas pagas não podem ser editadas."
-                        : "Editar"
-                    }
-                    disabled={expense.status === ExpenseStatus.PAID}
-                    onClick={() => {
-                      alert("Editar despesa");
-                    }}
+                  <button
+                    className="p-1 rounded hover:bg-sky-100 transition "
+                    title="Visualizar detalhes"
+                    onClick={() => onExpenseDetailsClick(expense.id)}
                   >
-                    <Pencil
-                      className={`w-4 h-4 ${
-                        expense.status === ExpenseStatus.PAID
-                          ? "text-gray-400 cursor-not-allowed"
-                          : "text-gray-800 hover:text-yellow-600 hover:cursor-pointer"
-                      }`}
-                    />
-                  </button> */}
+                    <Eye className="w-4 h-4 text-gray-800 hover:text-sky-600 hover:cursor-pointer" />
+                  </button>
                   <button
                     className="p-1 rounded hover:bg-red-50 transition"
                     title={

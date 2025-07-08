@@ -139,6 +139,19 @@ export class ExpenseRepository implements IExpenseRepository {
             name: true,
           },
         },
+        expenseItems: {
+          select: {
+            itemId: true,
+            quantity: true,
+            unitValue: true,
+            item: {
+              select: {
+                name: true,
+                description: true,
+              },
+            },
+          },
+        },
       },
     });
     return expense;
