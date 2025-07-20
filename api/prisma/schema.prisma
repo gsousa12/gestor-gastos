@@ -81,18 +81,43 @@ model Expense {
   updatedAt       DateTime?    @map("updated_at")
 
   supplierId      Int          @map("supplier_id")
-  supplier        Supplier     @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+  supplier        Supplier     @relation(fields: [supplierId], references: [id])
 
   secretaryId     Int          @map("secretary_id")
-  secretary       Secretary    @relation(fields: [secretaryId], references: [id], onDelete: Cascade)
+  secretary       Secretary    @relation(fields: [secretaryId], references: [id])
 
   userId         Int           @map("user_id")
-  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user           User          @relation(fields: [userId], references: [id])
 
   subsectorId    Int           @map("subsector_id")
-  subsector      SubSector     @relation(fields: [subsectorId], references: [id], onDelete: Cascade)
+  subsector      SubSector     @relation(fields: [subsectorId], references: [id])
 
   payments        Payment[]
+
+  expenseItems    ExpenseItem[]
+}
+
+model Item {
+  id          Int        @id @default(autoincrement())
+  name        String     @unique
+  description String?
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime?  @map("updated_at")
+  deletedAt   DateTime?  @map("deleted_at")
+
+  expenseItems ExpenseItem[]
+}
+
+model ExpenseItem {
+  id         Int      @id @default(autoincrement())
+  expenseId  Int      @map("expense_id")
+  itemId     Int      @map("item_id")
+  quantity   Int
+  unitValue  Int      @map("unit_value")
+
+  expense    Expense  @relation(fields: [expenseId], references: [id], onDelete: Cascade)
+  
+  item       Item     @relation(fields: [itemId], references: [id])
 }
 
 model Payment {
@@ -108,11 +133,11 @@ model Payment {
   cancelledAt      DateTime?    @map("cancelled_at")
 
   supplierId      Int          @map("supplier_id")
-  supplier        Supplier     @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+  supplier        Supplier     @relation(fields: [supplierId], references: [id])
 
   sectorId        Int          @map("sector_id")
-  sector          Sector       @relation(fields: [sectorId], references: [id], onDelete: Cascade)
+  sector          Sector       @relation(fields: [sectorId], references: [id])
 
   expenseId       Int          @map("expense_id")
-  expense         Expense      @relation(fields: [expenseId], references: [id], onDelete: Cascade)
+  expense         Expense      @relation(fields: [expenseId], references: [id])
 }

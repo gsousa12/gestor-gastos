@@ -69,7 +69,11 @@ export const Sidebar = () => {
             label={"Despesas"}
             routerLink={"/expenses"}
             isMobile={isMobile}
-            active={location.pathname === "/expenses"}
+            active={
+              location.pathname === "/expenses" ||
+              location.pathname === "/expenses/details" ||
+              location.pathname === "/expenses/create"
+            }
           />
           <SidebarItem
             key={"Payments"}

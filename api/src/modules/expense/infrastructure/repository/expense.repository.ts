@@ -1,7 +1,7 @@
 import { PrismaService } from '@common/modules/prisma/service/prisma.service';
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { IExpenseRepository } from '../interfaces/expense-repository.interface';
-import { ExpenseEntity } from '@modules/expense/core/domain/entities/expense.entity';
+import { ExpenseEntity, ExpenseItemEntity } from '@modules/expense/core/domain/entities/expense.entity';
 import { Expense, Secretary, Sector, SubSector, Supplier } from '@prisma/client';
 import { PaginationMeta } from '@common/structures/types';
 import { ExpenseStatus } from '@modules/expense/core/domain/enums/expense.enum';
@@ -139,6 +139,19 @@ export class ExpenseRepository implements IExpenseRepository {
             name: true,
           },
         },
+        expenseItems: {
+          select: {
+            itemId: true,
+            quantity: true,
+            unitValue: true,
+            item: {
+              select: {
+                name: true,
+                description: true,
+              },
+            },
+          },
+        },
       },
     });
     return expense;
@@ -148,6 +161,7 @@ export class ExpenseRepository implements IExpenseRepository {
     supplierList: { id: number; name: string }[];
     subSectorList: { id: number; name: string }[];
     secretaryList: { id: number; name: string }[];
+    itemList: { id: number; name: string; description: string | null }[];
   }> {
     const supplierList = await this.prisma.supplier.findMany({
       select: { id: true, name: true },
@@ -163,16 +177,117 @@ export class ExpenseRepository implements IExpenseRepository {
       select: { id: true, name: true },
       orderBy: { name: 'asc' },
     });
+    const itemList = await this.prisma.item.findMany({
+      select: { id: true, name: true, description: true },
+      orderBy: { name: 'asc' },
+    });
     return {
       supplierList,
       subSectorList,
       secretaryList,
+      itemList,
     };
   }
 
   async deleteExpenseById(expenseId: number): Promise<void> {
     await this.prisma.expense.delete({
       where: { id: expenseId },
+    });
+  }
+
+  async createExpenseWithItems(expense: ExpenseEntity): Promise<any> {
+    // Evita duplicidade de item na mesma despesa
+    const itemIds: { [key: number]: true } = {};
+
+    // Processa os itens: resolve id, cria se necessário
+    const processedItems = await Promise.all(
+      expense.items.map(async (item: ExpenseItemEntity) => {
+        let itemId = item.id;
+
+        if (!itemId) {
+          // Busca por name (case-insensitive)
+          const existingItem = await this.prisma.item.findFirst({
+            where: {
+              name: { equals: item.name, mode: 'insensitive' },
+              deletedAt: null,
+            },
+          });
+
+          if (existingItem) {
+            itemId = existingItem.id;
+          } else {
+            // Cria novo item
+            const newItem = await this.prisma.item.create({
+              data: {
+                name: item.name,
+                description: item.description ?? null,
+                createdAt: new Date(),
+              },
+            });
+            itemId = newItem.id;
+          }
+        }
+
+        // Evita duplicidade de item na mesma despesa
+        if (itemIds[itemId]) {
+          throw new BadRequestException(
+            `O item "${item.name}" foi informado mais de uma vez na mesma despesa.`,
+          );
+        }
+        itemIds[itemId] = true;
+
+        return {
+          itemId,
+          quantity: item.quantity,
+          unitValue: item.unitValue,
+        };
+      }),
+    );
+
+    // Calcula o amount total
+    const amount = processedItems.reduce((sum, item) => sum + item.quantity * item.unitValue, 0);
+
+    // Cria tudo em transação
+    return await this.prisma.$transaction(async (prisma) => {
+      const expenseRecord = await prisma.expense.create({
+        data: {
+          description: expense.description,
+          month: expense.month,
+          year: expense.year,
+          amount,
+          status: ExpenseStatus.PENDING,
+          createdAt: new Date(),
+          supplierId: expense.supplierId,
+          secretaryId: expense.secretaryId,
+          userId: expense.userId,
+          subsectorId: expense.subsectorId,
+        },
+      });
+
+      await Promise.all(
+        processedItems.map((item) =>
+          prisma.expenseItem.create({
+            data: {
+              expenseId: expenseRecord.id,
+              itemId: item.itemId,
+              quantity: item.quantity,
+              unitValue: item.unitValue,
+            },
+          }),
+        ),
+      );
+
+      // Retorna a despesa criada com os itens associados
+      return prisma.expense.findUnique({
+        where: { id: expenseRecord.id },
+        include: {
+          expenseItems: {
+            include: {
+              item: true,
+            },
+          },
+        },
+      });
     });
   }
 }

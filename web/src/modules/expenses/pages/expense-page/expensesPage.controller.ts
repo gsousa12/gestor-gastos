@@ -4,11 +4,13 @@ import { getExpenseListQuery } from "@common/api/queries/expenses/getExpenseList
 import { deleteExpenseByIdMutation } from "@common/api/mutations/expense/deleteExpenseByIdMutation";
 import { showToast } from "@components/toast/Toast";
 import { useAuthStore } from "@/common/store/auth/authStore";
+import { useNavigate } from "react-router-dom";
 
 export const getCreateExpenseFormDataEmpty = {
   supplierList: [],
   secretaryList: [],
   subSectorList: [],
+  itemList: [],
 };
 
 export type ExpenseFilterValues = {
@@ -27,6 +29,7 @@ export const useExpensesController = () => {
     year: getCurrentYear(),
   });
 
+  const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [selectedExpenseId, setSelectedExpenseId] = useState<number | null>(
     null
@@ -93,7 +96,8 @@ export const useExpensesController = () => {
   };
 
   const handleOpenCreateExpense = () => {
-    setOpenCreateExpensePopup(true);
+    // setOpenCreateExpensePopup(true);
+    navigate("/expenses/create");
   };
 
   const handleCloseDeletePopup = () => {

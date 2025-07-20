@@ -22,4 +22,5 @@ export const validationMessages = {
     `O campo ${args.property} é obrigatório e deve está presente no payload de request.`,
   taxId: (args: ValidationArguments) => `O campo ${args.property} deve ser um CNPJ ou CPF válido`,
   isEnum: (args: ValidationArguments) => `O campo ${args.property} deve ser um valor válido do enum`,
+  isArray: (args: ValidationArguments) => `O campo ${args.property} deve ser um array`,
 };

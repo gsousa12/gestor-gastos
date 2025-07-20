@@ -1,8 +1,15 @@
 import { getCreateExpenseFormDataQuery } from "../../../../common/api/queries/expenses/getCreateExpenseFormDataQuery";
 
 export const useCreateExpensePopupContentController = () => {
-  const { data: createExpenseFormData, isPending } =
-    getCreateExpenseFormDataQuery();
+  const {
+    data: createExpenseFormData,
+    isPending,
+    refetch,
+  } = getCreateExpenseFormDataQuery();
 
-  return { createExpenseFormData: createExpenseFormData?.data, isPending };
+  return {
+    createExpenseFormData: createExpenseFormData?.data,
+    isPending,
+    refetchCreateExpenseFormDataQuery: refetch,
+  };
 };

@@ -8,11 +8,19 @@ export class ExpenseMapper {
     expense.description = request.description;
     expense.month = request.month;
     expense.year = request.year;
-    expense.amount = request.amount;
     expense.supplierId = request.supplierId;
     expense.secretaryId = request.secretaryId;
     expense.userId = request.userId;
     expense.subsectorId = request.subsectorId;
+
+    expense.items = request.items.map((item) => ({
+      id: item.id,
+      name: item.name,
+      description: item.description,
+      quantity: item.quantity,
+      unitValue: item.unitValue,
+    }));
+
     return expense;
   }
 
@@ -21,15 +29,20 @@ export class ExpenseMapper {
     response.description = createdExpense.description;
     response.month = createdExpense.month;
     response.year = createdExpense.year;
-    response.amount = createdExpense.amount;
+
+    // Formatando amount como string com 2 casas decimais (opcional)
+    response.amount = Number(createdExpense.amount.toFixed(2));
+
     response.supplierId = createdExpense.supplierId;
     response.secretaryId = createdExpense.secretaryId;
     response.userId = createdExpense.userId;
     response.subsectorId = createdExpense.subsectorId;
+
     return response;
   }
 
-  toMapperGetExpenseListResponse(expenseList: any[]): ExpenseEntity[] {
+  // FIXME: Tipar expenseList corretamente
+  toMapperGetExpenseListResponse(expenseList: any[]): any[] {
     return expenseList.map((expense) => ({
       id: expense.id,
       description: expense.description,

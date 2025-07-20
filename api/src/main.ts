@@ -4,7 +4,6 @@ import { Logger } from '@nestjs/common';
 import * as cookieParser from 'cookie-parser';
 import { config } from '@common/configuration/config';
 import { SingleErrorPipe } from '@common/pipes/single-error.pipe';
-import { DelayInterceptor } from '@common/interceptors/delay.interceptor';
 import { PrismaClient } from '@prisma/client';
 import { connectionAttemp } from '@common/utils/connection-attemp';
 
