@@ -16,7 +16,7 @@ import { showToast } from "@components/toast/Toast";
 import { CreateExpensePopupSkeleton } from "@components/skeletons/create-expense-skeleton/CreateExpenseSkeleton";
 import { useAuthStore } from "@/common/store/auth/authStore";
 import { createExpenseMutation } from "@common/api/mutations/expense/createExpenseMutation";
-import { Building, Calendar, Info, Layers2, Truck } from "lucide-react";
+import { Building, Layers2, Truck } from "lucide-react";
 import { useCreateExpensePopupContentController } from "./createExpensePopupContentController";
 import { ItemFieldsArray } from "../item-fields-array/ItemFieldsArray";
 

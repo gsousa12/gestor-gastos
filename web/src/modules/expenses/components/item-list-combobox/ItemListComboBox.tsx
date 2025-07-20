@@ -101,7 +101,7 @@ export const ItemNameComboBox: React.FC<ItemNameComboBoxProps> = ({
                     }`
                   }
                 >
-                  {({ selected, active }) => (
+                  {({ selected }) => (
                     <>
                       <span
                         className={`block truncate ${
