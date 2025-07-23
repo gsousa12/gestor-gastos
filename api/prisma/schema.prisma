@@ -138,6 +138,6 @@ model Payment {
   sectorId        Int          @map("sector_id")
   sector          Sector       @relation(fields: [sectorId], references: [id])
 
-  expenseId       Int          @map("expense_id")
-  expense         Expense      @relation(fields: [expenseId], references: [id])
+  expenseId   Int      @map("expense_id")
+  expense     Expense  @relation(fields: [expenseId], references: [id], onDelete: Cascade)
 }
