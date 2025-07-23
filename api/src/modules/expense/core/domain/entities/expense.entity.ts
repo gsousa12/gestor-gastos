@@ -1,9 +1,12 @@
+// <-- MUDANÇA: Definindo a entidade do item da despesa para incluir os novos campos
 export class ExpenseItemEntity {
   id?: number;
   name: string;
   description?: string | null;
+  ci?: number; // <-- MUDANÇA
   quantity: number;
   unitValue: number;
+  unitOfMeasure: string; // <-- MUDANÇA
 }
 
 export class ExpenseEntity {
@@ -20,5 +23,5 @@ export class ExpenseEntity {
   createdAt: Date;
   supplierName: string | null;
 
-  items: ExpenseItemEntity[];
+  items: ExpenseItemEntity[]; // <-- MUDANÇA: Agora usa a entidade definida acima
 }

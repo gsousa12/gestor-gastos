@@ -17,8 +17,10 @@ export class ExpenseMapper {
       id: item.id,
       name: item.name,
       description: item.description,
+      ci: item.ci, // <-- MUDANÇA
       quantity: item.quantity,
       unitValue: item.unitValue,
+      unitOfMeasure: item.unitOfMeasure, // <-- MUDANÇA
     }));
 
     return expense;

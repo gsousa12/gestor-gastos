@@ -2,6 +2,7 @@ import {
   ArrayMinSize,
   IsArray,
   IsInt,
+  IsNotEmpty, // <-- MUDANÇA
   IsNumber,
   IsOptional,
   IsString,
@@ -27,13 +28,21 @@ class CreateExpenseItemDto {
   @Length(0, 255, { message: validationMessages.Length })
   description?: string | null;
 
-  @IsInt({ message: validationMessages.isNumber })
-  @Min(1, { message: validationMessages.Min })
+  // <-- MUDANÇA: Adicionado campo opcional para o código interno
+  @IsOptional()
+  ci?: number;
+
+  // <-- MUDANÇA: Alterado para IsNumber para aceitar decimais
+  @IsNumber({}, { message: validationMessages.isNumber })
   quantity: number;
 
   @IsInt({ message: validationMessages.isNumber })
-  @Min(1, { message: validationMessages.Min })
+  @Min(100, { message: validationMessages.Min })
   unitValue: number;
+
+  // <-- MUDANÇA: Adicionado campo obrigatório para unidade de medida
+  @IsString({ message: validationMessages.isString })
+  unitOfMeasure: string;
 }
 
 export class CreateExpenseRequestDto {
