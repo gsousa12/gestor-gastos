@@ -15,7 +15,7 @@ import { cn } from "@common/lib/utils";
 import { showToast } from "@components/toast/Toast";
 import { CreateExpensePopupSkeleton } from "@components/skeletons/create-expense-skeleton/CreateExpenseSkeleton";
 import { useAuthStore } from "@/common/store/auth/authStore";
-import { createExpenseMutation } from "@common/api/mutations/expense/createExpenseMutation";
+// import { createExpenseMutation } from "@common/api/mutations/expense/createExpenseMutation";
 import { Building, Layers2, Truck } from "lucide-react";
 import { useCreateExpensePopupContentController } from "./createExpensePopupContentController";
 import { ItemFieldsArray } from "../item-fields-array/ItemFieldsArray";
@@ -33,7 +33,7 @@ export const CreateExpensePopupContent = ({
     isPending,
     refetchCreateExpenseFormDataQuery,
   } = useCreateExpensePopupContentController();
-  const { mutateAsync: createExpenseMutate } = createExpenseMutation();
+  // const { mutateAsync: createExpenseMutate } = createExpenseMutation();
 
   const methods = useForm<CreateExpenseFormValues>({
     resolver: zodResolver(createExpenseSchema),
@@ -75,23 +75,23 @@ export const CreateExpensePopupContent = ({
     return <>{/* FIXME: Criar componente de error */}</>;
   }
 
-  const onSubmit = async (data: CreateExpenseFormValues) => {
+  const onSubmit = async (_: CreateExpenseFormValues) => {
     try {
-      await createExpenseMutate({
-        month: data.month,
-        year: data.year,
-        description: data.description?.length ? data.description : null,
-        supplierId: data.supplierId,
-        secretaryId: data.secretaryId,
-        userId: data.userId,
-        subsectorId: data.subsectorId,
-        items: data.items.map((item) => ({
-          id: item.id ? item.id : null,
-          name: item.name,
-          quantity: item.quantity,
-          unitValue: Number(String(item.unitValue).replace(/\D/g, "")), // <-- conversão para centavos
-        })),
-      });
+      // await createExpenseMutate({
+      //   month: data.month,
+      //   year: data.year,
+      //   description: data.description?.length ? data.description : null,
+      //   supplierId: data.supplierId,
+      //   secretaryId: data.secretaryId,
+      //   userId: data.userId,
+      //   subsectorId: data.subsectorId,
+      //   items: data.items.map((item) => ({
+      //     id: item.id ? item.id : null,
+      //     name: item.name,
+      //     quantity: item.quantity,
+      //     unitValue: Number(String(item.unitValue).replace(/\D/g, "")), // <-- conversão para centavos
+      //   })),
+      // });
       // Limpa o formulário após sucesso
       //setValue("description", "");
       setValue("items", []);
