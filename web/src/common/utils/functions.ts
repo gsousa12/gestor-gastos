@@ -198,3 +198,19 @@ export const formatCurrentDate = () => {
     meses[date.getMonth()]
   } de ${date.getFullYear()}`;
 };
+
+export const formatNumber = (value: number | null | undefined): string => {
+  // Retorna um hífen se o valor for nulo, indefinido ou não for um número
+  if (value === null || value === undefined || isNaN(value)) {
+    return "-";
+  }
+
+  // Cria um formatador para o locale 'pt-BR'
+  const formatter = new Intl.NumberFormat("pt-BR", {
+    // Define o número máximo de casas decimais a serem exibidas.
+    // Ideal para quantidades que podem ser fracionadas (ex: 1,5 kg).
+    maximumFractionDigits: 3,
+  });
+
+  return formatter.format(value);
+};

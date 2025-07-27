@@ -30,10 +30,14 @@ export class ExpenseController {
   @Post('/')
   @HttpCode(HttpStatus.OK)
   async createExpense(@Body() request: CreateExpenseRequestDto) {
-    const expense = this.expenseMapper.toMapperCreateExpenseRequest(request);
-    const createdExpense = await this.expenseService.createExpense(expense);
-    const response = this.expenseMapper.toMapperCreateExpenseResponse(createdExpense);
-    return createApiResponse('Despesa criada com sucesso', response);
+    try {
+      const expense = this.expenseMapper.toMapperCreateExpenseRequest(request);
+      const createdExpense = await this.expenseService.createExpense(expense);
+      const response = this.expenseMapper.toMapperCreateExpenseResponse(createdExpense);
+      return createApiResponse('Despesa criada com sucesso', response);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   @UseGuards(AuthGuard('jwt'))
@@ -75,7 +79,7 @@ export class ExpenseController {
     const expenseId = Number(id);
 
     const expense = await this.expenseService.getExpenseById(expenseId);
-    // const response = this.expenseMapper.toMapperGetExpenseByIdResponse(expense);
+
     return createApiResponse('Despesa encontrado com sucesso', expense);
   }
 

@@ -13,6 +13,7 @@ import { getCreateExpenseFormDataQuery } from "@/common/api/queries/expenses/get
 import {
   CreateExpenseFormValues,
   createExpenseSchema,
+  ExpenseItemFormValues, // <-- Importar o tipo do item
 } from "../../schemas/create-expense-schema";
 
 export const useExpenseCreationPageController = () => {
@@ -44,6 +45,7 @@ export const useExpenseCreationPageController = () => {
     setValue,
     watch,
     trigger,
+    reset, // <-- Adicionar reset para limpar o form
   } = methods;
 
   /* ---------- mutation ---------- */
@@ -52,6 +54,10 @@ export const useExpenseCreationPageController = () => {
   const onSubmit = useCallback(
     async (data: CreateExpenseFormValues) => {
       try {
+        // ==================================================================
+        // AQUI ESTÁ A CORREÇÃO
+        // O payload agora é montado com os campos corretos: totalValue e unitOfMeasure
+        // ==================================================================
         await createExpenseMutate({
           month: data.month,
           year: data.year,
@@ -60,17 +66,28 @@ export const useExpenseCreationPageController = () => {
           secretaryId: data.secretaryId,
           userId: data.userId,
           subsectorId: data.subsectorId,
-          items: data.items.map((item: any) => ({
+          items: data.items.map((item: ExpenseItemFormValues) => ({
             id: item.id ? item.id : null,
             name: item.name,
             quantity: item.quantity,
-            unitValue: Number(String(item.unitValue).replace(/\D/g, "")),
+            // Converte o valor formatado (ex: "R$ 100,00") para centavos (10000)
+            totalValue: Number(String(item.totalValue).replace(/\D/g, "")),
+            // Envia a unidade de medida
+            unitOfMeasure: item.unitOfMeasure,
           })),
         });
 
-        /* limpa somente o necessário */
-        setValue("items", []);
-        setValue("description", "");
+        /* limpa o formulário para um novo cadastro */
+        reset({
+          description: "",
+          month: getCurrentMonth(),
+          year: getCurrentYear(),
+          supplierId: undefined,
+          secretaryId: undefined,
+          userId,
+          subsectorId: undefined,
+          items: [],
+        });
         refetchCreateExpenseFormDataQuery();
 
         showToast({
@@ -86,7 +103,7 @@ export const useExpenseCreationPageController = () => {
         });
       }
     },
-    [createExpenseMutate, setValue, refetchCreateExpenseFormDataQuery]
+    [createExpenseMutate, reset, refetchCreateExpenseFormDataQuery, userId] // <-- Adicionar dependências
   );
 
   return {

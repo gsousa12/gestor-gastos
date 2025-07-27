@@ -11,10 +11,11 @@ export interface GetExpenseDetailsRequest {
 }
 
 export interface ExpenseItemRequest {
-  id: number | null; // sempre null por enquanto
+  id: number | null;
   name: string;
   quantity: number;
-  unitValue: number;
+  totalValue: number; // <-- MUDANÇA: de unitValue para totalValue
+  unitOfMeasure: string; // <-- MUDANÇA: Adicionado
 }
 
 export interface CreateExpenseRequest {

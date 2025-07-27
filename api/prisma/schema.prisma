@@ -115,7 +115,8 @@ model ExpenseItem {
   itemId        Int      @map("item_id")
   quantity      Decimal  @map("quantity") 
   unitOfMeasure String   @map("unit_of_measure") @default("unidade") 
-  unitValue     Int  @map("unit_value") 
+  unitValue     Int?     @map("unit_value") // <-- MUDANÇA: Torna o campo opcional/anulável
+  totalValue    Int      @map("total_value") @default(0)
 
   expense       Expense  @relation(fields: [expenseId], references: [id], onDelete: Cascade)
   item          Item     @relation(fields: [itemId], references: [id])

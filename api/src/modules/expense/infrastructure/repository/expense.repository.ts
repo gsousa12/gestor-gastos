@@ -143,7 +143,8 @@ export class ExpenseRepository implements IExpenseRepository {
           select: {
             itemId: true,
             quantity: true,
-            unitValue: true,
+            totalValue: true,
+            unitOfMeasure: true,
             item: {
               select: {
                 name: true,
@@ -198,6 +199,9 @@ export class ExpenseRepository implements IExpenseRepository {
   async createExpenseWithItems(expense: ExpenseEntity): Promise<any> {
     const itemIds: { [key: number]: true } = {};
 
+    // MUDANÇA: O cálculo do valor total agora é feito aqui, somando os `totalValue` dos itens.
+    const amount = expense.items.reduce((sum, item) => sum + item.totalValue, 0);
+
     const processedItems = await Promise.all(
       expense.items.map(async (item: ExpenseItemEntity) => {
         let itemId = item.id;
@@ -217,7 +221,7 @@ export class ExpenseRepository implements IExpenseRepository {
               data: {
                 name: item.name,
                 description: item.description ?? null,
-                ci: item.ci, // <-- MUDANÇA: Adiciona o CI ao criar um novo item
+                ci: item.ci,
                 createdAt: new Date(),
               },
             });
@@ -235,13 +239,15 @@ export class ExpenseRepository implements IExpenseRepository {
         return {
           itemId,
           quantity: item.quantity,
-          unitValue: item.unitValue,
-          unitOfMeasure: item.unitOfMeasure, // <-- MUDANÇA: Passa a unidade de medida para a próxima etapa
+          // MUDANÇA: unitValue não é mais necessário aqui
+          totalValue: item.totalValue, // <-- MUDANÇA: Passa o totalValue para a próxima etapa
+          unitOfMeasure: item.unitOfMeasure,
         };
       }),
     );
 
-    const amount = processedItems.reduce((sum, item) => sum + item.quantity * item.unitValue, 0);
+    // MUDANÇA: A lógica de `amount` foi movida para cima e simplificada.
+    // const amount = processedItems.reduce((sum, item) => sum + item.quantity * item.unitValue, 0);
 
     return await this.prisma.$transaction(async (prisma) => {
       const expenseRecord = await prisma.expense.create({
@@ -249,7 +255,7 @@ export class ExpenseRepository implements IExpenseRepository {
           description: expense.description,
           month: expense.month,
           year: expense.year,
-          amount, // Prisma lida com a conversão de number para Decimal
+          amount, // <-- MUDANÇA: Usa o novo `amount` calculado
           status: ExpenseStatus.PENDING,
           createdAt: new Date(),
           supplierId: expense.supplierId,
@@ -265,9 +271,10 @@ export class ExpenseRepository implements IExpenseRepository {
             data: {
               expenseId: expenseRecord.id,
               itemId: item.itemId,
-              quantity: item.quantity, // Prisma lida com a conversão de number para Decimal
-              unitValue: item.unitValue, // Prisma lida com a conversão de number para Decimal
-              unitOfMeasure: item.unitOfMeasure, // <-- MUDANÇA: Salva a unidade de medida
+              quantity: item.quantity,
+              unitValue: null, // <-- MUDANÇA: Salva como null no banco
+              totalValue: item.totalValue, // <-- MUDANÇA: Salva o valor total do item
+              unitOfMeasure: item.unitOfMeasure,
             },
           }),
         ),
