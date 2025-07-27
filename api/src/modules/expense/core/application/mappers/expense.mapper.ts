@@ -1,8 +1,9 @@
 import { Expense } from '@prisma/client';
-import { ExpenseEntity } from '../../domain/entities/expense.entity';
+import { ExpenseEntity, ExpenseItemEntity } from '../../domain/entities/expense.entity';
 import { CreateExpenseRequestDto } from '../dtos/request/create-expense.request.dto';
 
 export class ExpenseMapper {
+  // A função agora está alinhada com o DTO e a Entidade
   toMapperCreateExpenseRequest(request: CreateExpenseRequestDto): ExpenseEntity {
     const expense = new ExpenseEntity();
     expense.description = request.description;
@@ -13,13 +14,19 @@ export class ExpenseMapper {
     expense.userId = request.userId;
     expense.subsectorId = request.subsectorId;
 
-    expense.items = request.items.map((item) => ({
-      id: item.id,
-      name: item.name,
-      description: item.description,
-      quantity: item.quantity,
-      unitValue: item.unitValue,
-    }));
+    // Mapeamento correto para a ExpenseItemEntity corrigida
+    expense.items = request.items.map((itemDto) => {
+      const itemEntity = new ExpenseItemEntity();
+      itemEntity.id = itemDto.id;
+      itemEntity.name = itemDto.name;
+      itemEntity.description = itemDto.description ?? null;
+      itemEntity.ci = itemDto.ci;
+      itemEntity.quantity = itemDto.quantity;
+      itemEntity.totalValue = itemDto.totalValue; // <-- Vindo do DTO
+      itemEntity.unitOfMeasure = itemDto.unitOfMeasure; // <-- Vindo do DTO
+      itemEntity.unitValue = null; // <-- Agora é um valor válido (null) para a entidade
+      return itemEntity;
+    });
 
     return expense;
   }

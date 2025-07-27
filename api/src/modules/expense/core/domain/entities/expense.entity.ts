@@ -2,10 +2,14 @@ export class ExpenseItemEntity {
   id?: number;
   name: string;
   description?: string | null;
+  ci?: number;
   quantity: number;
-  unitValue: number;
+  unitOfMeasure: string;
+  unitValue: number | null; // <-- MUDANÇA CRÍTICA: Agora aceita null
+  totalValue: number;
 }
 
+// A ExpenseEntity principal não precisa de mudanças
 export class ExpenseEntity {
   id: number;
   description: string | null;

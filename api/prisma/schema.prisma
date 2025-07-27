@@ -101,6 +101,7 @@ model Item {
   id          Int        @id @default(autoincrement())
   name        String     @unique
   description String?
+  ci          Int?       @map("ci") 
   createdAt   DateTime   @default(now()) @map("created_at")
   updatedAt   DateTime?  @map("updated_at")
   deletedAt   DateTime?  @map("deleted_at")
@@ -109,15 +110,16 @@ model Item {
 }
 
 model ExpenseItem {
-  id         Int      @id @default(autoincrement())
-  expenseId  Int      @map("expense_id")
-  itemId     Int      @map("item_id")
-  quantity   Int
-  unitValue  Int      @map("unit_value")
+  id            Int      @id @default(autoincrement())
+  expenseId     Int      @map("expense_id")
+  itemId        Int      @map("item_id")
+  quantity      Decimal  @map("quantity") 
+  unitOfMeasure String   @map("unit_of_measure") @default("unidade") 
+  unitValue     Int?     @map("unit_value") // <-- MUDANÇA: Torna o campo opcional/anulável
+  totalValue    Int      @map("total_value") @default(0)
 
-  expense    Expense  @relation(fields: [expenseId], references: [id], onDelete: Cascade)
-  
-  item       Item     @relation(fields: [itemId], references: [id])
+  expense       Expense  @relation(fields: [expenseId], references: [id], onDelete: Cascade)
+  item          Item     @relation(fields: [itemId], references: [id])
 }
 
 model Payment {

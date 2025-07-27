@@ -143,7 +143,8 @@ export class ExpenseRepository implements IExpenseRepository {
           select: {
             itemId: true,
             quantity: true,
-            unitValue: true,
+            totalValue: true,
+            unitOfMeasure: true,
             item: {
               select: {
                 name: true,
@@ -196,16 +197,16 @@ export class ExpenseRepository implements IExpenseRepository {
   }
 
   async createExpenseWithItems(expense: ExpenseEntity): Promise<any> {
-    // Evita duplicidade de item na mesma despesa
     const itemIds: { [key: number]: true } = {};
 
-    // Processa os itens: resolve id, cria se necessário
+    // MUDANÇA: O cálculo do valor total agora é feito aqui, somando os `totalValue` dos itens.
+    const amount = expense.items.reduce((sum, item) => sum + item.totalValue, 0);
+
     const processedItems = await Promise.all(
       expense.items.map(async (item: ExpenseItemEntity) => {
         let itemId = item.id;
 
         if (!itemId) {
-          // Busca por name (case-insensitive)
           const existingItem = await this.prisma.item.findFirst({
             where: {
               name: { equals: item.name, mode: 'insensitive' },
@@ -216,11 +217,11 @@ export class ExpenseRepository implements IExpenseRepository {
           if (existingItem) {
             itemId = existingItem.id;
           } else {
-            // Cria novo item
             const newItem = await this.prisma.item.create({
               data: {
                 name: item.name,
                 description: item.description ?? null,
+                ci: item.ci,
                 createdAt: new Date(),
               },
             });
@@ -228,7 +229,6 @@ export class ExpenseRepository implements IExpenseRepository {
           }
         }
 
-        // Evita duplicidade de item na mesma despesa
         if (itemIds[itemId]) {
           throw new BadRequestException(
             `O item "${item.name}" foi informado mais de uma vez na mesma despesa.`,
@@ -239,22 +239,23 @@ export class ExpenseRepository implements IExpenseRepository {
         return {
           itemId,
           quantity: item.quantity,
-          unitValue: item.unitValue,
+          // MUDANÇA: unitValue não é mais necessário aqui
+          totalValue: item.totalValue, // <-- MUDANÇA: Passa o totalValue para a próxima etapa
+          unitOfMeasure: item.unitOfMeasure,
         };
       }),
     );
 
-    // Calcula o amount total
-    const amount = processedItems.reduce((sum, item) => sum + item.quantity * item.unitValue, 0);
+    // MUDANÇA: A lógica de `amount` foi movida para cima e simplificada.
+    // const amount = processedItems.reduce((sum, item) => sum + item.quantity * item.unitValue, 0);
 
-    // Cria tudo em transação
     return await this.prisma.$transaction(async (prisma) => {
       const expenseRecord = await prisma.expense.create({
         data: {
           description: expense.description,
           month: expense.month,
           year: expense.year,
-          amount,
+          amount, // <-- MUDANÇA: Usa o novo `amount` calculado
           status: ExpenseStatus.PENDING,
           createdAt: new Date(),
           supplierId: expense.supplierId,
@@ -271,13 +272,14 @@ export class ExpenseRepository implements IExpenseRepository {
               expenseId: expenseRecord.id,
               itemId: item.itemId,
               quantity: item.quantity,
-              unitValue: item.unitValue,
+              unitValue: null, // <-- MUDANÇA: Salva como null no banco
+              totalValue: item.totalValue, // <-- MUDANÇA: Salva o valor total do item
+              unitOfMeasure: item.unitOfMeasure,
             },
           }),
         ),
       );
 
-      // Retorna a despesa criada com os itens associados
       return prisma.expense.findUnique({
         where: { id: expenseRecord.id },
         include: {

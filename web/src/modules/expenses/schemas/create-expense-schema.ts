@@ -1,8 +1,6 @@
-// src/schemas/create-expense-schema.ts
-
 import { z } from "zod";
 
-// Schema para um item da despesa
+// Schema para um item da despesa (com a validação de centavos corrigida)
 export const expenseItemSchema = z.object({
   id: z.number().nullable(),
   name: z
@@ -11,20 +9,28 @@ export const expenseItemSchema = z.object({
     .max(100, { message: "O nome do item deve ter no máximo 100 caracteres." }),
   quantity: z
     .number({ required_error: "A quantidade é obrigatória." })
-    .int({ message: "A quantidade deve ser um número inteiro." })
-    .min(1, { message: "A quantidade deve ser maior que zero." }),
-  unitValue: z
-    .string({ required_error: "O valor unitário é obrigatório." })
+    .min(0.01, { message: "A quantidade deve ser maior que zero." }),
+
+  // <-- MUDANÇA CORRIGIDA: Validação do valor total em centavos
+  totalValue: z
+    .string({ required_error: "O valor total é obrigatório." })
+    .min(1, "O valor total é obrigatório.")
     .refine(
       (val) => {
+        // Converte "R$ 1,00" para 100
         const cents = Number(val.replace(/\D/g, ""));
+        // Garante que o valor seja de no mínimo 1 real (100 centavos)
         return cents >= 100;
       },
-      { message: "Mínimo: R$ 1,00." }
+      { message: "O valor mínimo é R$ 1,00." } // Mensagem de erro mais clara
     ),
+
+  unitOfMeasure: z
+    .string({ required_error: "A unidade de medida é obrigatória." })
+    .min(1, { message: "A unidade de medida é obrigatória." }),
 });
 
-// Schema principal
+// Schema principal (sem alterações)
 export const createExpenseSchema = z.object({
   description: z
     .string({ required_error: "A descrição é obrigatória." })
@@ -60,11 +66,9 @@ export const createExpenseSchema = z.object({
     .array(expenseItemSchema)
     .min(1, "Informe ao menos um item")
     .refine((items) => {
-      // mantém só os nomes preenchidos (trim) e em lower-case
       const filledNames = items
         .filter((i) => i.name && i.name.trim() !== "")
         .map((i) => i.name.trim().toLowerCase());
-
       return new Set(filledNames).size === filledNames.length;
     }, "Não é permitido itens duplicados pelo nome"),
 });
