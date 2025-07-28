@@ -3,6 +3,8 @@ import { PaginationMeta } from "../api-response";
 // Requests
 export interface GetDashboardDataRequest {
   month: number;
+  year: string;
+  userId?: number;
 }
 
 // Responses

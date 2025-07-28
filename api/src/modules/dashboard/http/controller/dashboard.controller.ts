@@ -20,7 +20,7 @@ export class DashboardController {
     @Query('year') year: string,
   ) {
     // <-- MUDANÇA: Extrair o userId do usuário autenticado
-    const parsedUserId = userId ? userId : undefined; // <-- MELHORIA: Definir um valor padrão ou tratar caso não seja fornecido
+    const parsedUserId = userId ? Number(userId) : undefined; // <-- MELHORIA: Definir um valor padrão ou tratar caso não seja fornecido
 
     // <-- MELHORIA: Adicionar valores padrão para mês e ano de forma mais clara
     const getMonth = month ? Number(month) : new Date().getMonth() + 1;
