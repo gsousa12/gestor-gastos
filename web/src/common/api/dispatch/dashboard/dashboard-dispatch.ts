@@ -10,9 +10,9 @@ import { getApiResponse } from "../../interfaces/get-api-response";
 export const getDashboardDataDispatch = async (
   request: GetDashboardDataRequest
 ): Promise<ApiResponse<GetDashboardData>> => {
-  const { month } = request;
+  const { month, year, userId } = request;
   const response = await api.get("/dashboard/", {
-    params: { month },
+    params: { month, year, userId },
   });
   return getApiResponse<GetDashboardData>(response.data, getDashboardDataEmpty);
 };

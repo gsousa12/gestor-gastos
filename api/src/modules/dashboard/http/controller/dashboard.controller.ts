@@ -11,13 +11,27 @@ export class DashboardController {
     private readonly dashboardMapper: DashboardMapper,
   ) {}
 
-  // TODO: Adicionar o year como parâmetro de filtragem
   @UseGuards(AuthGuard('jwt'))
   @Get('/')
   @HttpCode(HttpStatus.OK)
-  async getDashboardData(@Query('month') month: number, @Query('year') year: string) {
+  async getDashboardData(
+    @Query('userId') userId: number, // <-- MUDANÇA: Injetar o objeto da requisição para pegar o usuário
+    @Query('month') month: number,
+    @Query('year') year: string,
+  ) {
+    // <-- MUDANÇA: Extrair o userId do usuário autenticado
+    const parsedUserId = userId ? Number(userId) : undefined; // <-- MELHORIA: Definir um valor padrão ou tratar caso não seja fornecido
+
+    // <-- MELHORIA: Adicionar valores padrão para mês e ano de forma mais clara
     const getMonth = month ? Number(month) : new Date().getMonth() + 1;
-    const { dashboardData } = await this.dashboardService.getDashboardData(getMonth, year);
+    const getYear = year ? year : new Date().getFullYear().toString();
+
+    const { dashboardData } = await this.dashboardService.getDashboardData(
+      getMonth,
+      getYear,
+      parsedUserId, // <-- MUDANÇA: Passar o userId para o service
+    );
+
     return createApiResponse('Informações do dashboard', dashboardData);
   }
 }

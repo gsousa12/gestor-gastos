@@ -8,14 +8,18 @@ import { PaymentStatus } from '@modules/payment/core/domain/enums/payment.enum';
 export class DashboardRepository implements IDashboardRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async getDashboardData(month: number): Promise<{
+  async getDashboardData(
+    month: number,
+    year: string,
+    userId?: number, // <-- MUDANÇA: userId agora é opcional
+  ): Promise<{
     dashboardData: DashboardData[];
   }> {
-    const now = new Date();
-    const year = now.getFullYear();
-    const startDate = new Date(`${year}-${String(month).padStart(2, '0')}-01`);
-    const endDate = new Date(year, month, 0, 23, 59, 59, 999); // último dia do mês
+    const numericYear = Number(year);
+    const startDate = new Date(numericYear, month - 1, 1);
+    const endDate = new Date(numericYear, month, 0, 23, 59, 59, 999);
 
+    // ... (consultas 1, 2 e 3 não mudam) ...
     // 1. Active suppliers
     const activeSuppliers = await this.prisma.supplier.count({
       where: { deletedAt: null },
@@ -23,33 +27,27 @@ export class DashboardRepository implements IDashboardRepository {
 
     // 2. Expenses month somatory
     const expensesAggregate = await this.prisma.expense.aggregate({
-      _sum: {
-        amount: true,
-      },
-      where: {
-        createdAt: {
-          gte: startDate,
-          lte: endDate,
-        },
-      },
+      _sum: { amount: true },
+      where: { createdAt: { gte: startDate, lte: endDate } },
     });
 
     // 3. Payments month somatory
     const paymentsAggregate = await this.prisma.payment.aggregate({
-      _sum: {
-        amount: true,
-      },
+      _sum: { amount: true },
       where: {
         status: { not: PaymentStatus.CANCELED },
-        createdAt: {
-          gte: startDate,
-          lte: endDate,
-        },
+        createdAt: { gte: startDate, lte: endDate },
       },
     });
 
-    // 4. Last 4 expenses (with supplier name)
+    // 4. Last expenses (with supplier name)
     const lastExpensesRaw = await this.prisma.expense.findMany({
+      // MUDANÇA: O filtro de userId é aplicado condicionalmente.
+      // Se `userId` for `undefined`, o Prisma ignora essa condição.
+      // Se `userId` tiver um valor, o filtro `where: { userId: ... }` é aplicado.
+      where: {
+        userId: userId,
+      },
       orderBy: { createdAt: 'desc' },
       take: 6,
       include: {
@@ -61,7 +59,6 @@ export class DashboardRepository implements IDashboardRepository {
       },
     });
 
-    // Mapeia os dados para incluir supplierName diretamente no objeto
     const lastExpenses = lastExpensesRaw.map((expense) => ({
       id: expense.id,
       supplierName: expense.supplier.name,
@@ -70,17 +67,11 @@ export class DashboardRepository implements IDashboardRepository {
       date: expense.createdAt,
     }));
 
-    // 5. Top 5 suppliers by recurringDebit
+    // 5. Top 5 suppliers by recurringDebit (não muda)
     const supplierWithMostDebits = await this.prisma.supplier.findMany({
-      orderBy: {
-        recurringDebit: 'desc',
-      },
+      orderBy: { recurringDebit: 'desc' },
       take: 5,
-      select: {
-        id: true,
-        name: true,
-        recurringDebit: true,
-      },
+      select: { id: true, name: true, recurringDebit: true },
     });
 
     const dashboardData: DashboardData = {
